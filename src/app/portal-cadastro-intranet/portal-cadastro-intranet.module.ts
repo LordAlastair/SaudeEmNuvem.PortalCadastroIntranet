@@ -1,11 +1,10 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {PortalCadastroIntranetComponent} from './portal-cadastro-intranet.component';
-import {PortalRoutingModule} from './portal-cadastro-intranet.routing.module';
-import {ThemeModule} from '../@theme/theme.module';
-import {DashboardComponent} from './dashboard/dashboard.component';
+import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.component';
+import { PortalRoutingModule } from './portal-cadastro-intranet-routing.module';
+import { ThemeModule } from '../@theme/theme.module';
 
-const PORTAL_COMPONENTS = [
+const COMPONENTS = [
   PortalCadastroIntranetComponent,
 ];
 
@@ -15,9 +14,9 @@ const PORTAL_COMPONENTS = [
     PortalRoutingModule,
   ],
   declarations: [
-    ...PORTAL_COMPONENTS,
-    DashboardComponent,
+    ...COMPONENTS,
   ],
 })
+
 export class PortalComponent {
 }
