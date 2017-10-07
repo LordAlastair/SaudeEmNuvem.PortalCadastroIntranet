@@ -22,7 +22,6 @@ import {
   HeaderComponent,
   SearchInputComponent,
   ThemeSettingsComponent,
-  ThemeSwitcherComponent,
   TinyMCEComponent,
 } from './components';
 import { CapitalizePipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
@@ -52,7 +51,7 @@ const NB_MODULES = [
 ];
 
 const COMPONENTS = [
-  ThemeSwitcherComponent,
+
   HeaderComponent,
   FooterComponent,
   SearchInputComponent,
@@ -74,9 +73,9 @@ const PIPES = [
 const NB_THEME_PROVIDERS = [
   ...NbThemeModule.forRoot(
     {
-      name: 'cosmic',
+      name: 'default',
     },
-    [ DEFAULT_THEME, COSMIC_THEME ],
+    [DEFAULT_THEME, COSMIC_THEME],
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
