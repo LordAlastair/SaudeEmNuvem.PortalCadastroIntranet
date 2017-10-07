@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ngx-paciente',
-  templateUrl: './paciente.component.html',
-  styleUrls: ['./paciente.component.scss'],
+  selector: 'ngx-paciente-elements',
+  template: `
+    <router-outlet></router-outlet>
+  `,
 })
+
 export class PacienteComponent {
 }

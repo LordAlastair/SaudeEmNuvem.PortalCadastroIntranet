@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {MENU_ITEMS_PORTAL} from './portal-cadastro-intranet-menu';
+import { Component } from '@angular/core';
+import { MENU_ITEMS_PORTAL } from './portal-cadastro-intranet-menu';
 
 @Component({
   selector: 'ngx-portal-cadastro-intranet',
