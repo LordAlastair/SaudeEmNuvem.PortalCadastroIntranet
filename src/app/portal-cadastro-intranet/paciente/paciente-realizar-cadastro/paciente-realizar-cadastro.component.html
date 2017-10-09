@@ -1,3 +1,31 @@
-<p>
-  paciente-realizar-cadastro works!
-</p>
+<div class="row">
+  <div class="col-lg-6">
+    <form [formGroup]="myForm" (ngSubmit)="register(myForm)">
+      <nb-card>
+        <nb-card-header>Dados Pessoais</nb-card-header>
+        <nb-card-body>
+          <div class="input-group">
+            <input type="text" placeholder="Nome" class="form-control" name="nome" formControlName="nome" required minlength="3" maxlength="50"/>
+          </div>
+          <div>
+            <show-errors [control]="myForm.controls.nome"></show-errors>
+          </div>
+          <div class="input-group">
+            <input type="text" placeholder="CPF" class="form-control" name="cpf" formControlName="cpf" required minlength="11" maxlength="11"/>
+          </div>
+          <div>
+            <show-errors [control]="myForm.controls.cpf"></show-errors>
+          </div>
+          <div class="input-group">
+            <input type="text" placeholder="Data de Nascimento" class="form-control" name="nascimento" formControlName="nascimento" required nascimento />
+          </div>
+          <div>
+            <show-errors [control]="myForm.controls.nascimento"></show-errors>
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+          <button type="button" (click)="printMyForm()" class="btn btn-primary">Print to console</button>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </div>
+</div>

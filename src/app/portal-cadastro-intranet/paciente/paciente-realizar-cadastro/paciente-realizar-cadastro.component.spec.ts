@@ -11,7 +11,7 @@ describe('PacienteRealizarCadastroComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacienteRealizarCadastroComponent ]
+      declarations: [ PacienteRealizarCadastroComponent ],
     })
     .compileComponents();
   }));
