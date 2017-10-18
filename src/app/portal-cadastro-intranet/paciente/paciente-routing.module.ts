@@ -21,7 +21,7 @@ const routes: Routes = [{
         path: 'pesquisar',
         component: PacientePesquisarCadastroComponent,
     }, {
-        path: 'realizar',
+        path: 'cadastrar',
         component: PacienteRealizarCadastroComponent,
     }, {
         path: 'visualizar',

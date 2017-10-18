@@ -13,7 +13,7 @@ export const MENU_ITEMS_PORTAL: NbMenuItem[] = [
     children: [
       {
         title: 'Novo cadastro',
-        link: '/portal-cadastro-intranet/paciente/realizar',
+        link: '/portal-cadastro-intranet/paciente/cadastrar',
         icon: 'ion-person-add',
       },
       {

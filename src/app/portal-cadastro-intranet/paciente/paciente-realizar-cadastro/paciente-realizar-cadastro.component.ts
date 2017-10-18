@@ -1,5 +1,7 @@
 import { FormGroup, FormControl, FormArray, NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { PacienteService } from 'app/portal-cadastro-intranet/_services/paciente.service';
+import { Paciente } from '../../_models/paciente';
 
 @Component({
   selector: 'ngx-paciente-realizar-cadastro',
@@ -7,25 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./paciente-realizar-cadastro.component.scss'],
 })
 export class PacienteRealizarCadastroComponent implements OnInit {
+  form: FormGroup;
 
-  private myForm: FormGroup;
-
-  constructor() { }
-
+  constructor(private pacienteService: PacienteService) { }
   ngOnInit() {
-    this.myForm = new FormGroup({
-      'nome': new FormControl(),
-      'cpf': new FormControl(),
-      'nascimento': new FormControl(),
+    this.form = new FormGroup({
+      nome: new FormControl(),
+      cpf: new FormControl(),
+      sobreNome: new FormControl(),
+      cns: new FormControl(),
+      nascimento: new FormControl(),
     });
   }
 
-  printMyForm() {
-    console.log(this.myForm);
-  }
-
-  register(myForm: NgForm) {
-    console.log('Registration successful.');
-    console.log(myForm.value);
+  register() {
+    let pacientes: any[] = JSON.parse(localStorage.getItem("pacientes") || '[]');
+    console.log(pacientes);
+    pacientes.push(this.form.value);
+    localStorage.setItem("pacientes", JSON.stringify(pacientes));
   }
 }
