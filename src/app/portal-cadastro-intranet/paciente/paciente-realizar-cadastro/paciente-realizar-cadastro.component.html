@@ -27,12 +27,14 @@
         <div>
           <show-errors [control]="form.controls.cpf"></show-errors>
         </div>
-        <div class="input-group" >
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary btn-icon" (click)="d.toggle()">
+              <i class="ion-android-calendar"></i>
+            </button>
+          </span>
           <input class="form-control " placeholder="Data de Nascimento" name="nascimento" ngbDatepicker #d="ngbDatepicker" formControlName="nascimento"
-            (focus)="d.open()" (click)="d.open()" required>
-          <button class="input-group-addon" (click)="d.toggle()" type="button">
-            <span class="fa fa-calendar"></span>
-          </button>
+          (focus)="d.open()" (click)="d.open()" required>
         </div>
         <div>
           <show-errors [control]="form.controls.nascimento"></show-errors>
