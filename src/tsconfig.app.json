@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "module": "es2015",
-    "baseUrl": "",
+    "baseUrl": "./",
     "types": [],
     "paths": {
       "@angular/*": [
@@ -11,9 +11,6 @@
       ],
       "@nebular/*": [
         "../node_modules/@nebular/*"
-      ],
-      "rxjs/*": [
-        "../node_modules/rxjs/*"
       ]
     }
   },
