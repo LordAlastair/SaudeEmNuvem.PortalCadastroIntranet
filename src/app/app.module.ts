@@ -19,7 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Imports from dev
 import { ReactiveFormsModule } from '@angular/forms';
-import {ToasterModule, ToasterService, ToasterConfig} from 'angular2-toaster';
+import { ToasterModule, ToasterService, ToasterConfig } from 'angular2-toaster';
 
 
 @NgModule({

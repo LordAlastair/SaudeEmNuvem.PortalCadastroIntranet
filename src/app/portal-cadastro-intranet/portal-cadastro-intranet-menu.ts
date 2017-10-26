@@ -2,7 +2,7 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS_PORTAL: NbMenuItem[] = [
   {
-    title: 'dashboard',
+    title: 'Dashboard',
     icon: 'ion-home',
     link: '/portal-cadastro-intranet/dashboard',
     home: true,
