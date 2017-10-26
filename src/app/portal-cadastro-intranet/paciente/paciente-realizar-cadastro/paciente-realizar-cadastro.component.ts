@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { PacienteService } from 'app/portal-cadastro-intranet/_services/paciente.service';
 import { Paciente } from '../../_models/paciente';
 import { ToasterModule, ToasterService, ToasterConfig, Toast } from 'angular2-toaster';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'ngx-paciente-realizar-cadastro',
@@ -24,7 +24,6 @@ export class PacienteRealizarCadastroComponent implements OnInit {
       nascimento: new FormControl(),
     });
   }
-
 
   register() {
     this.pacienteService.create(this.form.value);

@@ -3,26 +3,35 @@
     <nb-card>
       <nb-card-header>Dados Pessoais</nb-card-header>
       <nb-card-body>
-        <div class="input-group">
-          <input type="text" placeholder="CNS" class="form-control" name="cns" formControlName="cns" required minlength="15" />
+        <div class="input-group" [ngClass]="{'has-warning': form.controls.cns.untouched, 'has-danger': form.controls.cns.invalid && !form.controls.cns.untouched, 'has-success': form.controls.cns.valid}">
+          <input type="text" placeholder="CNS" class="form-control" name="cns" formControlName="cns" required minlength="15"
+            [ngClass]="{'form-control-warning': form.controls.cns.untouched, 'form-control-danger': form.controls.cns.invalid && !form.controls.cns.untouched, 'form-control-success': form.controls.cns.valid}"
+          />
         </div>
         <div>
           <show-errors [control]="form.controls.cns"></show-errors>
         </div>
-        <div class="input-group">
-          <input type="text" placeholder="Nome" class="form-control" name="nome" formControlName="nome" required/>
+        <div class="form-group" [ngClass]="{'has-warning': form.controls.nome.untouched, 'has-danger': form.controls.nome.invalid && !form.controls.nome.untouched, 'has-success': form.controls.nome.valid}">
+          <input type="text" placeholder="Nome" class="form-control" name="nome" formControlName="nome"
+            [ngClass]="{'form-control-warning': form.controls.nome.untouched, 'form-control-danger': form.controls.nome.invalid && !form.controls.nome.untouched, 'form-control-success': form.controls.nome.valid}"
+            required minlength="3" />
         </div>
         <div>
           <show-errors [control]="form.controls.nome"></show-errors>
         </div>
-        <div class="input-group">
-          <input type="text" placeholder="SobreNome" class="form-control" name="sobreNome" formControlName="sobreNome" required/>
+        <div class="input-group" [ngClass]="{'has-warning': form.controls.sobreNome.untouched, 'has-danger': form.controls.sobreNome.invalid && !form.controls.sobreNome.untouched, 'has-success': form.controls.sobreNome.valid}">
+          <input type="text" placeholder="SobreNome" class="form-control" name="sobreNome" formControlName="sobreNome" 
+           [ngClass]="{'form-control-warning': form.controls.sobreNome.untouched, 'form-control-danger': form.controls.sobreNome.invalid && !form.controls.sobreNome.untouched, 'form-control-success': form.controls.sobreNome.valid}"
+           required
+           />
         </div>
         <div>
           <show-errors [control]="form.controls.sobreNome"></show-errors>
         </div>
-        <div class="input-group">
-          <input type="text" placeholder="CPF" class="form-control" name="cpf" formControlName="cpf" required/>
+        <div class="input-group"  [ngClass]="{'has-warning': form.controls.cpf.untouched, 'has-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'has-success': form.controls.cpf.valid}">
+          <input type="text" placeholder="CPF" class="form-control" name="cpf" formControlName="cpf"
+            [ngClass]="{'form-control-warning': form.controls.cpf.untouched, 'form-control-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'form-control-success': form.controls.cpf.valid}"
+            required/>
         </div>
         <div>
           <show-errors [control]="form.controls.cpf"></show-errors>
@@ -34,7 +43,7 @@
             </button>
           </span>
           <input class="form-control " placeholder="Data de Nascimento" name="nascimento" ngbDatepicker #d="ngbDatepicker" formControlName="nascimento"
-          (focus)="d.open()" (click)="d.open()" required>
+            (focus)="d.open()" (click)="d.open()" required>
         </div>
         <div>
           <show-errors [control]="form.controls.nascimento"></show-errors>
