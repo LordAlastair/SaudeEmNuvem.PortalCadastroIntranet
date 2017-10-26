@@ -36,14 +36,16 @@
         <div>
           <show-errors [control]="form.controls.cpf"></show-errors>
         </div>
-        <div class="input-group">
-          <span class="input-group-btn">
+        <div class="input-group"  [ngClass]="{'has-warning': form.controls.nascimento.untouched, 'has-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'has-success': form.controls.nascimento.valid}" >
+          <span class="input-group-btn" >
             <button type="button" class="btn btn-primary btn-icon" (click)="d.toggle()">
               <i class="ion-android-calendar"></i>
             </button>
           </span>
           <input class="form-control " placeholder="Data de Nascimento" name="nascimento" ngbDatepicker #d="ngbDatepicker" formControlName="nascimento"
-            (focus)="d.open()" (click)="d.open()" required>
+            (focus)="d.open()" (click)="d.open()"
+            [ngClass]="{'form-control-warning': form.controls.nascimento.untouched, 'form-control-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'form-control-success': form.controls.nascimento.valid}"
+             required>
         </div>
         <div>
           <show-errors [control]="form.controls.nascimento"></show-errors>

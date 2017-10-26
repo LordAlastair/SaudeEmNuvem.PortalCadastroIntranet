@@ -26,13 +26,21 @@ export class PacienteRealizarCadastroComponent implements OnInit {
   }
 
   register() {
-    this.pacienteService.create(this.form.value);
+    if (this.form.valid) {
+      this.pacienteService.create(this.form.value);
 
-    const toast: Toast = {
-      type: 'success',
-      title: 'Here is a Toast Title',
-      body: 'Here is a Toast Body',
-    };
-    this.toasterService.pop(toast);
+      const toast: Toast = {
+        type: 'success',
+        body: this.form.value.nome + ' ' + this.form.value.sobreNome + ' ' + 'cadastrado com sucesso',
+      };
+      this.toasterService.pop(toast);
+    } else {
+      const toast: Toast = {
+        type: 'error',
+        title: 'Formulário invalido',
+        body: 'Termine de preencher os campos e ajuste os erros',
+      };
+      this.toasterService.pop(toast);
+    }
   }
 }
