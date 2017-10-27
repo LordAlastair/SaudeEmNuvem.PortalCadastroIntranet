@@ -4,6 +4,8 @@ import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.comp
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PortalRoutingModule } from './portal-cadastro-intranet-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
+import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatePTParserFormatter } from './_services/NgbDatePTParserFormatter'
 
 const COMPONENTS = [
   PortalCadastroIntranetComponent,
@@ -18,6 +20,7 @@ const COMPONENTS = [
   declarations: [
     ...COMPONENTS,
   ],
+  providers: [{provide: NgbDateParserFormatter, useClass: NgbDatePTParserFormatter}],
 })
 
 export class PortalCadastroIntranetModule {

@@ -4,16 +4,24 @@ import { PacienteService } from 'app/portal-cadastro-intranet/_services/paciente
 import { Paciente } from '../../_models/paciente';
 import { ToasterModule, ToasterService, ToasterConfig, Toast } from 'angular2-toaster';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { CustomDatepickerI18n, I18n } from '../../_services/CustomDatepickerI18n';
+
 
 @Component({
   selector: 'ngx-paciente-realizar-cadastro',
   templateUrl: './paciente-realizar-cadastro.component.html',
   styleUrls: ['./paciente-realizar-cadastro.component.scss'],
+  providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],
 })
+
 export class PacienteRealizarCadastroComponent implements OnInit {
   form: FormGroup;
+  // Opções do calendario
+  currentYear = new Date().getFullYear();
 
   constructor(private pacienteService: PacienteService, private toasterService: ToasterService) { }
+
   ngOnInit() {
     this.form = new FormGroup({
       codigo: new FormControl(),
