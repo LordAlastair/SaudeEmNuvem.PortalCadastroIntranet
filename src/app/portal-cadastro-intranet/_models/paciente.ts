@@ -1,8 +1,8 @@
 export interface Paciente {
-    codigo: number;
+    codigo: string;
     nome: string;
     sobreNome: string;
     nascimento: Date;
-    cns: string;
-    cpf: string;
+    cns?: string;
+    cpf?: string;
 }

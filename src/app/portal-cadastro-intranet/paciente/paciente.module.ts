@@ -5,6 +5,8 @@ import { PacienteRoutingModule, routedComponents } from './paciente-routing.modu
 import { ShowErrorsComponent } from './validators/show-errors.component';
 import { DataNascimentoValidatorDirective } from './validators/data-nascimento-validator.directive';
 import { PacienteService } from '../_services/paciente.service';
+import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { CustomDatepickerI18n, I18n } from '../_services/CustomDatepickerI18n';
 
 @NgModule({
     imports: [
@@ -19,6 +21,7 @@ import { PacienteService } from '../_services/paciente.service';
     ],
     providers: [
         PacienteService,
+        [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],
     ],
 })
 export class PacienteModule { }

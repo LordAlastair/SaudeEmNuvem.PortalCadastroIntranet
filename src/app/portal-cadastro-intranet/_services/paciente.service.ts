@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Paciente } from '../_models/paciente';
 
-
 @Injectable()
 export class PacienteService {
     constructor() { }
