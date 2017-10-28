@@ -3,21 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { PacienteService } from 'app/portal-cadastro-intranet/_services/paciente.service';
 import { Paciente } from '../../_models/paciente';
 import { ToasterService, Toast } from 'angular2-toaster';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-paciente-realizar-cadastro',
   templateUrl: './paciente-realizar-cadastro.component.html',
   styleUrls: ['./paciente-realizar-cadastro.component.scss'],
- // providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],
 })
 
 export class PacienteRealizarCadastroComponent implements OnInit {
   form: FormGroup;
+  public mask = [/[1-9]/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
 
   constructor(
     private pacienteService: PacienteService,
     private toasterService: ToasterService,
     private fb: FormBuilder,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class PacienteRealizarCadastroComponent implements OnInit {
         body: this.form.value.nome + ' ' + this.form.value.sobreNome + ' ' + 'cadastrado com sucesso',
       };
       this.toasterService.pop(toast);
+      this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar']);
     } else {
       const toast: Toast = {
         type: 'error',

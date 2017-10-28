@@ -7,17 +7,23 @@ import { DataNascimentoValidatorDirective } from './validators/data-nascimento-v
 import { PacienteService } from '../_services/paciente.service';
 import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { CustomDatepickerI18n, I18n } from '../_services/CustomDatepickerI18n';
+import { CpfPipe } from '../_pipe/cpf.pipe';
+import { TextMaskModule } from 'angular2-text-mask';
+import { ValidatorsModule } from 'ngx-brazilian-helpers';
 
 @NgModule({
     imports: [
         ThemeModule,
         PacienteRoutingModule,
         Ng2SmartTableModule,
+        TextMaskModule,
+        ValidatorsModule,
     ],
     declarations: [
         ...routedComponents,
         ShowErrorsComponent,
         DataNascimentoValidatorDirective,
+        CpfPipe,
     ],
     providers: [
         PacienteService,

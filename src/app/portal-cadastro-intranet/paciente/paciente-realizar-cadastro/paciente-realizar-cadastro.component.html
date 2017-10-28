@@ -24,9 +24,11 @@
         <div>
           <show-errors [control]="form.controls.sobreNome"></show-errors>
         </div>
-        <div class="input-group" [ngClass]="{'has-warning': form.controls.cpf.untouched, 'has-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'has-success': form.controls.cpf.valid}">
-          <input type="text" placeholder="CPF" class="form-control" name="cpf" formControlName="cpf" [ngClass]="{'form-control-warning': form.controls.cpf.untouched, 'form-control-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'form-control-success': form.controls.cpf.valid}"
-            required/>
+        <div class="input-group"
+          [ngClass]="{'has-warning': form.controls.cpf.untouched, 'has-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'has-success': form.controls.cpf.valid}">
+          <input type="text" placeholder="CPF" class="form-control" name="cpf" formControlName="cpf"
+            [ngClass]="{'form-control-warning': form.controls.cpf.untouched, 'form-control-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'form-control-success': form.controls.cpf.valid}"
+            [textMask]="{mask: mask}" cpf required/>
         </div>
         <div>
           <show-errors [control]="form.controls.cpf"></show-errors>
@@ -38,11 +40,9 @@
               <i class="ion-android-calendar"></i>
             </button>
           </span>
-          <input class="form-control " placeholder="Data de Nascimento" name="nascimento" formControlName="nascimento"
-            ngbDatepicker #d="ngbDatepicker" 
-            [ngClass]="{'form-control-warning': form.controls.nascimento.untouched, 'form-control-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'form-control-success': form.controls.nascimento.valid}"
-            (focus)="d.open()" (click)="d.open()"
-            required>
+          <input class="form-control " placeholder="Data de Nascimento" name="nascimento" formControlName="nascimento" ngbDatepicker
+            #d="ngbDatepicker" [ngClass]="{'form-control-warning': form.controls.nascimento.untouched, 'form-control-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'form-control-success': form.controls.nascimento.valid}"
+            (focus)="d.open()" (click)="d.open()" required>
         </div>
         <div>
           <show-errors [control]="form.controls.nascimento"></show-errors>
