@@ -4,15 +4,16 @@ import { AbstractControlDirective, AbstractControl } from '@angular/forms';
 @Component({
     selector: 'show-errors',
     template: `
-    <ul *ngIf="shouldShowErrors()">
-      <li style="color: red" *ngFor="let error of listOfErrors()">{{error}}</li>
-    </ul>
+        <div class="alert alert-danger" role="alert" *ngIf="shouldShowErrors()">
+            <i *ngFor="let error of listOfErrors()">{{error}}</i>
+        </div>
   `,
 })
 export class ShowErrorsComponent {
 
     private static readonly errorMessages = {
         'required': () => 'Este campo é obrigatório',
+        'cpf': () => 'CPF não é válido',
         'minlength': (params) => 'O Minimo de caracteres desse campo é: ' + params.requiredLength,
         'maxlength': (params) => 'O Máximo de caracteres desse campo é: ' + params.requiredLength,
         'pattern': (params) => 'O padrão para esse campo é: ' + params.requiredPattern,
