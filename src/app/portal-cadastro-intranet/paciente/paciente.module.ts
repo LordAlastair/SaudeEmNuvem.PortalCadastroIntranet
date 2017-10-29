@@ -6,10 +6,10 @@ import { ShowErrorsComponent } from './validators/show-errors.component';
 import { DataNascimentoValidatorDirective } from './validators/data-nascimento-validator.directive';
 import { PacienteService } from '../_services/paciente.service';
 import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
-import { CustomDatepickerI18n, I18n } from '../_services/CustomDatepickerI18n';
 import { CpfPipe } from '../_pipe/cpf.pipe';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ValidatorsModule } from 'ngx-brazilian-helpers';
+import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
     imports: [
@@ -18,6 +18,8 @@ import { ValidatorsModule } from 'ngx-brazilian-helpers';
         Ng2SmartTableModule,
         TextMaskModule,
         ValidatorsModule,
+        DatepickerModule.forRoot(),
+        BsDatepickerModule.forRoot(),
     ],
     declarations: [
         ...routedComponents,
@@ -27,7 +29,6 @@ import { ValidatorsModule } from 'ngx-brazilian-helpers';
     ],
     providers: [
         PacienteService,
-        [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],
     ],
 })
 export class PacienteModule { }

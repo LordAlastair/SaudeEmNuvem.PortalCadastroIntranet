@@ -11,7 +11,7 @@ export class CpfPipe implements PipeTransform {
                     .concat('.')
                     .concat(value.substring(6, 9))
                     .concat('-')
-                    .concat(value.substring(9, 11))
+                    .concat(value.substring(9, 11));
             }
         }
         return value;
