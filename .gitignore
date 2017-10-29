@@ -30,6 +30,7 @@
 npm-debug.log
 testem.log
 /typings
+/docs
 
 # e2e
 /e2e/*.js
@@ -38,4 +39,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-.vscode/
