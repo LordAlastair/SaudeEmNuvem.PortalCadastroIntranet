@@ -39,7 +39,8 @@ export class PacienteRealizarCadastroComponent implements OnInit {
       codigo: [],
       nome: [],
       cpf: [],
-      sobreNome: [],
+      sexo: [],
+      apelido: [],
       cns: [],
       nascimento: [],
     });
@@ -55,7 +56,7 @@ export class PacienteRealizarCadastroComponent implements OnInit {
 
       const toast: Toast = {
         type: 'success',
-        body: this.form.value.nome + ' ' + this.form.value.sobreNome + ' ' + 'cadastrado com sucesso',
+        body: this.form.value.nome + ' ' + this.form.value.apelido + ' ' + 'cadastrado com sucesso',
       };
       this.toasterService.pop(toast);
       this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar']);
@@ -71,8 +72,12 @@ export class PacienteRealizarCadastroComponent implements OnInit {
 
   // Validação CNS
   private validaCNS(vlrCNS: String) {
-    // remover a mascara
+    if (vlrCNS === null || vlrCNS === '') {
+      return false;
+    }
+
     vlrCNS = vlrCNS.replace(/\s+/g, '');
+
     if ((vlrCNS.length) !== 15) {
       return false;
     }

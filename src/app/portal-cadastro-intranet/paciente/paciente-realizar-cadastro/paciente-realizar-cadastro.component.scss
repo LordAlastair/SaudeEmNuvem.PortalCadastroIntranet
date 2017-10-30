@@ -7,6 +7,15 @@
     overflow: visible;
   }
 
+  .form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+  }
+  
+  nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+  }
+  
+
   .input-group {
     margin-bottom: 1rem;
   }
@@ -18,12 +27,6 @@
     .custom-control {
       margin-left: 1rem;
     }
-  }
-
-  .demo-checkboxes {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
   }
 
   .demo-radio {
@@ -41,36 +44,6 @@
   .demo-checkboxes-radio {
     display: flex;
     justify-content: space-between;
-  }
-
-  .demo-rating {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .star {
-    font-size: 1.5rem;
-    color: nb-theme(color-fg);
-  }
-
-  .filled {
-    color: nb-theme(color-fg);
-  }
-
-  // TODO: Replace with the card header styles mixin
-  .rating-header {
-    line-height: 2rem;
-    font-size: 1.25rem;
-    font-family: nb-theme(font-secondary);
-    font-weight: nb-theme(font-weight-bolder);
-    color: nb-theme(color-fg-heading);
-  }
-
-  .current-rate {
-    font-size: 1.5rem;
-    padding-left: 1rem;
-    color: nb-theme(color-fg-heading);
   }
 
   .full-name-inputs {
@@ -105,17 +78,6 @@
 
   .form-group label {
     padding: 0 0 0.75rem;
-  }
-
-  ngb-rating {
-    outline: none;
-  }
-
-  ngb-rating i {
-    color: nb-theme(color-success);
-    @include nb-for-theme(cosmic) {
-      color: nb-theme(color-primary);
-    }
   }
 
   @include media-breakpoint-down(xs) {
@@ -234,16 +196,26 @@
       margin-right: 1rem;
     }
 
-    h1, h2, h3, h4, h5, h6 {
-      margin-bottom: 0.25rem;
+  .pagination-container {
+    margin-right: 1rem;
+
+    .btn-group > .btn {
+      padding-left: 1.125rem;
+      padding-right: 1.125rem;
     }
   }
 
-  .text-link {
-    color: nb-theme(link-color);
+
+  .toggle-types {
+    .btn-toggle-radio-group {
+      margin-bottom: 1rem;
+    }
   }
 
-  .bg-link {
-    background: nb-theme(link-color);
+  @include media-breakpoint-down(sm) {
+    .btn {
+      padding: 0.75rem 0.7rem;
+    }
   }
+}
 }

@@ -21,7 +21,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 
 export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOptions, realBackend: XHRBackend) {
     // array in local storage for registered pacientes
-    let pacientes: any[] = JSON.parse(localStorage.getItem('pacientes')) || [];
+    const pacientes: any[] = JSON.parse(localStorage.getItem('pacientes')) || [];
 
     // configure fake backend
     backend.connections.subscribe((connection: MockConnection) => {
@@ -31,23 +31,23 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
             // authenticate
             if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
                 // get parameters from post request
-                let params = JSON.parse(connection.request.getBody());
+                const params = JSON.parse(connection.request.getBody());
 
                 // find if any user matches login credentials
-                let filteredPacientes = pacientes.filter(user => {
+                const filteredPacientes = pacientes.filter(user => {
                     return user.username === params.username && user.password === params.password;
                 });
 
                 if (filteredPacientes.length) {
                     // if login details are valid return 200 OK with user details and fake jwt token
-                    let paciente = filteredPacientes[0];
+                    const paciente = filteredPacientes[0];
                     connection.mockRespond(new Response(new ResponseOptions({
                         status: 200,
                         body: {
                             codigo: paciente.codigo,
                             nome: paciente.nome,
-                            sobreNome: paciente.firstName,
-                            token: 'fake-jwt-token'
+                            apelido: paciente.firstName,
+                            token: 'fake-jwt-token',
                         },
                     })));
                 } else {
