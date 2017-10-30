@@ -1,7 +1,8 @@
 import { Http } from '@angular/http';
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { PacienteService } from '../../_services/paciente.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -49,17 +50,13 @@ export class PacientePesquisarCadastroComponent {
 
   source: LocalDataSource;
 
-  constructor(private service: PacienteService) {
+  constructor(private service: PacienteService, private router: Router) {
     this.source = new LocalDataSource();
     const data = this.service.getAll();
     this.source.load(data);
   }
 
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
+  selecionarPaciente(event): void {
+    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.codigo}]);
   }
 }
