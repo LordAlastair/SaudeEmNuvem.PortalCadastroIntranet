@@ -21,6 +21,9 @@ const routes: Routes = [{
         path: 'pesquisar',
         component: PacientePesquisarCadastroComponent,
     }, {
+        path: 'pesquisar/:codigo',
+        component: PacientePesquisarCadastroComponent,
+    }, {
         path: 'cadastrar',
         component: PacienteRealizarCadastroComponent,
     }, {
