@@ -2,7 +2,6 @@ import { Http } from '@angular/http';
 import { Component } from '@angular/core';
 import { PacienteService } from '../../_services/paciente.service';
 import { LocalDataSource } from 'ng2-smart-table';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -29,7 +28,7 @@ export class PacientePesquisarCadastroComponent {
         title: 'Nome',
         type: 'string',
       },
-      Apelido: {
+      apelido: {
         title: 'apelido',
         type: 'string',
       },
@@ -53,7 +52,7 @@ export class PacientePesquisarCadastroComponent {
   constructor(private service: PacienteService) {
     this.source = new LocalDataSource();
     const data = this.service.getAll();
-    this.source.load(data)
+    this.source.load(data);
   }
 
   onDeleteConfirm(event): void {
