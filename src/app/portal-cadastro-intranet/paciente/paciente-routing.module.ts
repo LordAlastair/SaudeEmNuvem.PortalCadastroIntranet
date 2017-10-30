@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { PacienteComponent } from './paciente.component';
-// tslint:disable-next-line:max-line-length
+
 import { PacienteAlterarCadastroComponent } from './paciente-alterar-cadastro/paciente-alterar-cadastro.component';
 // tslint:disable-next-line:max-line-length
 import { PacientePesquisarCadastroComponent } from './paciente-pesquisar-cadastro/paciente-pesquisar-cadastro.component';
@@ -21,7 +21,10 @@ const routes: Routes = [{
         path: 'pesquisar',
         component: PacientePesquisarCadastroComponent,
     }, {
-        path: 'realizar',
+        path: 'pesquisar/:codigo',
+        component: PacientePesquisarCadastroComponent,
+    }, {
+        path: 'cadastrar',
         component: PacienteRealizarCadastroComponent,
     }, {
         path: 'visualizar',

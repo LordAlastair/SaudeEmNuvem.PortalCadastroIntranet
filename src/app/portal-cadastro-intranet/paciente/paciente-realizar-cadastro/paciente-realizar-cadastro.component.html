@@ -1,3 +1,67 @@
-<p>
-  paciente-realizar-cadastro works!
-</p>
+<div class="col-12 col-md-12">
+  <form [formGroup]="form" (ngSubmit)="register(form)">
+    <nb-card>
+      <nb-card-header>Dados Pessoais</nb-card-header>
+      <nb-card-body>
+        <div> 
+          <show-errors [control]="form.controls.nome"></show-errors>
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Nome" class="form-control" name="nome" formControlName="nome" [ngClass]="{'form-control-warning': form.controls.nome.untouched, 'form-control-danger': form.controls.nome.invalid && !form.controls.nome.untouched, 'form-control-success': form.controls.nome.valid}"
+            required minlength="3" />
+        </div>
+        <div>
+          <show-errors [control]="form.controls.apelido"></show-errors>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="Apelido" class="form-control" name="apelido" formControlName="apelido" [ngClass]="{'form-control-warning': form.controls.apelido.untouched, 'form-control-danger': form.controls.apelido.invalid && !form.controls.apelido.untouched, 'form-control-success': form.controls.apelido.valid}"
+            required />
+        </div>
+        <div>
+          <show-errors [control]="form.controls.cpf"></show-errors>
+        </div>
+        <div class="input-group">
+          <input type="text" placeholder="CPF" class="form-control" name="cpf" formControlName="cpf" [ngClass]="{'form-control-warning': form.controls.cpf.untouched, 'form-control-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'form-control-success': form.controls.cpf.valid}"
+            [textMask]="{mask: maskCpf}" cpf required/>
+        </div>
+
+        <!-- <div class="input-group" [ngClass]="{'has-warning': form.controls.nascimento.untouched, 'has-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'has-success': form.controls.nascimento.valid}">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary btn-icon" (click)="d.toggle()">
+              <i class="ion-android-calendar"></i>
+            </button>
+          </span>
+          <input class="form-control " placeholder="Data de Nascimento" name="nascimento" formControlName="nascimento" ngbDatepicker #d="ngbDatepicker"
+           [ngClass]="{'form-control-warning': form.controls.nascimento.untouched, 'form-control-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'form-control-success': form.controls.nascimento.valid}"
+           
+            (focus)="d.open()" (click)="d.open()" required>
+        </div> -->
+
+        <div>
+          <show-errors [control]="form.controls.nascimento"></show-errors>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control " placeholder="Data de Nascimento" name="nascimento" formControlName="nascimento" bsDatepicker
+              #dp="bsDatepicker" [bsConfig]="dpConfig" [ngClass]="{'form-control-warning': form.controls.nascimento.untouched, 'form-control-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'form-control-success': form.controls.nascimento.valid}"
+              required>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-primary btn-icon" (click)="dp.show() ">
+                <i class="ion-android-calendar"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row show-grid">
+          <div class=" col-md-4">
+            <button type="submit" class="btn btn-primary col-12">Cadastrar Paciente</button>
+          </div>
+          <div class=" col-md-4">
+            <button type="button" class="btn btn-primary col-12">Salvar Pré-cadastro</button>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </form>
+</div>
