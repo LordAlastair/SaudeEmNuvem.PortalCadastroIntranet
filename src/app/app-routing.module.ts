@@ -12,7 +12,7 @@ import {
 const routes: Routes = [
   {
     path: 'portal-cadastro-intranet',
-    loadChildren: 'app/portal-cadastro-intranet/portal-cadastro-intranet.module#PortalComponent',
+    loadChildren: 'app/portal-cadastro-intranet/portal-cadastro-intranet.module#PortalCadastroIntranetModule',
   },
   {
     path: 'auth',

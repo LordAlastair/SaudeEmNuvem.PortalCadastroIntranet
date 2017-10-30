@@ -2,16 +2,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [{
   path: '',
   component: PortalCadastroIntranetComponent,
-  children: [ {
+  children: [{
+    path: 'dashboard',
+    component: DashboardComponent,
+  }, {
     path: 'paciente',
     loadChildren: './paciente/paciente.module#PacienteModule',
   }, {
     path: '',
-    redirectTo: 'paciente',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   }],
 }];
