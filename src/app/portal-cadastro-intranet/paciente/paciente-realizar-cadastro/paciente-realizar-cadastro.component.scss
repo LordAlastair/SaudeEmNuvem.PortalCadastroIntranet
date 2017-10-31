@@ -5,7 +5,12 @@
 @include nb-install-component() {
   nb-card-body {
     overflow: visible;
+    z-index: 0;
   }
+  .bs-datepicker-container{
+    z-index: 1000;
+  }
+  .ui-datepicker { z-index: 10000 !important; }
 
   .form-inline > * {
     margin: 0 1.5rem 1.5rem 0;
@@ -218,4 +223,7 @@
     }
   }
 }
+}
+#error{
+  float: right !important;
 }
