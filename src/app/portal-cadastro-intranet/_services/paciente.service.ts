@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Paciente } from '../_models/paciente';
+import { generateUUID } from '../_util/util';
 
 @Injectable()
 export class PacienteService {
@@ -18,22 +19,25 @@ export class PacienteService {
         return data;
     }
 
+    getById(codigo: number) {
+        const pacientes: any[] = JSON.parse(localStorage.getItem('pacientes') || '[]');
+        return pacientes.find(X => X.codigo === codigo);
+    }
+
+    cadastrarPaciente(paciente): string {
+        const pacientes: any[] = JSON.parse(localStorage.getItem('pacientes') || '[]');
+        paciente.codigo = generateUUID();
+        pacientes.push(paciente);
+        localStorage.setItem('pacientes', JSON.stringify(pacientes));
+        return paciente.codigo;
+    }
+
     create(paciente) {
         const pacientes: any[] = JSON.parse(localStorage.getItem('pacientes') || '[]');
-        paciente.codigo = this.generateUUID();
+        paciente.codigo = generateUUID();
         pacientes.push(paciente);
         localStorage.setItem('pacientes', JSON.stringify(pacientes));
     }
-
-    private generateUUID() {
-        let d = new Date().getTime();
-        const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-          const r = (d + Math.random() * 16) % 16 | 0;
-          d = Math.floor(d / 16);
-          return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-        });
-        return uuid;
-      }
 
     // getById(codigo: number) {
     //     return this.http.get('/api/paciente/');
