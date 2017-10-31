@@ -20,5 +20,4 @@ const COMPONENTS = [
   ],
 })
 
-export class PortalCadastroIntranetModule {
-}
+export class PortalCadastroIntranetModule { }

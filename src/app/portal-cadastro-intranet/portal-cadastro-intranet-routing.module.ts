@@ -14,6 +14,10 @@ const routes: Routes = [{
     path: 'paciente',
     loadChildren: './paciente/paciente.module#PacienteModule',
   }, {
+    path: 'atendimento',
+    loadChildren: './atendimento/atendimento.module#AtendimentoModule',
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
