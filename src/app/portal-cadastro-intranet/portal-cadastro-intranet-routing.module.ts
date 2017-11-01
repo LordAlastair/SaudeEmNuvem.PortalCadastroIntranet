@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 

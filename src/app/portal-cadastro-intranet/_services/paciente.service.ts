@@ -19,7 +19,7 @@ export class PacienteService {
         return data;
     }
 
-    getById(codigo: number) {
+    getById(codigo) {
         const pacientes: any[] = JSON.parse(localStorage.getItem('pacientes') || '[]');
         return pacientes.find(X => X.codigo === codigo);
     }

@@ -1,0 +1,29 @@
+<div *ngIf="atendimentoForm; else elseBlock">
+  <nb-card class="col-md-0">
+    <nb-card-header class="col-md-0">
+      Protocolo
+    </nb-card-header>
+    <nb-card-body class="col-md-0">
+      <blockquote class="blockquote">
+        <p class="mb-0">Código: {{atendimentoForm.codigo}}</p>
+      </blockquote>
+      <blockquote class="blockquote">
+        <p class="mb-0">Paciente: {{atendimentoForm.paciente}}</p>
+      </blockquote>
+      <blockquote class="blockquote">
+        <p class="mb-0">Tipo de atendimento :{{atendimentoForm.tipo}}</p>
+      </blockquote>
+      <blockquote class="blockquote-reverse">
+        <p class="mb-0">{{atendimentoForm.atendente}}</p>
+        <footer class="blockquote-footer">{{atendimentoForm.data}}</footer>
+      </blockquote>
+    </nb-card-body>
+  </nb-card>
+</div>
+<ng-template #elseBlock>
+  <nb-card #elseBlock class="col-md-0">
+    <nb-card-header class="col-md-0">
+      Como você chegou aqui...
+    </nb-card-header>
+  </nb-card>
+</ng-template>

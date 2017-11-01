@@ -3,7 +3,9 @@ import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.comp
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PortalRoutingModule } from './portal-cadastro-intranet-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
-import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { PacienteService } from './_services/paciente.service';
+import { AtendimentoService } from './_services/atendimento.service';
+
 
 const COMPONENTS = [
   PortalCadastroIntranetComponent,
@@ -18,6 +20,10 @@ const COMPONENTS = [
   declarations: [
     ...COMPONENTS,
   ],
+  providers: [
+    PacienteService,
+    AtendimentoService,
+],
 })
 
 export class PortalCadastroIntranetModule { }

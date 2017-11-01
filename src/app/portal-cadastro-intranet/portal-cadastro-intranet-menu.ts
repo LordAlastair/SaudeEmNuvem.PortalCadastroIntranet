@@ -6,8 +6,22 @@ export const MENU_ITEMS_PORTAL: NbMenuItem[] = [
     icon: 'ion-home',
     link: '/portal-cadastro-intranet/dashboard',
     home: true,
-  },
-  {
+  }, {
+    title: 'Atendimento',
+    icon: 'ion-person',
+    children: [
+      // {
+      //   title: 'Protocolos desta Sessão',
+      //   link: '/portal-cadastro-intranet/atendimento/visualizarSessao',
+      //   icon: 'ion-person-add',
+      // },
+      {
+        title: 'Pesquisar Protocolo',
+        link: '/portal-cadastro-intranet/atendimento/pesquisar',
+        icon: 'ion-edit',
+      },
+    ],
+  }, {
     title: 'Pacientes',
     icon: 'ion-person',
     children: [
