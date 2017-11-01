@@ -16,7 +16,7 @@ export class DataNascimentoValidatorDirective implements Validator {
         const isValid = !isNaN(numValue) && numValue >= minYear && numValue <= maxYear;
         const message = {
             'nascimento': {
-                'message': 'A data de nascimento deve ser entre ' + minYear + ' e ' + maxYear,
+                'message': '' + minYear + 'e ' + maxYear,
             },
         };
         return isValid ? null : message;

@@ -5,14 +5,14 @@ import { AbstractControlDirective, AbstractControl } from '@angular/forms';
     selector: 'show-errors',
     template: `
         <div *ngIf="shouldShowErrors()">
-            <label class="text-danger" *ngFor="let error of listOfErrors()">{{error}}</label>
+            <label style='float:right; margin-bottom: 0px;' class="text-danger" *ngFor="let error of listOfErrors()">{{error}}</label>
         </div>
   `,
 })
 export class ShowErrorsComponent {
 
     private static readonly errorMessages = {
-        'required': () => 'Obrigatório',
+        'required': () => '*Obrigatório',
         'cpf': () => 'CPF inválido',
         'minlength': (params) => 'Minimo de caracteres: ' + params.requiredLength,
         'maxlength': (params) => 'Máximo de caracteres: ' + params.requiredLength,

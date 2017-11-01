@@ -1,12 +1,9 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { Paciente } from '../../_models/paciente';
 import { ToasterService, Toast } from 'angular2-toaster';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PacienteService } from '../../_services/paciente.service';
-import { defineLocale } from 'ngx-bootstrap/bs-moment';
-import { ptBr } from 'ngx-bootstrap/locale';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'ngx-paciente-realizar-cadastro',
@@ -14,24 +11,21 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
   styleUrls: ['./paciente-realizar-cadastro.component.scss'],
 })
 
-export class PacienteRealizarCadastroComponent implements OnInit {
+export class PacienteRealizarCadastroComponent implements OnInit, AfterViewInit {
   form: FormGroup;
-  public dpConfig: Partial<BsDatepickerConfig> = new BsDatepickerConfig();
 
-  public maskCpf = [/[1-9]/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
+  public maskCpf = [/[0-9]/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
   public maskCns =
-  [/[1-9]/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+  [/[0-9]/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+  public maskNascimento = [/[0-9]/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
 
   constructor(
     private pacienteService: PacienteService,
     private toasterService: ToasterService,
     private fb: FormBuilder,
     private router: Router,
+    private cd: ChangeDetectorRef,
   ) {
-
-    defineLocale('ptBr', ptBr);
-    this.dpConfig.locale = 'ptBr';
-    this.dpConfig.dateInputFormat = 'L';
   }
 
   ngOnInit() {
@@ -46,20 +40,26 @@ export class PacienteRealizarCadastroComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.cd.detectChanges();
+  }
+
   register() {
     if (this.form.valid) {
       // const ngbDate = this.form.controls.nascimento.value;
       // const paciente: Paciente = this.form.value;
       // paciente.nascimento = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
 
-      this.pacienteService.create(this.form.value);
+      const codigo = this.pacienteService.cadastrarPaciente(this.form.value);
 
       const toast: Toast = {
         type: 'success',
         body: this.form.value.nome + ' ' + this.form.value.apelido + ' ' + 'cadastrado com sucesso',
       };
       this.toasterService.pop(toast);
-      this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar']);
+
+      // this.router.navigate(['/portal-cadastro-intranet/atendimento/cadastro']);
+      this.router.navigate(['/portal-cadastro-intranet/atendimento/cadastro', { codigo: codigo }]);
     } else {
       const toast: Toast = {
         type: 'error',
@@ -68,6 +68,10 @@ export class PacienteRealizarCadastroComponent implements OnInit {
       };
       this.toasterService.pop(toast);
     }
+  }
+
+  cancelar() {
+    this.router.navigate(['/portal-cadastro-intranet/dashboard']);
   }
 
   // Validação CNS

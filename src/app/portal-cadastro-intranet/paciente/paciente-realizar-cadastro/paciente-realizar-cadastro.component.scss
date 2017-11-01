@@ -3,227 +3,34 @@
 @import '~@nebular/theme/styles/global/bootstrap/breakpoints';
 
 @include nb-install-component() {
+  .label.text-danger {
+    float: right initial !important;
+    margin-bottom: 0;
+  }
   nb-card-body {
     overflow: visible;
     z-index: 0;
   }
-  .bs-datepicker-container{
-    z-index: 1000;
-  }
-  .ui-datepicker { z-index: 10000 !important; }
 
-  .form-inline > * {
-    margin: 0 1.5rem 1.5rem 0;
+  // Reduzir a distancia dos labels com os botões
+  label.input-label {
+    margin-bottom: 0;
   }
-  
-  nb-card.inline-form-card nb-card-body {
-    padding-bottom: 0;
-  }
-  
 
   .input-group {
     margin-bottom: 1rem;
   }
 
-  .validation-checkboxes {
-    display: flex;
-    justify-content: space-between;
-
-    .custom-control {
-      margin-left: 1rem;
-    }
-  }
-
-  .demo-radio {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  .demo-disabled-checkbox-radio {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-
-  .demo-checkboxes-radio {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .full-name-inputs {
-    display: flex;
-  }
-
-  .input-group.has-person-icon {
-    position: relative;
-
-    .form-control {
-      padding-left: 3rem;
-    }
-
-    &::before {
-      content: '\F47D';
-      font-family: 'Ionicons';
-      font-size: 2rem;
-      position: absolute;
-      z-index: 100;
-      left: 1rem;
-      top: 0.25rem;
-    }
-  }
-
-  .dropdown {
-    min-width: 7rem;
-  }
-
-  .dropdown-menu {
-    width: auto;
-  }
-
   .form-group label {
-    padding: 0 0 0.75rem;
+    padding: 0 0 0.15rem;
   }
 
-  @include media-breakpoint-down(xs) {
-    button:not(.btn-icon) {
-      padding: 0.75rem 1rem;
-      font-size: 0.75rem;
-      margin-bottom: 1px;
-    }
-  }
-  .font-secondary .font-header .name {
-    font-size: 4.5rem;
-    line-height: 4rem;
-    font-weight: nb-theme(font-weight-bold);
-  }
+  // datepicker atras dos inputs...
+  // .bs-datepicker-container {
+  //   z-index: 1000;
+  // }
 
-  .font-main .font-header .name {
-    font-size: 3rem;
-    font-weight: nb-theme(font-weight-bold);
-  }
-
-  .font-row {
-    &:first-child {
-      margin-bottom: 2rem;
-    }
-
-    .header {
-      align-items: baseline;
-    }
-
-    p {
-      margin: 0;
-    }
-  }
-
-  .headings-card {
-    nb-card-body {
-      padding: 1rem 1.25rem;
-    }
-    .header {
-      padding-bottom: 0.675rem;
-      margin-bottom: 0.675rem;
-
-      &:last-child {
-        padding-bottom: 0;
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  .header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid nb-theme(separator);
-    color: nb-theme(color-fg-heading);
-
-    &:last-child {
-      border-bottom: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    div:first-child {
-      flex: 2;
-      -ms-flex: 2 1 auto;
-      line-height: 1;
-      align-items: flex-end;
-
-      h1, h2, h3, h4, h5, h6 {
-        margin-bottom: 0;
-      }
-    }
-
-    .variants {
-      flex: 1;
-      -ms-flex: 1 1 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-
-      span {
-        padding-left: 1rem;
-        font-size: 1.5rem;
-      }
-    }
-
-    .detail {
-      flex: 1;
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      color: nb-theme(color-fg);
-    }
-  }
-
-  .colors {
-    display: flex;
-    flex-direction: column;
-
-    .item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.25rem;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    .color {
-      width: 86px;
-      height: 60px;
-      border-top-right-radius: 1rem;
-      border-bottom-left-radius: 1rem;
-      margin-right: 1rem;
-    }
-
-  .pagination-container {
-    margin-right: 1rem;
-
-    .btn-group > .btn {
-      padding-left: 1.125rem;
-      padding-right: 1.125rem;
-    }
-  }
-
-
-  .toggle-types {
-    .btn-toggle-radio-group {
-      margin-bottom: 1rem;
-    }
-  }
-
-  @include media-breakpoint-down(sm) {
-    .btn {
-      padding: 0.75rem 0.7rem;
-    }
-  }
-}
-}
-#error{
-  float: right !important;
+  // .ui-datepicker {
+  //   z-index: 10000 !important;
+  // }
 }
