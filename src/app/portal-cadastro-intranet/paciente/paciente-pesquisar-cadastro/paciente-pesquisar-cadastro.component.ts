@@ -37,10 +37,6 @@ export class PacientePesquisarCadastroComponent {
         title: 'Data Nascimento',
         type: 'Date',
       },
-      cns: {
-        title: 'CNS',
-        type: 'string',
-      },
       cpf: {
         title: 'CPF',
         type: 'string',
