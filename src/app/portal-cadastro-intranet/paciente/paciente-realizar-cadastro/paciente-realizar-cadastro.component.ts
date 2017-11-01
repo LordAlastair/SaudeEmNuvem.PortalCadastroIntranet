@@ -1,17 +1,17 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { Paciente } from '../../_models/paciente';
 import { ToasterService, Toast } from 'angular2-toaster';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PacienteService } from '../../_services/paciente.service';
 
 @Component({
-  selector: 'ngx-paciente-realizar-cadastro',
   templateUrl: './paciente-realizar-cadastro.component.html',
   styleUrls: ['./paciente-realizar-cadastro.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class PacienteRealizarCadastroComponent implements OnInit, AfterViewInit {
+export class PacienteRealizarCadastroComponent implements OnInit {
   form: FormGroup;
 
   public maskCpf = [/[0-9]/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
@@ -40,16 +40,8 @@ export class PacienteRealizarCadastroComponent implements OnInit, AfterViewInit 
     });
   }
 
-  ngAfterViewInit() {
-    this.cd.detectChanges();
-  }
-
   register() {
     if (this.form.valid) {
-      // const ngbDate = this.form.controls.nascimento.value;
-      // const paciente: Paciente = this.form.value;
-      // paciente.nascimento = new Date(ngbDate.year, ngbDate.month - 1, ngbDate.day);
-
       const codigo = this.pacienteService.cadastrarPaciente(this.form.value);
 
       const toast: Toast = {
