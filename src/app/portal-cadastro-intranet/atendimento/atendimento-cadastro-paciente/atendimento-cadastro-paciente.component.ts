@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AtendimentoService } from '/services/atendimento.service';
+import { AtendimentoService } from '../../_services/atendimento.service';
 
 @Component({
     templateUrl: 'atendimento-cadastro-paciente.component.html',
