@@ -20,13 +20,8 @@ export class PacienteRealizarCadastroComponent implements OnInit {
   public maskNascimento = [/[0-9]/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
 
   constructor(
-    private pacienteService: PacienteService,
-    private toasterService: ToasterService,
-    private fb: FormBuilder,
-    private router: Router,
-    private cd: ChangeDetectorRef,
-  ) {
-  }
+    private pacienteService: PacienteService, private toasterService: ToasterService,
+    private fb: FormBuilder, private router: Router, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -43,13 +38,12 @@ export class PacienteRealizarCadastroComponent implements OnInit {
   register() {
     if (this.form.valid) {
       const codigo = this.pacienteService.cadastrarPaciente(this.form.value);
-
       const toast: Toast = {
         type: 'success',
         body: this.form.value.nome + ' ' + this.form.value.apelido + ' ' + 'cadastrado com sucesso',
       };
       this.toasterService.pop(toast);
-      this.router.navigate(['/portal-cadastro-intranet/atendimento/cadastro', { codigo: codigo }]);
+      this.router.navigate(['/portal-cadastro-intranet/atendimento/pesquisar', { codigo: codigo }]);
     } else {
       const toast: Toast = {
         type: 'error',
@@ -59,6 +53,25 @@ export class PacienteRealizarCadastroComponent implements OnInit {
       this.toasterService.pop(toast);
     }
   }
+  // register() {
+  //   if (this.form.valid) {
+  //     const codigo = this.pacienteService.cadastrarPaciente(this.form.value);
+
+  //     const toast: Toast = {
+  //       type: 'success',
+  //       body: this.form.value.nome + ' ' + this.form.value.apelido + ' ' + 'cadastrado com sucesso',
+  //     };
+  //     this.toasterService.pop(toast);
+  //     this.router.navigate(['/portal-cadastro-intranet/atendimento/cadastro', { codigo: codigo }]);
+  //   } else {
+  //     const toast: Toast = {
+  //       type: 'error',
+  //       title: 'Formulário invalido',
+  //       body: 'Termine de preencher os campos e ajuste os erros',
+  //     };
+  //     this.toasterService.pop(toast);
+  //   }
+  // }
 
   cancelar() {
     this.router.navigate(['/portal-cadastro-intranet/dashboard']);

@@ -1,13 +1,35 @@
-import { Injectable } from '@angular/core';
-import { Paciente } from '../_models/paciente';
-import { generateUUID } from '../_util/util';
+import { Injectable, NgZone, OnInit } from '@angular/core';
+
+import { PouchDBService } from '../_services/pouchdb.service';
+
+const uuidv4 = require('uuid/v4');
 
 @Injectable()
-export class PacienteService {
+export class PacienteService implements OnInit {
     private pacientes;
+    private _db;
 
-    constructor() {
+    constructor(private database: PouchDBService, private zone: NgZone) {
         this.pacientes = JSON.parse(localStorage.getItem('pacientes') || '[]');
+    }
+
+    public ngOnInit() {
+        // this.database.sync('http://localhost:4984/portalsus');
+        // this.database.getChangeListener().subscribe(data => {
+        //     for (let i = 0; i < data.change.docs.length; i++) {
+        //         this.zone.run(() => {
+        //             this.pacientes.push(data.change.docs[i]);
+        //         });
+        //     }
+        // });
+        // this.database.fetch().then(result => {
+        //     this.pacientes = [];
+        //     for (let i = 0; i < result.rows.length; i++) {
+        //         this.pacientes.push(result.rows[i].doc);
+        //     }
+        // }, error => {
+        //     console.error(error);
+        // });
     }
 
     getData(): Promise<any[]> {
@@ -27,21 +49,21 @@ export class PacienteService {
     }
 
     cadastrarPaciente(paciente): string {
-        paciente.codigo = this.geradorCNSValido();
-        this.pacientes.push(paciente);
-        this.salvarDadosLocalStore();
+        paciente.codigo = uuidv4();
+        paciente.cns = this.geradorCNSValido();
+        this.database.put(paciente.codigo, paciente);
         return paciente.codigo;
     }
 
-    create(paciente) {
-        paciente.codigo = this.geradorCNSValido();
-        this.pacientes.push(paciente);
-        this.salvarDadosLocalStore();
-    }
+    // // create(paciente) {
+    // //     paciente.codigo = this.geradorCNSValido();
+    // //     this.pacientes.push(paciente);
+    // //     this.salvarDadosLocalStore();
+    // // }
 
-    salvarDadosLocalStore() {
-        localStorage.setItem('pacientes', JSON.stringify(this.pacientes));
-    }
+    // salvarDadosLocalStore() {
+    //     localStorage.setItem('pacientes', JSON.stringify(this.pacientes));
+    // }
 
     private geradorCNSValido() {
         let gera0 = Math.floor((Math.random() * 3) + 1);
@@ -92,20 +114,4 @@ export class PacienteService {
         }
         return cns;
     }
-
-    // getById(codigo: number) {
-    //     return this.http.get('/api/paciente/');
-    // }
-
-    // create(paciente: Paciente) {
-    //     return this.http.post('/api/paciente', paciente);
-    // }
-
-    // update(paciente: Paciente) {
-    //     return this.http.put('/api/paciente/' + paciente.codigo, paciente);
-    // }
-
-    // delete(id: number) {
-    //     return this.http.delete('/api/paciente/' + id);
-    // }
 }

@@ -1,8 +1,8 @@
-import { Http } from '@angular/http';
-import { Component, Output } from '@angular/core';
-import { PacienteService } from '../../_services/paciente.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Router, ActivatedRoute } from '@angular/router';
+
+import { PacienteService } from '../../_services/paciente.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -13,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
     }
   `],
 })
-export class PacientePesquisarCadastroComponent {
+export class PacientePesquisarCadastroComponent implements OnInit {
   settings = {
     actions: {
       add: false,
@@ -44,15 +44,20 @@ export class PacientePesquisarCadastroComponent {
     },
   };
 
-  source: LocalDataSource;
+  public pacientes: Array<any>;
+  public source: LocalDataSource;
 
   constructor(private service: PacienteService, private router: Router) {
+    this.pacientes = [];
     this.source = new LocalDataSource();
-    const data = this.service.getAll();
-    this.source.load(data);
+  }
+
+  public ngOnInit() {
+    this.service.getAll();
+    this.source.load(this.pacientes);
   }
 
   selecionarPaciente(event): void {
-    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.codigo}]);
+    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.codigo }]);
   }
 }

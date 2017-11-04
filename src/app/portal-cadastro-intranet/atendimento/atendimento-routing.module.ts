@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AtendimentoComponent } from './atendimento.component';
-import { AtendimentoCadastroPacienteComponent } from './atendimento-cadastro-paciente/atendimento-cadastro-paciente.component';
-import { AtendimentoVisualizarProtocolosSessaoComponent } from './atendimento-visualizar-protocolos-sessao/atendimento-visualizar-protocolos-sessao.component';
-import { AtendimentoPesquisarProtocoloComponent } from './atendimento-pesquisar-protocolo/atendimento-pesquisar-protocolo.component';
+import { RouterModule, Routes } from '@angular/router';
 
+import {
+    AtendimentoCadastroPacienteComponent,
+} from './atendimento-cadastro-paciente/atendimento-cadastro-paciente.component';
+import {
+    AtendimentoPesquisarProtocoloComponent,
+} from './atendimento-pesquisar-protocolo/atendimento-pesquisar-protocolo.component';
+import {
+    AtendimentoVisualizarProtocolosSessaoComponent,
+} from './atendimento-visualizar-protocolos-sessao/atendimento-visualizar-protocolos-sessao.component';
+import { AtendimentoComponent } from './atendimento.component';
 
 const routes: Routes = [{
     path: '',
