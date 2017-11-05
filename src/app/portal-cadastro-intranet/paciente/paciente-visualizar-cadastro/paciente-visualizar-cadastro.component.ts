@@ -9,12 +9,19 @@ import { PacienteService } from '../../_services/paciente.service';
 
 export class PacienteVisualizarCadastroComponent implements OnInit {
   paciente;
+  mensagem;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private pacienteService: PacienteService) { }
 
   ngOnInit() {
-    this.paciente = this.pacienteService.getById(this.route.snapshot.params['codigo']);
+    this.pacienteService.getById(this.route.snapshot.params['codigo']).then(paciente => {
+      this.paciente = paciente;
+    }, error => {
+      if (error === 404) {
+        this.mensagem = 'Registro do paciente não encontrado na base...';
+      }
+    });
   }
 }
