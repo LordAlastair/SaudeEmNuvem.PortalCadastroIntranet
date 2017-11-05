@@ -1,5 +1,6 @@
 import { Injectable, NgZone, OnInit } from '@angular/core';
 
+import { Paciente } from '../_models/paciente';
 import { PouchDBService } from '../_services/pouchdb.service';
 
 const uuidv4 = require('uuid/v4');
@@ -7,10 +8,9 @@ const uuidv4 = require('uuid/v4');
 @Injectable()
 export class PacienteService implements OnInit {
     private pacientes;
-    private _db;
 
     constructor(private database: PouchDBService, private zone: NgZone) {
-        this.pacientes = JSON.parse(localStorage.getItem('pacientes') || '[]');
+        // this.pacientes = JSON.parse(localStorage.getItem('pacientes') || '[]');
     }
 
     public ngOnInit() {
@@ -32,11 +32,11 @@ export class PacienteService implements OnInit {
         // });
     }
 
-    getData(): Promise<any[]> {
+    buscarTodos(): Promise<any> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(this.getAll());
-            }, 2000);
+                resolve(this.database.fetch());
+            }, 500);
         });
     }
 
@@ -44,8 +44,15 @@ export class PacienteService implements OnInit {
         return this.pacientes;
     }
 
-    getById(codigo) {
-        return this.pacientes.find(X => X.codigo === codigo);
+    getById(codigo: string): Promise<any[]> {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(this.database.get(codigo));
+            }, 500);
+        });
+
+
+        // return this.database.get('' + codigo);
     }
 
     cadastrarPaciente(paciente): string {

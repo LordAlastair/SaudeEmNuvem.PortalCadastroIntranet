@@ -23,14 +23,14 @@ export class PouchDBService {
         return this.database.get(id);
     }
 
-    public put(id: string, document: any) {
-        document._id = id;
+    public put(id: string, documento: any) {
+        documento._id = id;
         return this.get(id).then(result => {
-            document._rev = result._rev;
-            return this.database.put(document);
+            documento._rev = result._rev;
+            return this.database.put(documento);
         }, error => {
             if (error.status === 404) {
-                return this.database.put(document);
+                return this.database.put(documento);
             } else {
                 return new Promise((resolve, reject) => {
                     reject(error);

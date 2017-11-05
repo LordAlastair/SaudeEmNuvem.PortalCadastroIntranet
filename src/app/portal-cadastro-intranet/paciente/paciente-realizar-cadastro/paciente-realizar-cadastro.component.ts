@@ -53,25 +53,6 @@ export class PacienteRealizarCadastroComponent implements OnInit {
       this.toasterService.pop(toast);
     }
   }
-  // register() {
-  //   if (this.form.valid) {
-  //     const codigo = this.pacienteService.cadastrarPaciente(this.form.value);
-
-  //     const toast: Toast = {
-  //       type: 'success',
-  //       body: this.form.value.nome + ' ' + this.form.value.apelido + ' ' + 'cadastrado com sucesso',
-  //     };
-  //     this.toasterService.pop(toast);
-  //     this.router.navigate(['/portal-cadastro-intranet/atendimento/cadastro', { codigo: codigo }]);
-  //   } else {
-  //     const toast: Toast = {
-  //       type: 'error',
-  //       title: 'Formulário invalido',
-  //       body: 'Termine de preencher os campos e ajuste os erros',
-  //     };
-  //     this.toasterService.pop(toast);
-  //   }
-  // }
 
   cancelar() {
     this.router.navigate(['/portal-cadastro-intranet/dashboard']);

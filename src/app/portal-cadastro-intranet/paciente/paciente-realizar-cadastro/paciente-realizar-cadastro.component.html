@@ -1,5 +1,5 @@
 <div class="col-12 col-md-12">
-	<form [formGroup]="form" (ngSubmit)="register(form)">
+	<form [formGroup]="form" (ngSubmit)="register()">
 		<nb-card>
 			<nb-card-header>Dados Pessoais</nb-card-header>
 			<nb-card-body>
@@ -27,7 +27,7 @@
 							<show-errors [control]="form.controls.cpf"></show-errors>
 							<label for="" class="input-label">CPF* </label>
 							<input type="text" placeholder="CPF" class="form-control" name="cpf" formControlName="cpf" [ngClass]="{'form-control-warning': form.controls.cpf.untouched, 'form-control-danger': form.controls.cpf.invalid && !form.controls.cpf.untouched, 'form-control-success': form.controls.cpf.valid}"
-							 [textMask]="{mask: maskCpf}" cpf required />
+							 [textMask]="{mask: maskCpf}" required />
 						</div>
 					</div>
 					<div class="col-md-4 sm-12">
