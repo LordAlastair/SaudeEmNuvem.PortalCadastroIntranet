@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import {
+    AtendimentoAtualizarCadastroPacienteComponent,
+} from './atendimento-atualizar-cadastro-paciente/atendimento-atualizar-cadastro-paciente.component';
+import {
     AtendimentoCadastroPacienteComponent,
 } from './atendimento-cadastro-paciente/atendimento-cadastro-paciente.component';
 import {
@@ -40,4 +43,5 @@ export const routedComponents = [
     AtendimentoCadastroPacienteComponent,
     AtendimentoVisualizarProtocolosSessaoComponent,
     AtendimentoPesquisarProtocoloComponent,
+    AtendimentoAtualizarCadastroPacienteComponent,
 ];

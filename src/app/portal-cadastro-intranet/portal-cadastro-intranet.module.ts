@@ -8,7 +8,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PortalRoutingModule } from './portal-cadastro-intranet-routing.module';
 import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.component';
 
-
 const COMPONENTS = [
   PortalCadastroIntranetComponent,
 ];
