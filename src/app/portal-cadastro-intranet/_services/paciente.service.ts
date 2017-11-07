@@ -31,7 +31,11 @@ export class PacienteService implements OnInit {
         //     console.error(error);
         // });
     }
-
+    /**
+     * Retorna uma lista com todos os pacientes sync com a base e armazenados no indexDb
+     * @returns {Promise<any>}
+     * @memberof PacienteService
+     */
     buscarTodos(): Promise<any> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -40,26 +44,40 @@ export class PacienteService implements OnInit {
         });
     }
 
-    getAll() {
-        return this.pacientes;
-    }
-
-    getById(codigo: string): Promise<any[]> {
+    /**
+     * Retorna o registro do paciente encontrado, se não retorna o error
+     * @param {string} codigo required
+     * @returns {Promise<any[]>}
+     * @memberof PacienteService
+     */
+    buscarPorCodigo(codigo: string): Promise<any[]> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.database.get(codigo));
             }, 500);
         });
-
-
-        // return this.database.get('' + codigo);
     }
 
-    cadastrarPaciente(paciente): string {
+
+    /**
+     * Este metodo salva um novo paciente no sistema;
+     * @param {Paciente} paciente
+     * @returns {Promise<any>}
+     * @memberof PacienteService
+     */
+    cadastrarPaciente(paciente: Paciente): Promise<any> {
         paciente.codigo = uuidv4();
         paciente.cns = this.geradorCNSValido();
-        this.database.put(paciente.codigo, paciente);
-        return paciente.codigo;
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(this.database.put(paciente.codigo, paciente));
+            }, 500);
+        });
+    }
+
+    atualizarPaciente(paciente: Paciente) {
+
     }
 
     // // create(paciente) {

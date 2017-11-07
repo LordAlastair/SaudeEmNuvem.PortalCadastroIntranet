@@ -24,7 +24,7 @@ export class PouchDBService {
     }
 
     public put(id: string, documento: any) {
-        documento._id = id;
+        documento._id = id; // pouchdb espera um campo _id no registro
         return this.get(id).then(result => {
             documento._rev = result._rev;
             return this.database.put(documento);
