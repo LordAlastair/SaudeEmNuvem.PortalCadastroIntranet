@@ -77,7 +77,7 @@
   },
   "defaults": {
     "serve": {
-      "host": "192.168.255.9",
+      "host": "192.168.137.1",
       "port": 4201
     },
     "styleExt": "scss",
