@@ -13,6 +13,7 @@ import { PacienteService } from '../../_services/paciente.service';
     }
   `],
 })
+
 export class PacientePesquisarCadastroComponent implements OnInit {
   settings = {
     actions: {
@@ -23,7 +24,7 @@ export class PacientePesquisarCadastroComponent implements OnInit {
     columns: {
       codigo: {
         title: 'Codigo',
-        type: 'number',
+        type: 'string',
       },
       nome: {
         title: 'Nome',
@@ -37,24 +38,21 @@ export class PacientePesquisarCadastroComponent implements OnInit {
         title: 'Data Nascimento',
         type: 'Date',
       },
-      cpf: {
-        title: 'CPF',
-        type: 'string',
-      },
     },
   };
 
-  public pacientes: Array<any>;
   public source: LocalDataSource;
+  public pacientes: any[];
 
   constructor(private service: PacienteService, private router: Router) {
-    this.pacientes = [];
-    this.source = new LocalDataSource();
   }
 
   public ngOnInit() {
-    this.service.getAll();
-    this.source.load(this.pacientes);
+    this.service.buscarTodos().then(dados => {
+      this.source = new LocalDataSource(dados.rows.map(function (row) {
+        return row.doc;
+      }));
+    });
   }
 
   selecionarPaciente(event): void {

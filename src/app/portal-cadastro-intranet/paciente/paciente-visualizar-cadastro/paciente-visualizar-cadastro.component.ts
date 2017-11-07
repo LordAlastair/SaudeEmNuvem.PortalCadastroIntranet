@@ -16,7 +16,7 @@ export class PacienteVisualizarCadastroComponent implements OnInit {
     private pacienteService: PacienteService) { }
 
   ngOnInit() {
-    this.pacienteService.getById(this.route.snapshot.params['codigo']).then(paciente => {
+    this.pacienteService.buscarPorCodigo(this.route.snapshot.params['codigo']).then(paciente => {
       this.paciente = paciente;
     }, error => {
       if (error === 404) {
