@@ -1,9 +1,15 @@
 export interface Paciente {
-    codigo: string;
+    pacientecod?: number;
+    chaveNatural?: string;
+    nomePai?: string;
+    nomeMae?: string;
     nome: string;
-    apelido: string;
-    nascimento: Date;
+    nomeApelido?: string;
+    dataNascimento: Date;
     sexo?: string;
     cns?: string;
     cpf?: string;
+    pais?: string;
+    cor?: string;
+    rg?: string;
 }

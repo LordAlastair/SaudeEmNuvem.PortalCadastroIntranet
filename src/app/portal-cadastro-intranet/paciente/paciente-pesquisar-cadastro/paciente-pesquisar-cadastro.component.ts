@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { PacienteService } from '../../_services/paciente.service';
+import { PacienteDataService } from '../../_services/data-services/paciente-data.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -22,7 +23,7 @@ export class PacientePesquisarCadastroComponent implements OnInit {
       delete: false,
     },
     columns: {
-      codigo: {
+      chaveNatural: {
         title: 'Codigo',
         type: 'string',
       },
@@ -30,11 +31,11 @@ export class PacientePesquisarCadastroComponent implements OnInit {
         title: 'Nome',
         type: 'string',
       },
-      apelido: {
+      nomeApelido: {
         title: 'apelido',
         type: 'string',
       },
-      nascimento: {
+      dataNascimento: {
         title: 'Data Nascimento',
         type: 'Date',
       },
@@ -42,20 +43,21 @@ export class PacientePesquisarCadastroComponent implements OnInit {
   };
 
   public source: LocalDataSource;
-  public pacientes: any[];
+  public pacientes: any;
 
-  constructor(private service: PacienteService, private router: Router) {
-  }
+  constructor(
+    private cd: ChangeDetectorRef,
+    private http: HttpClient,
+    private pacienteService: PacienteDataService,
+    private router: Router) { }
 
   public ngOnInit() {
-    this.service.buscarTodos().then(dados => {
-      this.source = new LocalDataSource(dados.rows.map(function (row) {
-        return row.doc;
-      }));
-    });
+    this.source = new LocalDataSource();
+    this.pacienteService.buscarTodos()
+      .subscribe(pacientes => this.source.load(pacientes));
   }
 
   selecionarPaciente(event): void {
-    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.codigo }]);
+    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.chaveNatural }]);
   }
 }
