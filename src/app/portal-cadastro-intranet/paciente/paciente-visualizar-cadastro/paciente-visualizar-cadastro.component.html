@@ -5,19 +5,40 @@
         </nb-card-header>
         <nb-card-body class="col-md-0">
             <blockquote class="blockquote">
-                <p class="mb-0">Código: {{paciente.codigo}}</p>
+                <p class="mb-0">Código: {{paciente.chaveNatural}}</p>
             </blockquote>
             <blockquote class="blockquote">
                 <p class="mb-0">Nome: {{paciente.nome}}</p>
             </blockquote>
             <blockquote class="blockquote">
-                <p class="mb-0">Apelido :{{paciente.apelido}}</p>
+                <p class="mb-0">Apelido :{{paciente.nomeApelido}}</p>
             </blockquote>
             <blockquote class="blockquote">
-                <p class="mb-0">Nascimento: :{{paciente.nascimento}}</p>
+                <p class="mb-0">Nome Pai :{{paciente.nomePai}}</p>
+            </blockquote>
+            <blockquote class="blockquote">
+                <p class="mb-0">Nome Mãe :{{paciente.nomeMae}}</p>
+            </blockquote>
+            <blockquote class="blockquote">
+                <p class="mb-0">Nascimento: :{{paciente.dataNascimento}}</p>
             </blockquote>
             <blockquote class="blockquote">
                 <footer class="blockquote">CPF: {{paciente.cpf}}</footer>
+            </blockquote>
+            <blockquote class="blockquote">
+                <footer class="blockquote">CNS: {{paciente.cns}}</footer>
+            </blockquote>
+            <blockquote class="blockquote">
+                <footer class="blockquote">rg: {{paciente.rg}}</footer>
+            </blockquote>
+            <blockquote class="blockquote">
+                <footer class="blockquote">cor: {{paciente.cor}}</footer>
+            </blockquote>
+            <blockquote class="blockquote">
+                <footer class="blockquote">sexo: {{paciente.sexo}}</footer>
+            </blockquote>
+            <blockquote class="blockquote">
+                <footer class="blockquote">nacionalidade: {{paciente.nacionalidade}}</footer>
             </blockquote>
         </nb-card-body>
     </nb-card>
@@ -25,7 +46,7 @@
 <ng-template #elseBlock>
     <nb-card #elseBlock class="col-md-0">
         <nb-card-header class="col-md-0">
-                <h1>{{ mensagem }} </h1>
+                <h1>{{mensagem}} </h1>
         </nb-card-header>
     </nb-card>
 </ng-template>
