@@ -21,7 +21,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://192.168.137.1:4201",
+            "url": "http://0.0.0.0:4201",
             "webRoot": "${workspaceRoot}"
         }
     ]
