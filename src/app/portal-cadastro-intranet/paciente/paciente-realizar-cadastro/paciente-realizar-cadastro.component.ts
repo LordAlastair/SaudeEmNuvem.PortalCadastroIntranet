@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Toast, ToasterService } from 'angular2-toaster';
 
-import { PacienteService } from '../../_services/paciente.service';
+import { PacienteDataService } from '../../_services/data-services/paciente-data.service';
 
 @Component({
   templateUrl: './paciente-realizar-cadastro.component.html',
@@ -16,45 +16,52 @@ export class PacienteRealizarCadastroComponent implements OnInit {
 
   public maskCpf = [/[0-9]/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
   public maskCns =
-  [/[0-9]/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+    [/[0-9]/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
   public maskNascimento = [/[0-9]/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
 
   constructor(
-    private pacienteService: PacienteService, private toasterService: ToasterService,
+    private pacienteService: PacienteDataService, private toasterService: ToasterService,
     private fb: FormBuilder, private router: Router, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.fb.group({
-      codigo: [],
       nome: [],
       cpf: [],
       sexo: [],
-      apelido: [],
+      nomeApelido: [],
       cns: [],
-      nascimento: [],
+      dataNascimento: [],
     });
   }
 
   register() {
     if (this.form.valid) {
-      const codigo = this.pacienteService.cadastrarPaciente(this.form.value);
-      const toast: Toast = {
-        type: 'success',
-        body: this.form.value.nome + ' ' + this.form.value.apelido + ' ' + 'cadastrado com sucesso',
-      };
-      this.toasterService.pop(toast);
-      this.router.navigate(['/portal-cadastro-intranet/atendimento/pesquisar', { codigo: codigo }]);
-    } else {
-      const toast: Toast = {
-        type: 'error',
-        title: 'Formulário invalido',
-        body: 'Termine de preencher os campos e ajuste os erros',
-      };
-      this.toasterService.pop(toast);
+      this.pacienteService.criar(this.form.value).subscribe(res => {
+        this.logSuccess(res.nome + ' cadastrado no sistema');
+        this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: res.pacientecod }]);
+      }, (error) => {
+        this.logSuccess(error.value);
+      });
     }
   }
 
-  cancelar() {
+  private cancelar() {
     this.router.navigate(['/portal-cadastro-intranet/dashboard']);
+  }
+
+  private logError(msg: string) {
+    const toast: Toast = {
+      type: 'error',
+      body: msg,
+    };
+    this.toasterService.pop(toast);
+  }
+
+  private logSuccess(msg: string) {
+    const toast: Toast = {
+      type: 'success',
+      body: msg,
+    };
+    this.toasterService.pop(toast);
   }
 }

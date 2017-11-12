@@ -26,7 +26,12 @@ export class HttpWrapperService {
         return this.http.patch<T>(url, body);
     }
 }
-
+/**
+ * Este HttpInterceptor adiciona o header necessario para o Cors;
+ * @export
+ * @class CustomInterceptor
+ * @implements {HttpInterceptor}
+ */
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor {
 

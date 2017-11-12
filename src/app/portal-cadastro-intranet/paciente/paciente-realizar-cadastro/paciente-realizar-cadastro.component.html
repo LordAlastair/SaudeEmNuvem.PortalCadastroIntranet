@@ -14,9 +14,9 @@
 					</div>
 					<div class="col-md-4 sm-12">
 						<div class="form-group">
-							<show-errors [control]="form.controls.apelido"></show-errors>
+							<show-errors [control]="form.controls.nomeApelido"></show-errors>
 							<label for="" class="input-label">Apelido </label>
-							<input type="text" placeholder="Apelido" class="form-control" name="apelido" formControlName="apelido" [ngClass]="{'form-control-warning': form.controls.apelido.untouched, 'form-control-danger': form.controls.apelido.invalid && !form.controls.apelido.untouched, 'form-control-success': form.controls.apelido.valid}"
+							<input type="text" placeholder="Apelido" class="form-control" name="nomeApelido" formControlName="nomeApelido" [ngClass]="{'form-control-warning': form.controls.nomeApelido.untouched, 'form-control-danger': form.controls.nomeApelido.invalid && !form.controls.nomeApelido.untouched, 'form-control-success': form.controls.nomeApelido.valid}"
 							/>
 						</div>
 					</div>
@@ -32,9 +32,9 @@
 					</div>
 					<div class="col-md-4 sm-12">
 						<div class="form-group">
-							<show-errors [control]="form.controls.nascimento"></show-errors>
+							<show-errors [control]="form.controls.dataNascimento"></show-errors>
 							<label for="" class="input-label">Nascimento* </label>
-							<input type="text" placeholder="Nascimento" class="form-control" name="nascimento" formControlName="nascimento" [ngClass]="{'form-control-warning': form.controls.nascimento.untouched, 'form-control-danger': form.controls.nascimento.invalid && !form.controls.nascimento.untouched, 'form-control-success': form.controls.nascimento.valid}"
+							<input type="text" placeholder="Nascimento" class="form-control" name="dataNascimento" formControlName="dataNascimento" [ngClass]="{'form-control-warning': form.controls.dataNascimento.untouched, 'form-control-danger': form.controls.dataNascimento.invalid && !form.controls.dataNascimento.untouched, 'form-control-success': form.controls.dataNascimento.valid}"
 							 [textMask]="{mask: maskNascimento}" required />
 						</div>
 					</div>

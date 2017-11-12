@@ -5,6 +5,9 @@ import { catchError } from 'rxjs/operators/catchError';
 import { HttpWrapperService } from '../httpWrapper.service';
 import { Configuration } from '../../_shared/configuration';
 import { Paciente } from '../../_models/paciente';
+import { of } from 'rxjs/observable/of';
+import { tap } from 'rxjs/operators';
+import { ToasterService, Toast } from 'angular2-toaster';
 
 const uuidv4 = require('uuid/v4');
 
@@ -13,43 +16,38 @@ export class PacienteDataService {
 
     public actionUrl: string;
 
-    constructor(private http: HttpWrapperService, private configuration: Configuration) {
+    constructor(private http: HttpWrapperService, private configuration: Configuration, private toasterService: ToasterService) {
         this.actionUrl = configuration.server + configuration.apiUrl + 'paciente/';
     }
 
-    buscarTodos = (): Observable<Paciente[]> => {
+    buscarTodos(): Observable<Paciente[]> {
         return this.http.get<Paciente[]>(this.actionUrl)
-            .pipe(catchError(this.handleError));
+            .pipe(catchError(this.handleError<Paciente[]>('buscarTodos')));
     }
 
-    buscarPorCodigo = (codigo: string): Observable<Paciente> => {
+    buscarPorCodigo(codigo: string): Observable<Paciente> {
         return this.http.get<Paciente>(this.actionUrl + codigo)
-            .pipe(catchError(this.handleError));
+            .pipe(catchError(this.handleError<Paciente>('buscarPorCodigo')));
     }
 
-    criar = (paciente: Paciente): Observable<Paciente> => {
-        paciente.pacientecod = null;
+    criar(paciente: Paciente): Observable<Paciente> {
+        // paciente.pacientecod = null;
         paciente.chaveNatural = uuidv4();
         paciente.cns = this.geradorCNSValido();
-        this.http.post(this.actionUrl, paciente).subscribe(
-            res => {
-              console.log(res);
-            },
-            (err: HttpErrorResponse) => {
-              console.log(err.error);
-              console.log(err.name);
-              console.log(err.message);
-              console.log(err.status);
-            },
-          );
-          return null;
+        //  return this.http.post<Paciente>(this.actionUrl, paciente);
+
+        return this.http.post<Paciente>(this.actionUrl, paciente).pipe(
+            tap((paciente: Paciente) => this.log('Solicitação de cadastro iniciada')),
+            catchError(this.handleError<Paciente>('criar')),
+        );
+
         // return this.http.post<Paciente>(this.actionUrl, paciente)
-        //     .pipe(catchError(this.handleError));
+        //     .pipe(catchError(this.handleError<Paciente>('criar')));
     }
 
-    atualizar = (codigo: string, foodToUpdate: Paciente): Observable<Paciente> => {
-        return this.http.put<Paciente>(this.actionUrl + codigo, JSON.stringify(foodToUpdate))
-            .pipe(catchError(this.handleError));
+    atualizar = (codigo: string, paciente: Paciente): Observable<Paciente> => {
+        return this.http.put<Paciente>(this.actionUrl + codigo, JSON.stringify(paciente))
+            .pipe(catchError(this.handleError<Paciente>('atualizar')));
     }
 
     // apagar = (paciente: Paciente): Observable<HttpResponse<any>> => {
@@ -58,8 +56,34 @@ export class PacienteDataService {
     // }
 
 
-    private handleError(error: HttpResponse<any>) {
-        return Observable.throw(error || 'Server error');
+    // private handleError(error: HttpResponse<any>) {
+    //     return Observable.throw(error || 'Server error');
+    // }
+
+    /**
+  * Handle Http operation that failed.
+  * Let the app continue.
+  * @param operation - name of the operation that failed
+  * @param result - optional value to return as the observable result
+  */
+    private handleError<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
+
+            // TODO: send the error to remote logging infrastructure
+            console.error(error); // log to console instead
+
+            // Let the app keep running by returning an empty result.
+            return of(result as T);
+        };
+    }
+
+    /** Log the error with a toast */
+    private log(message: string) {
+        const toast: Toast = {
+            type: 'warning',
+            body: message,
+        };
+        this.toasterService.pop(toast);
     }
 
     public geradorCNSValido() {
