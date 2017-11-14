@@ -1,21 +1,21 @@
-<div *ngIf="atendimentoForm; else elseBlock">
+<div *ngIf="atendimento; else elseBlock">
   <nb-card class="col-md-0">
     <nb-card-header class="col-md-0">
       Protocolo
     </nb-card-header>
     <nb-card-body class="col-md-0">
       <blockquote class="blockquote">
-        <p class="mb-0">Código: {{atendimentoForm.codigo}}</p>
+        <p class="mb-0">Código: {{atendimento.chaveNatural}}</p>
       </blockquote>
       <blockquote class="blockquote">
-        <p class="mb-0">Paciente: {{atendimentoForm.paciente}}</p>
+        <p class="mb-0">Paciente: {{atendimento.paciente}}</p>
       </blockquote>
       <blockquote class="blockquote">
-        <p class="mb-0">Tipo de atendimento :{{atendimentoForm.tipo}}</p>
+        <p class="mb-0">Tipo de atendimento :{{atendimento.tipo}}</p>
       </blockquote>
       <blockquote class="blockquote-reverse">
-        <p class="mb-0">{{atendimentoForm.atendente}}</p>
-        <footer class="blockquote-footer">{{atendimentoForm.data}}</footer>
+        <p class="mb-0">{{atendimento.atendente}}</p>
+        <footer class="blockquote-footer">{{atendimento.data}}</footer>
       </blockquote>
     </nb-card-body>
   </nb-card>

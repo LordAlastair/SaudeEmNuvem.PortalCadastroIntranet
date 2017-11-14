@@ -1,24 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { AtendimentoDataService } from '../../_services/data-services/atendimento-data.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AtendimentoService } from '../../_services/atendimento.service';
-import { PacienteService } from '../../_services/paciente.service';
 
 @Component({
-    templateUrl: 'atendimento-visualizar-protocolos-sessao.component.html',
-    styleUrls: ['atendimento-visualizar-protocolos-sessao.component.scss'],
+  templateUrl: 'atendimento-visualizar-protocolos-sessao.component.html',
+  styleUrls: ['atendimento-visualizar-protocolos-sessao.component.scss'],
 })
 export class AtendimentoVisualizarProtocolosSessaoComponent implements OnInit {
-    atendimentoForm;
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private atendimentoService: AtendimentoService,
-        private pacienteService: PacienteService,
-    ) { }
+  @Input() atendimento;
+  @Input() mensagem: 'Algo deu errado...';
 
-    ngOnInit() {
-        this.atendimentoForm = this.atendimentoService.buscarPorProtocolo(this.route.snapshot.params['codigo']);
-        const paciente = this.pacienteService.getById(this.atendimentoForm.paciente);
-        this.atendimentoForm.paciente = paciente.nome;
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private atendimentoService: AtendimentoDataService,
+  ) { }
+
+  ngOnInit() {
+    if (this.route.snapshot.params['codigo'] !== undefined ) {
+      this.atendimento = this.atendimentoService
+      .buscarPorCodigo(this.route.snapshot.params['codigo'])
+      .subscribe(
+        res => {
+          this.atendimento = res;
+        },
+        error => {
+          this.mensagem = error.value;
+        },
+      );
     }
+  }
 }
