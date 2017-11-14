@@ -12,38 +12,38 @@ import { PacienteRealizarCadastroComponent } from './paciente-realizar-cadastro/
 import { PacienteVisualizarCadastroComponent } from './paciente-visualizar-cadastro/paciente-visualizar-cadastro.component';
 
 const routes: Routes = [{
-    path: '',
-    component: PacienteComponent,
-    children: [{
-        path: 'alterar',
-        component: PacienteAlterarCadastroComponent,
-    }, {
-        path: 'pesquisar',
-        component: PacientePesquisarCadastroComponent,
-    }, {
-        path: 'pesquisar/:codigo',
-        component: PacientePesquisarCadastroComponent,
-    }, {
-        path: 'cadastrar',
-        component: PacienteRealizarCadastroComponent,
-    }, {
-        path: 'visualizar',
-        component: PacienteVisualizarCadastroComponent,
-    }],
+  path: '',
+  component: PacienteComponent,
+  children: [{
+    path: 'alterar',
+    component: PacienteAlterarCadastroComponent,
+  }, {
+    path: 'pesquisar',
+    component: PacientePesquisarCadastroComponent,
+  }, {
+    path: 'pesquisar/:codigo',
+    component: PacientePesquisarCadastroComponent,
+  }, {
+    path: 'cadastrar',
+    component: PacienteRealizarCadastroComponent,
+  }, {
+    path: 'visualizar',
+    component: PacienteVisualizarCadastroComponent,
+  }],
 }];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
 
 export class PacienteRoutingModule {
 }
 
 export const routedComponents = [
-    PacienteComponent,
-    PacienteAlterarCadastroComponent,
-    PacientePesquisarCadastroComponent,
-    PacienteRealizarCadastroComponent,
-    PacienteVisualizarCadastroComponent,
+  PacienteComponent,
+  PacienteAlterarCadastroComponent,
+  PacientePesquisarCadastroComponent,
+  PacienteRealizarCadastroComponent,
+  PacienteVisualizarCadastroComponent,
 ];

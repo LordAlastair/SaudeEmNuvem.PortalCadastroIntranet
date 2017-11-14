@@ -1,53 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { AtendimentoService } from '../../_services/atendimento.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AtendimentoDataService } from '../../_services/data-services/atendimento-data.service';
 
 @Component({
-    templateUrl: 'atendimento-pesquisar-protocolo.component.html',
-    styleUrls: ['atendimento-pesquisar-protocolo.component.scss'],
+  templateUrl: 'atendimento-pesquisar-protocolo.component.html',
+  styleUrls: ['atendimento-pesquisar-protocolo.component.scss'],
 })
 
-export class AtendimentoPesquisarProtocoloComponent {
-    settings = {
-        actions: {
-          add: false,
-          edit: false,
-          delete: false,
-        },
-        columns: {
-          codigo: {
-            title: 'Codigo',
-            type: 'string',
-          },
-          tipo: {
-            title: 'Nome',
-            type: 'string',
-          },
-          atendente: {
-            title: 'Atendente',
-            type: 'string',
-          },
-          data: {
-            title: 'Data Nascimento',
-            type: 'Date',
-          },
-          paciente: {
-            title: 'codigo Paciente',
-            type: 'string',
-          },
-        },
-      };
+export class AtendimentoPesquisarProtocoloComponent implements OnInit {
+  settings = {
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+    columns: {
+      chaveNatural: {
+        title: 'Codigo Atendimento',
+        type: 'string',
+      },
+      tipo: {
+        title: 'Tipo',
+        type: 'string',
+      },
+      atendente: {
+        title: 'Atendente',
+        type: 'string',
+      },
+      data: {
+        title: 'Data Nascimento',
+        type: 'Date',
+      },
+      paciente: {
+        title: 'codigo Paciente',
+        type: 'string',
+      },
+    },
+  };
 
-    source: LocalDataSource;
+  @Input() source: LocalDataSource;
+  @Input() mensagem: 'Algo deu errado...';
 
-    constructor(private service: AtendimentoService, private router: Router) {
-        this.source = new LocalDataSource();
-        const data = this.service.listarTodosProtocolos();
-        this.source.load(data);
-    }
+  constructor(private service: AtendimentoDataService, private router: Router) { }
 
-    selecionarProtocolo(event): void {
-        this.router.navigate(['/portal-cadastro-intranet/atendimento/visualizarSessao', { codigo: event.data.codigo }]);
-    }
+  ngOnInit() {
+    this.source = new LocalDataSource();
+    this.service.buscarTodos()
+      .subscribe(pacientes => this.source.load(pacientes));
+  }
+
+  selecionarProtocolo(event): void {
+    this.router.navigate(['/portal-cadastro-intranet/atendimento/visualizarSessao', { codigo: event.data.idAtendimento }]);
+  }
 }
