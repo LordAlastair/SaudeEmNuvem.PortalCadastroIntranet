@@ -1,5 +1,6 @@
 export interface Atendimento {
-    codigo: string;
+    idAtendimento?: number;
+    chaveNatural: string;
     tipo: string;
     data: Date;
     atendente: string;

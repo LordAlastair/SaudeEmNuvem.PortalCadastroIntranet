@@ -10,6 +10,7 @@ import { PortalRoutingModule } from './portal-cadastro-intranet-routing.module';
 import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.component';
 import { Configuration } from './_shared/configuration';
 import { HttpWrapperService } from './_services/httpWrapper.service';
+import { AtendimentoDataService } from './_services/data-services/atendimento-data.service';
 
 const COMPONENTS = [
   PortalCadastroIntranetComponent,
@@ -26,6 +27,7 @@ const COMPONENTS = [
   ],
   providers: [
     PacienteService,
+    AtendimentoDataService,
     Configuration,
     AtendimentoService,
     PacienteDataService,
