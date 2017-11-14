@@ -44,7 +44,7 @@ export class PacienteRealizarCadastroComponent implements OnInit {
     if (this.form.valid) {
       this.pacienteService.criar(this.form.value).subscribe(res => {
         this.logSuccess(res.nome + ' cadastrado no sistema');
-        this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: res.pacientecod }]);
+        this.router.navigate(['/portal-cadastro-intranet/atendimento/cadastro', { codigo: res.chaveNatural }]);
       }, (error) => {
         this.logSuccess(error.value);
       });
