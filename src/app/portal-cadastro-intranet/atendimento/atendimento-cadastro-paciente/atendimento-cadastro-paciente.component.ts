@@ -1,19 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { AtendimentoDataService } from '../../_services/data-services/atendimento-data.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AtendimentoService } from '../../_services/atendimento.service';
 
 @Component({
     templateUrl: 'atendimento-cadastro-paciente.component.html',
     styleUrls: ['atendimento-cadastro-paciente.component.scss'],
 })
 export class AtendimentoCadastroPacienteComponent implements OnInit {
-    atendimentoForm;
+  @Input() atendimento;
+  @Input() mensagem: 'Algo deu errado...';
+
+  atendimentoForm;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private atendimentoService: AtendimentoService) { }
+        private atendimentoService: AtendimentoDataService) { }
 
     ngOnInit() {
-        this.atendimentoForm =  this.atendimentoService.gerarProtocoloPacienteRealizarCadastro(this.route.snapshot.params['codigo']);
+      if (this.route.snapshot.params['codigo'] !== undefined ) {
+        this.atendimento = this.atendimentoService
+        .gerarProtocoloPacienteRealizarCadastro(this.route.snapshot.params['codigo'])
+        .subscribe(
+          res => {
+            this.atendimento = res;
+          },
+          error => {
+            this.mensagem = error.value;
+          },
+        );
+      }
     }
 }
