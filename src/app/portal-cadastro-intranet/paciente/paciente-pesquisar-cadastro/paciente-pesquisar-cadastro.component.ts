@@ -58,6 +58,6 @@ export class PacientePesquisarCadastroComponent implements OnInit {
   }
 
   selecionarPaciente(event): void {
-    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.chaveNatural }]);
+    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.pacientecod }]);
   }
 }
