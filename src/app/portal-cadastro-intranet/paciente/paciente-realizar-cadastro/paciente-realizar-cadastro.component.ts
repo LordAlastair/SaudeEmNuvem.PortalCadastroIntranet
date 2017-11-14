@@ -26,11 +26,17 @@ export class PacienteRealizarCadastroComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       nome: [],
-      cpf: [],
-      sexo: [],
       nomeApelido: [],
-      cns: [],
+      nomeMae: [],
+      nomePai: [],
       dataNascimento: [],
+      sexo: [],
+      cpf: [],
+      rg: [],
+      cns: [],
+      pais: [],
+      nacionalidade: [],
+      cor: [],
     });
   }
 

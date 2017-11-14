@@ -29,6 +29,27 @@
     padding: 0 0 0.15rem;
   }
 
+  // Toggle Buttons CSS
+  .btn-group > .btn {
+padding-left: 1.2rem;
+    padding-right: 1.2rem;
+    padding-bottom: 1rem;
+    margin-top: 0.125rem;
+  }
+
+  .icon-toolbar-container {
+    .btn-group > .btn {
+      padding-left: 1.2rem;
+      padding-right: 1.2rem;
+    }
+  }
+
+  .toggle-types {
+    .btn-toggle-radio-group {
+      margin-bottom: 1rem;
+    }
+  }
+
   // datepicker atras dos inputs...
   // .bs-datepicker-container {
   //   z-index: 1000;
