@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { ThemeModule } from '../@theme/theme.module';
-import { AtendimentoService } from './_services/atendimento.service';
 import { PacienteDataService } from './_services/data-services/paciente-data.service';
-import { PacienteService } from './_services/paciente.service';
 import { PouchDBService } from './_services/pouchdb.service';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PortalRoutingModule } from './portal-cadastro-intranet-routing.module';
@@ -26,10 +24,8 @@ const COMPONENTS = [
     ...COMPONENTS,
   ],
   providers: [
-    PacienteService,
     AtendimentoDataService,
     Configuration,
-    AtendimentoService,
     PacienteDataService,
     [PouchDBService],
     HttpWrapperService,
