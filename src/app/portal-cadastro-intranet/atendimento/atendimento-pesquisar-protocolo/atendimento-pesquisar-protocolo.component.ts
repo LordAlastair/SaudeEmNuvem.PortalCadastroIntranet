@@ -47,6 +47,10 @@ export class AtendimentoPesquisarProtocoloComponent implements OnInit {
 
   ngOnInit() {
     this.source = new LocalDataSource();
+    this.carregarDados();
+  }
+
+  carregarDados(): void {
     this.service.buscarTodos()
       .subscribe(pacientes => this.source.load(pacientes));
   }

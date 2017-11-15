@@ -43,7 +43,6 @@ export class PacientePesquisarCadastroComponent implements OnInit {
   };
 
   public source: LocalDataSource;
-  public pacientes: any;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -53,6 +52,10 @@ export class PacientePesquisarCadastroComponent implements OnInit {
 
   public ngOnInit() {
     this.source = new LocalDataSource();
+    this.carregarDados();
+  }
+
+  carregarDados(): void {
     this.pacienteService.buscarTodos()
       .subscribe(pacientes => this.source.load(pacientes));
   }

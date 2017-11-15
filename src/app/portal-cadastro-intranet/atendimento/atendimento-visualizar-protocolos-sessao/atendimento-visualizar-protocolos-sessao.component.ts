@@ -17,17 +17,22 @@ export class AtendimentoVisualizarProtocolosSessaoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.route.snapshot.params['codigo'] !== undefined ) {
-      this.atendimento = this.atendimentoService
-      .buscarPorCodigo(this.route.snapshot.params['codigo'])
-      .subscribe(
-        res => {
-          this.atendimento = res;
-        },
-        error => {
-          this.mensagem = error.value;
-        },
-      );
+    if (this.route.snapshot.params['codigo'] !== undefined) {
+      this.carregarDados();
     }
   }
+
+  carregarDados(): void {
+    this.atendimentoService
+      .buscarPorCodigo(this.route.snapshot.params['codigo'])
+      .subscribe(
+      res => {
+        this.atendimento = res;
+      },
+      error => {
+        this.mensagem = error.value;
+      },
+    );
+  }
+
 }

@@ -18,16 +18,20 @@ export class PacienteVisualizarCadastroComponent implements OnInit {
 
   ngOnInit() {
     if (this.route.snapshot.params['codigo'] !== undefined) {
-      this.paciente = this.pacienteService
-        .buscarPorCodigo(this.route.snapshot.params['codigo'])
-        .subscribe(
-        res => {
-          this.paciente = res;
-        },
-        error => {
-          this.mensagem = error.value;
-        },
-      );
+      this.carregarDados();
     }
+  }
+
+  carregarDados(): void {
+    this.pacienteService
+      .buscarPorCodigo(this.route.snapshot.params['codigo'])
+      .subscribe(
+      res => {
+        this.paciente = res;
+      },
+      error => {
+        this.mensagem = error.value;
+      },
+    );
   }
 }
