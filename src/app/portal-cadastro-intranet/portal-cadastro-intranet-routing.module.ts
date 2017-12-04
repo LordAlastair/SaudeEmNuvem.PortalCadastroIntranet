@@ -17,6 +17,10 @@ const routes: Routes = [{
     loadChildren: './atendimento/atendimento.module#AtendimentoModule',
   },
   {
+    path: 'agenda',
+    loadChildren: './agenda/agenda.module#AgendaModule',
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

@@ -10,6 +10,11 @@ import { Configuration } from './_shared/configuration';
 import { HttpWrapperService } from './_services/httpWrapper.service';
 import { AtendimentoDataService } from './_services/data-services/atendimento-data.service';
 
+import { CalendarModule } from 'angular-calendar';
+import { CalendarHeaderComponent } from './_util/calendar/calendar-header.component';
+import { DateTimePickerComponent } from './_util/calendar/date-time-picker.component';
+import { NgbTimepickerModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+
 const COMPONENTS = [
   PortalCadastroIntranetComponent,
 ];
@@ -19,17 +24,22 @@ const COMPONENTS = [
     PortalRoutingModule,
     ThemeModule,
     DashboardModule,
+    NgbDatepickerModule.forRoot(),
+    NgbTimepickerModule.forRoot(),
+    CalendarModule.forRoot(),
   ],
   declarations: [
     ...COMPONENTS,
+    [CalendarHeaderComponent, DateTimePickerComponent],
   ],
+  exports: [CalendarHeaderComponent, DateTimePickerComponent],
   providers: [
     AtendimentoDataService,
     Configuration,
     PacienteDataService,
     [PouchDBService],
     HttpWrapperService,
-],
+  ],
 })
 
 export class PortalCadastroIntranetModule { }
