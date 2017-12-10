@@ -1,8 +1,8 @@
 <nb-card>
   <nb-card-header>
     <div class="row text-center">
-      <div class="col-md-4">
-        <div class="btn-group">
+      <div>
+        <div class="btn-group ">
           <button class="btn btn-primary" (click)="decrement()" [disabled]="prevBtnDisabled">
             <
           </button>
@@ -12,13 +12,13 @@
         </div>
       </div>
       <div class="col-md-4">
-          <!-- <h3>{{viewDate | calendarDate:(view + 'ViewTitle')}}</h3> -->
-          <h3>{{viewDate}}</h3>
-      </div>
+          <span>{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt-br' }}</span>
+        </div>
     </div>
   </nb-card-header>
-  <nb-card-body>
-    <mwl-calendar-month-view [viewDate]="viewDate" [locale]="locale" [events]="events">
+  <nb-card-body >
+    <mwl-calendar-month-view [viewDate]="viewDate" [locale]="locale" [events]="events"     (beforeViewRender)="beforeMonthViewRender($event)"
+    (dayClicked)="diaDoMesSelecionado($event.day)">
     </mwl-calendar-month-view>
   </nb-card-body>
 </nb-card>

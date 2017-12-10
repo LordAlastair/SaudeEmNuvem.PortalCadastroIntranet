@@ -1,8 +1,8 @@
 export interface Medico {
-    idMedico: number;
+    idMedico: Number;
+    crm: string;
     nome: string;
-    idEspecialidade: number;
-    crm: Date;
-    atendente: string;
-    paciente: string;
-}
+    login: string;
+    senha: string;
+    idEspecialidade: Number;
+  }

@@ -19,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToasterModule, ToasterService, ToasterConfig } from 'angular2-toaster';
 import { HttpClientModule } from '@angular/common/http';
+import { CalendarModule } from 'angular-calendar';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+    CalendarModule.forRoot(),
     ToasterModule,
   ],
   bootstrap: [AppComponent],

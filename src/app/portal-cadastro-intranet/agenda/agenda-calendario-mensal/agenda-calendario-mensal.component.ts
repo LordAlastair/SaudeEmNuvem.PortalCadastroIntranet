@@ -15,6 +15,7 @@ import {
   startOfDay,
   endOfDay,
 } from 'date-fns';
+import { CadastroService } from '../../_services/cadastroService';
 
 type CalendarPeriod = 'day' | 'week' | 'month';
 
@@ -58,20 +59,43 @@ function endOfPeriod(period: CalendarPeriod, date: Date): Date {
   styleUrls: ['./agenda-calendario-mensal.component.scss'],
 })
 export class AgendaCalendarioMensalComponent {
-  view: CalendarPeriod = 'month';
-  locale = 'pt-br';
+  @Input() view: CalendarPeriod = 'month';
+  @Input() locale = 'pt-br';
 
   @Input() events: CalendarEvent[] = [];
 
-  viewDate: Date = new Date();
-  minDate: Date = subMonths(new Date(), 1);
-  maxDate: Date = addMonths(new Date(), 1);
+  @Input() viewDate: Date = new Date();
+  @Input() minDate: Date = subMonths(new Date(), 0);
+  @Input() maxDate: Date = addMonths(new Date(), 1);
 
-  prevBtnDisabled: boolean;
-  nextBtnDisabled: boolean;
+  @Input() prevBtnDisabled: boolean;
+  @Input() nextBtnDisabled: boolean;
 
-  constructor() {
+  @Input() selectedMonthViewDay: CalendarMonthViewDay;
+
+  constructor(private service: CadastroService) {
     this.dateOrViewChanged();
+  }
+
+  diaDoMesSelecionado(day: CalendarMonthViewDay): void {
+    if (this.selectedMonthViewDay) {
+      delete this.selectedMonthViewDay.cssClass;
+    }
+    day.cssClass = 'cal-day-selected';
+    this.selectedMonthViewDay = day;
+    this.service.diaSelecionado(day.date);
+  }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach(day => {
+      if (
+        this.selectedMonthViewDay &&
+        day.date.getTime() === this.selectedMonthViewDay.date.getTime()
+      ) {
+        day.cssClass = 'cal-day-selected';
+        this.selectedMonthViewDay = day;
+      }
+    });
   }
 
   increment(): void {
@@ -112,13 +136,5 @@ export class AgendaCalendarioMensalComponent {
     } else if (this.viewDate > this.maxDate) {
       this.changeDate(this.maxDate);
     }
-  }
-
-  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-    body.forEach(day => {
-      if (!this.dateIsValid(day.date)) {
-        day.cssClass = 'cal-disabled';
-      }
-    });
   }
 }

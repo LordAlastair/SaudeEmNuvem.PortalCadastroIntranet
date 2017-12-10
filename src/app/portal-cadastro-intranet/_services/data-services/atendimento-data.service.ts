@@ -40,7 +40,7 @@ export class AtendimentoDataService {
     };
 
     return this.http.post<Atendimento>(this.actionUrl, atendimento).pipe(
-      tap((atendimento: Atendimento) => this.log('Protocolo solicitado')),
+      tap((data: Atendimento) => this.log('Protocolo solicitado')),
       catchError(this.handleError<Atendimento>('criar')),
     );
   }

@@ -1,0 +1,23 @@
+.cal-day-selected,
+.cal-day-selected:hover {
+  background-color: rgb(162, 226, 255) !important;
+}
+.cal-month-view .cal-cell-top {
+  height: 35px;
+  min-height: 20px;
+}
+.cal-month-view .cal-day-cell{
+  min-height: 20px;
+  height: 35px;
+}
+
+.cal-month-view .cal-day-number{
+  float: inherit;
+}
+.cal-month-view .cal-header .cal-cell {
+  padding: 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  white-space: inherit;
+}

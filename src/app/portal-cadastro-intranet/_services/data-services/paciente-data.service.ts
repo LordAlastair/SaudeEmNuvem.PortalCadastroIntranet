@@ -8,7 +8,6 @@ import { Paciente } from '../../_models/paciente';
 import { of } from 'rxjs/observable/of';
 import { tap } from 'rxjs/operators';
 import { ToasterService, Toast } from 'angular2-toaster';
-
 const uuidv4 = require('uuid/v4');
 
 @Injectable()
@@ -35,7 +34,7 @@ export class PacienteDataService {
     paciente.cns = this.geradorCNSValido();
 
     return this.http.post<Paciente>(this.actionUrl, paciente).pipe(
-      tap((paciente: Paciente) => this.log('Solicitação de cadastro iniciada')),
+      tap((data: Paciente) => this.log('Solicitação de cadastro iniciada')),
       catchError(this.handleError<Paciente>('criar')),
     );
   }

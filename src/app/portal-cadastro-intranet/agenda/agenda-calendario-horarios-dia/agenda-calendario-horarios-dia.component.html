@@ -1,3 +1,13 @@
-<p>
-  agenda-calendario-horarios-dia works!
-</p>
+<nb-card>
+  <nb-card-body >
+    <mwl-calendar-day-view
+    [refresh]="refresh"
+    [viewDate]="viewDate"
+    [events]="events"
+    [hourSegments]="1"
+    [dayStartHour]="7"
+    [dayEndHour]="17"
+    (hourSegmentClicked)="horarioSelecionado($event.date)">
+  </mwl-calendar-day-view>
+  </nb-card-body>
+</nb-card>
