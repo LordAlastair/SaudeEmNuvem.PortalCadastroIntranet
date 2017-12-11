@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { colors } from '../../_util/calendar/colors';
 import {
@@ -16,6 +16,8 @@ import {
   endOfDay,
 } from 'date-fns';
 import { CadastroService } from '../../_services/cadastroService';
+import { AgendaDataService } from '../../_services/data-services/agenda-data.service';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 type CalendarPeriod = 'day' | 'week' | 'month';
 
@@ -53,12 +55,12 @@ function endOfPeriod(period: CalendarPeriod, date: Date): Date {
 
 @Component({
   selector: 'ngx-calendario-mensal',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   templateUrl: './agenda-calendario-mensal.component.html',
   styleUrls: ['./agenda-calendario-mensal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
-export class AgendaCalendarioMensalComponent {
+export class AgendaCalendarioMensalComponent implements OnInit {
   @Input() view: CalendarPeriod = 'month';
   @Input() locale = 'pt-br';
 
@@ -72,28 +74,58 @@ export class AgendaCalendarioMensalComponent {
   @Input() nextBtnDisabled: boolean;
 
   @Input() selectedMonthViewDay: CalendarMonthViewDay;
-
-  constructor(private service: CadastroService) {
+  private vagasDias: number[] = [];
+  constructor(private service: CadastroService, private agendaService: AgendaDataService) {
     this.dateOrViewChanged();
+  }
+
+  ngOnInit() {
+    const date = new Date();
+    const dias = this.diasNoMes(date.getMonth(), date.getFullYear());
+    this.carregarvagasDias(dias);
   }
 
   diaDoMesSelecionado(day: CalendarMonthViewDay): void {
     if (this.selectedMonthViewDay) {
       delete this.selectedMonthViewDay.cssClass;
+      this.aplicarCorDia(day);
     }
     day.cssClass = 'cal-day-selected';
     this.selectedMonthViewDay = day;
     this.service.diaSelecionado(day.date);
   }
 
+  carregarvagasDias(dias: Date[]) {
+    for (let i = 0; i < dias.length; i++) {
+      this.agendaService.temConsultasAbertasDia(dias[i]).subscribe(res => {
+        this.vagasDias.push(res);
+      });
+    }
+  }
+
+  diasNoMes(mes, ano) {
+    const date = new Date(ano, mes, 1);
+    const dias = [];
+    while (date.getMonth() === mes) {
+      dias.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return dias;
+  }
+
+  aplicarCorDia(day: CalendarMonthViewDay) {
+    // delete day.cssClass;
+    // if (this.vagasDias[day.date.getDay()] > 0) {
+    //   day.cssClass = 'tem-vagas';
+    // } else {
+    //   day.cssClass = 'sem-vagas';
+    // }
+  }
+
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach(day => {
-      if (
-        this.selectedMonthViewDay &&
-        day.date.getTime() === this.selectedMonthViewDay.date.getTime()
-      ) {
-        day.cssClass = 'cal-day-selected';
-        this.selectedMonthViewDay = day;
+      if (day.isFuture) {
+        this.aplicarCorDia(day);
       }
     });
   }

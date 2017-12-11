@@ -1,8 +1,8 @@
 export interface Medico {
-    idMedico: Number;
+    idMedico: number;
     crm: string;
     nome: string;
     login: string;
     senha: string;
-    idEspecialidade: Number;
+    idEspecialidade: number;
   }

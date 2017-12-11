@@ -9,6 +9,8 @@ import { of } from 'rxjs/observable/of';
 import { tap } from 'rxjs/operators';
 import { ToasterService, Toast } from 'angular2-toaster';
 import { Cacheable } from '../cacheable';
+import { Prontuario } from '../../_models/prontuario';
+import { Consulta } from '../../_models/consulta';
 
 @Injectable()
 export class AgendaDataService {
@@ -31,6 +33,11 @@ export class AgendaDataService {
             .pipe(catchError(this.handleError<Agenda[]>('buscarConsultasAbertas')));
     }
 
+    temConsultasAbertasDia(dia: Date): Observable<number> {
+        return this.http.get<number>(this.actionUrl + 'TemConsultasAbertas/' + dia.toDateString())
+            .pipe(catchError(this.handleError<number>('temConsultasAbertasDia')));
+    }
+
     buscarConsultasAbertasDia(dia: Date): Observable<Agenda[]> {
         return this.http.get<Agenda[]>(this.actionUrl + 'GetConsultasAbertasDia/' + dia.toDateString())
             .pipe(catchError(this.handleError<Agenda[]>('buscarConsultasAbertasDia')));
@@ -48,7 +55,19 @@ export class AgendaDataService {
         );
     }
 
-    atualizar = (codigo: string, agenda: Agenda): Observable<Agenda> => {
+    criarConsulta(consulta: Consulta): Observable<Consulta> {
+        return this.http.post<Consulta>(this.configuration.server + this.configuration.apiUrl + 'consulta/', consulta).pipe(
+            tap((data: Consulta) => this.log('Solicitação de cadastro iniciada')),
+            catchError(this.handleError<Consulta>('criar')),
+        );
+    }
+
+    mudarParaMarcado(codigo: number): Observable<Agenda> {
+        return this.http.get<Agenda>(this.actionUrl + 'finalizarConsulta/' + codigo)
+            .pipe(catchError(this.handleError<Agenda>('mudarParaMarcado')));
+    }
+
+    atualizar(codigo: number, agenda: Agenda): Observable<Agenda> {
         return this.http.put<Agenda>(this.actionUrl + codigo, JSON.stringify(agenda))
             .pipe(catchError(this.handleError<Agenda>('atualizar')));
     }

@@ -1,8 +1,6 @@
-import { forEach } from '@angular/router/src/utils/collection';
-import { Data } from '@agm/core/services/google-maps-types';
 import { AgendaDataService } from '../../_services/data-services/agenda-data.service';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { CadastroService } from '../../_services/cadastroService';
 import { Agenda } from '../../_models/agenda';
 import { Consulta } from '../../_models/consulta';
@@ -10,23 +8,27 @@ import { MedicoDataService } from '../../_services/medico-data.service';
 import { colors } from '../../_util/calendar/colors';
 import { Subject } from 'rxjs/Subject';
 import { DayViewHour } from 'calendar-utils';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Medico } from '../../_models/medico';
+import { Event } from '../../_models/event';
 
 @Component({
   selector: 'ngx-calendario-diario',
   templateUrl: './agenda-calendario-horarios-dia.component.html',
   styleUrls: ['./agenda-calendario-horarios-dia.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class AgendaCalendarioHorariosDiaComponent implements OnInit {
-  @Input() locale = 'pt-br';
+  locale = 'pt-br';
 
-  @Input() events: CalendarEvent[] = [];
-  @Input() selectedDayViewDate: Date;
-  @Input() viewDate: Date = new Date();
+  events: Array<CalendarEvent<{ idMedico: number, idEvent: number }>> = [];
+  selectedDayViewDate: Date;
+  viewDate: Date = new Date();
   view: 'day';
   dayView: DayViewHour[] = [];
-
+  medicos: Medico[] = [];
+  eventoSelecionado;
+  agendas: Agenda[] = [];
 
   constructor(
     private cadastroService: CadastroService,
@@ -35,29 +37,15 @@ export class AgendaCalendarioHorariosDiaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.medicoService.buscarTodos().subscribe(data => this.medicos = data);
     this.cadastroService.emitirDiaSelecionado.subscribe(
       dia => {
         this.carregarDiaSelecionado(dia);
       },
     );
-    console.log('passei no ngInit');
   }
 
-
   refresh: Subject<any> = new Subject();
-
-  // carregarDiaSelecionado(dia: Date) {
-  //   this.events = [];
-  //   this.agendaService.buscarConsultasAbertas()
-  //     .subscribe(agendas => {
-  //       if (agendas !== undefined) {
-  //         let i = 0;
-  //         for (i = 0; i < agendas.length; i++) { // considerando que você só vai buscar as consultas marcadas
-  //           this.carregarEvento(agendas[i]);
-  //         }
-  //       }
-  //     });
-  // }
 
   carregarDiaSelecionado(dia: Date) {
     this.events = [];
@@ -69,51 +57,46 @@ export class AgendaCalendarioHorariosDiaComponent implements OnInit {
             this.carregarEvento(agendas[i]);
           }
         }
+
+        this.agendas = agendas;
         this.viewDate = new Date(dia);
         this.refresh.next();
-        console.log(this.events);
       });
   }
 
   carregarEvento(agenda: Agenda) {
-    console.log('passei aqui');
+    const m = this.medicos.findIndex(x => x.idMedico === agenda.idMedico);
     const horario = new Date(agenda.horario);
-    let cor = colors.red;
-
-    if (agenda.situacao === 'Aberta') {
-      cor = colors.blue;
-    }
 
     this.events.push({
-      title: 'Algum medico' + agenda.idMedico,
+      title: this.medicos[m].nome,
       start: new Date(agenda.horario),
       end: new Date(horario.setHours(horario.getHours() + 1)),
-      color: cor,
+      color: colors.blue,
       draggable: false,
       resizable: {
         beforeStart: false,
         afterEnd: false,
       },
-    });
-
-  }
-
-  private addSelectedDayViewClass() {
-    this.dayView.forEach(hourSegment => {
-      hourSegment.segments.forEach(segment => {
-        delete segment.cssClass;
-        if (
-          this.selectedDayViewDate &&
-          segment.date.getTime() === this.selectedDayViewDate.getTime()
-        ) {
-          segment.cssClass = 'cal-day-selected';
-        }
-      });
+      meta: {
+        idMedico: m,
+        idEvent: this.events.length,
+      },
     });
   }
 
-  horarioSelecionado(date: Date) {
-    this.selectedDayViewDate = date;
-    this.addSelectedDayViewClass();
+  filtrarPormedico(id: number) {
+    const filtro = this.events.filter(x => x.meta.idEvent === id);
+    this.refresh.next();
+  }
+
+  horarioSelecionado(evento): void {
+    if (this.eventoSelecionado !== undefined) {
+      this.events[this.eventoSelecionado.event.meta.idEvent].color = colors.blue;
+    }
+    this.events[evento.event.meta.idEvent].color = colors.red;
+    this.eventoSelecionado = evento;
+    const m = this.medicos.findIndex(x => x.idMedico === this.eventoSelecionado.event.idMedico);
+    this.cadastroService.horarioSelecionado(this.agendas[this.eventoSelecionado.event.meta.idEvent]);
   }
 }

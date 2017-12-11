@@ -3,22 +3,21 @@
     <div class="row text-center">
       <div>
         <div class="btn-group ">
-          <button class="btn btn-primary" (click)="decrement()" [disabled]="prevBtnDisabled">
-            <
-          </button>
-          <button class="btn btn-primary" (click)="increment()" [disabled]="nextBtnDisabled">
-            >
-          </button>
+          <button class="btn btn-primary btn-tn" (click)="decrement()" [disabled]="prevBtnDisabled">
+            < </button>
+              <button class="btn btn-primary btn-tn" (click)="increment()" [disabled]="nextBtnDisabled">
+                >
+              </button>
         </div>
       </div>
-      <div class="col-md-4">
-          <span>{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt-br' }}</span>
-        </div>
+      <div class="col-md-4  text-small">
+        <h6>{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt-br' }}</h6>
+      </div>
     </div>
   </nb-card-header>
-  <nb-card-body >
-    <mwl-calendar-month-view [viewDate]="viewDate" [locale]="locale" [events]="events"     (beforeViewRender)="beforeMonthViewRender($event)"
-    (dayClicked)="diaDoMesSelecionado($event.day)">
+  <nb-card-body>
+    <mwl-calendar-month-view [viewDate]="viewDate" [locale]="locale" [events]="events" (beforeViewRender)="beforeMonthViewRender($event)"
+      (dayClicked)="diaDoMesSelecionado($event.day)">
     </mwl-calendar-month-view>
   </nb-card-body>
 </nb-card>

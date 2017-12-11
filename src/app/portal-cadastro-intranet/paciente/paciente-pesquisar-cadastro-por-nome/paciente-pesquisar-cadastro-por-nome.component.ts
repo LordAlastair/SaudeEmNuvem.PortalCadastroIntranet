@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { PacienteDataService } from '../../_services/data-services/paciente-data.service';
+import { CadastroService } from '../../_services/cadastroService';
 
 @Component({
-  selector: 'ngx-pesquisar-paciente',
-  templateUrl: 'paciente-pesquisar-cadastro.component.html',
+  selector: 'ngx-pesquisar-paciente-por-nome',
+  templateUrl: 'paciente-pesquisar-cadastro-por-nome.component.html',
   styles: [`
     nb-card {
       transform: translate3d(0, 0, 0);
@@ -15,12 +16,16 @@ import { PacienteDataService } from '../../_services/data-services/paciente-data
   `],
 })
 
-export class PacientePesquisarCadastroComponent implements OnInit {
+export class PacientePesquisarCadastroPorNomeComponent implements OnInit {
   settings = {
     actions: {
       add: false,
       edit: false,
       delete: false,
+    },
+    pager: {
+      display: true,
+      perPage: 5,
     },
     columns: {
       chaveNatural: {
@@ -48,7 +53,8 @@ export class PacientePesquisarCadastroComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private http: HttpClient,
     private pacienteService: PacienteDataService,
-    private router: Router) { }
+    private router: Router,
+    private cadastroService: CadastroService) { }
 
   public ngOnInit() {
     this.source = new LocalDataSource();
@@ -61,6 +67,6 @@ export class PacientePesquisarCadastroComponent implements OnInit {
   }
 
   selecionarPaciente(event): void {
-    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.pacientecod }]);
+     this.cadastroService.pacienteSelecionado(event.data);
   }
 }
