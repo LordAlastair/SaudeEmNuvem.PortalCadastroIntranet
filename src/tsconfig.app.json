@@ -4,8 +4,7 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "baseUrl": "./",
-    "types": [ "node" ],
-    "typeRoots": [ "../node_modules/@types" ],
+    "types": [],
     "paths": {
       "@angular/*": [
         "../node_modules/@angular/*"
@@ -17,6 +16,12 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "../node_modules/@nebular/**/*.spec.ts"
+  ],
+  "include": [
+    "../src/*.ts",
+    "../src/**/*.ts",
+    "../node_modules/@nebular/**/*.ts"
   ]
 }

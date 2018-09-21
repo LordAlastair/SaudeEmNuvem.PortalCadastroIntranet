@@ -13,4 +13,5 @@ export interface Paciente {
     cor?: string;
     rg?: string;
     nacionalidade?: string;
+    codigo?: string;
 }
