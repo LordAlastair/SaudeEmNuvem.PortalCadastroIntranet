@@ -1,0 +1,13 @@
+<nb-card>
+  <nb-card-body >
+    <mwl-calendar-day-view
+    [refresh]="refresh"
+    [viewDate]="viewDate"
+    [events]="events"
+    [hourSegments]="1"
+    [dayStartHour]="7"
+    [dayEndHour]="17"
+    (eventClicked)="horarioSelecionado($event)">
+  </mwl-calendar-day-view>
+  </nb-card-body>
+</nb-card>
