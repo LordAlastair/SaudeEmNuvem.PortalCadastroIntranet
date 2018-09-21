@@ -53,9 +53,4 @@ export const MENU_ITEMS_PORTAL: NbMenuItem[] = [
     link: '/portal-cadastro-intranet/paciente/pesquisar',
     icon: 'ion-search',
   },
-  {
-    title: 'Pesquisar paciente',
-    link: '/portal-cadastro-intranet/agenda/mensal',
-    icon: 'ion-search',
-  },
 ];

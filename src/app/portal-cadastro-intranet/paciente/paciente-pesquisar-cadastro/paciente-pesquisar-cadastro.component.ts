@@ -6,7 +6,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { PacienteDataService } from '../../_services/data-services/paciente-data.service';
 
 @Component({
-  selector: 'ngx-pesquisar-paciente',
+  selector: 'ngx-smart-table',
   templateUrl: 'paciente-pesquisar-cadastro.component.html',
   styles: [`
     nb-card {

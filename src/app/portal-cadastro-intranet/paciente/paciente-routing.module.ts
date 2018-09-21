@@ -4,12 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { PacienteComponent } from './paciente.component';
 
 import { PacienteAlterarCadastroComponent } from './paciente-alterar-cadastro/paciente-alterar-cadastro.component';
+// tslint:disable-next-line:max-line-length
 import { PacientePesquisarCadastroComponent } from './paciente-pesquisar-cadastro/paciente-pesquisar-cadastro.component';
+// tslint:disable-next-line:max-line-length
 import { PacienteRealizarCadastroComponent } from './paciente-realizar-cadastro/paciente-realizar-cadastro.component';
+// tslint:disable-next-line:max-line-length
 import { PacienteVisualizarCadastroComponent } from './paciente-visualizar-cadastro/paciente-visualizar-cadastro.component';
-import {
-  PacientePesquisarCadastroPorNomeComponent,
-} from './paciente-pesquisar-cadastro-por-nome/paciente-pesquisar-cadastro-por-nome.component';
 
 const routes: Routes = [{
   path: '',
@@ -46,5 +46,4 @@ export const routedComponents = [
   PacientePesquisarCadastroComponent,
   PacienteRealizarCadastroComponent,
   PacienteVisualizarCadastroComponent,
-  PacientePesquisarCadastroPorNomeComponent,
 ];

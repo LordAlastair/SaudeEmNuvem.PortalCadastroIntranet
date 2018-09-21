@@ -1,5 +1,3 @@
-import { Prontuario } from './prontuario';
-
 export interface Paciente {
     pacientecod?: number;
     chaveNatural?: string;
@@ -15,5 +13,5 @@ export interface Paciente {
     cor?: string;
     rg?: string;
     nacionalidade?: string;
-    prontuario: Prontuario;
+    codigo?: string;
 }

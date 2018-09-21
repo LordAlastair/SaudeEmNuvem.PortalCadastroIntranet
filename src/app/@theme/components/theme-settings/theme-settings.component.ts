@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { StateService } from '../../../@core/data/state.service';
 
@@ -25,6 +25,9 @@ import { StateService } from '../../../@core/data/state.service';
          (click)="sidebarSelect(sidebar)">
         <i [attr.class]="sidebar.icon"></i>
       </a>
+    </div>
+    <div class="switcher">
+      <ngx-layout-direction-switcher [vertical]="true"></ngx-layout-direction-switcher>
     </div>
   `,
 })
