@@ -29,7 +29,8 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
         setTimeout(() => {
 
             // authenticate
-            if (connection.request.url.endsWith('/api/authenticate') && connection.request.method === RequestMethod.Post) {
+            if (connection.request.url.endsWith('/api/authenticate')
+                && connection.request.method === RequestMethod.Post) {
                 // get parameters from post request
                 const params = JSON.parse(connection.request.getBody());
 
@@ -68,10 +69,10 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
             if (connection.request.url.match(/\/api\/pacientes\/\d+$/)
                 && connection.request.method === RequestMethod.Get) {
                     // find paciente by id in pacientes array
-                    let urlParts = connection.request.url.split('/');
-                    let codigo = parseInt(urlParts[urlParts.length - 1]);
-                    let matchedpacientes = pacientes.filter(user => { return paciente.codigo === codigo; });
-                    let paciente = matchedpacientes.length ? matchedpacientes[0] : null;
+                    const urlParts = connection.request.url.split('/');
+                    const codigo = parseInt(urlParts[urlParts.length - 1]);
+                    const matchedpacientes = pacientes.filter(user => paciente.codigo === codigo);
+                    const paciente = matchedpacientes.length ? matchedpacientes[0] : null;
 
                     // respond 200 OK with paciente
                     connection.mockRespond(new Response(new ResponseOptions({ status: 200, body: paciente })));
@@ -81,7 +82,7 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
             // create user
             if (connection.request.url.endsWith('/api/pacientes') && connection.request.method === RequestMethod.Post) {
                 // get new user object from post body
-                let novoPaciente = JSON.parse(connection.request.getBody());
+                const novoPaciente = JSON.parse(connection.request.getBody());
 
                 // save new user
                 novoPaciente.codigo = pacientes.length + 1;
@@ -95,14 +96,14 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
             }
 
             // delete user
-            if (connection.request.url.match(/\/api\/pacientes\/\d+$/) && connection.request.method === RequestMethod.Delete) {
-                // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+            if (connection.request.url.match(/\/api\/pacientes\/\d+$/)
+             && connection.request.method === RequestMethod.Delete) {
                 if (connection.request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
                     // find user by id in pacientes array
-                    let urlParts = connection.request.url.split('/');
-                    let id = parseInt(urlParts[urlParts.length - 1]);
+                    const urlParts = connection.request.url.split('/');
+                    const id = parseInt(urlParts[urlParts.length - 1]);
                     for (let i = 0; i < pacientes.length; i++) {
-                        let user = pacientes[i];
+                        const user = pacientes[i];
                         if (user.id === id) {
                             // delete user
                             pacientes.splice(i, 1);
@@ -122,8 +123,8 @@ export function fakeBackendFactory(backend: MockBackend, options: BaseRequestOpt
             }
 
             // pass through any requests not handled above
-            let realHttp = new Http(realBackend, options);
-            let requestOptions = new RequestOptions({
+            const realHttp = new Http(realBackend, options);
+            const requestOptions = new RequestOptions({
                 method: connection.request.method,
                 headers: connection.request.headers,
                 body: connection.request.getBody(),

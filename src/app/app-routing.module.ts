@@ -44,8 +44,8 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'portal-cadastro-intranet', pathMatch: 'full' },
-  { path: '**', redirectTo: 'portal-cadastro-intranet' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' },
 ];
 
 const config: ExtraOptions = {

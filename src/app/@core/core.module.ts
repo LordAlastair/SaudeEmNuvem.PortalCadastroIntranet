@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbDummyAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy, NbAuthJWTToken } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
 
@@ -10,22 +10,16 @@ import { AnalyticsService } from './utils/analytics.service';
 
 const socialLinks = [
   {
-    url: 'https://github.com/akveo/nebular',
-    target: '_blank',
-    icon: 'socicon-github',
-  },
-  {
-    url: 'https://www.facebook.com/akveo/',
+    url: 'https://www.facebook.com/harlan.nascimento',
     target: '_blank',
     icon: 'socicon-facebook',
   },
   {
-    url: 'https://twitter.com/akveo_inc',
+    url: 'https://www.linkedin.com/in/harlan-gomes-896354b0/',
     target: '_blank',
-    icon: 'socicon-twitter',
+    icon: 'socicon-linkedin',
   },
 ];
-
 export class NbSimpleRoleProvider extends NbRoleProvider {
   getRole() {
     // here you could provide any role based on any auth flow
@@ -35,12 +29,37 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 
 export const NB_CORE_PROVIDERS = [
   ...DataModule.forRoot().providers,
+
   ...NbAuthModule.forRoot({
 
+
     strategies: [
-      NbDummyAuthStrategy.setup({
+      NbPasswordAuthStrategy.setup({
         name: 'email',
-        delay: 3000,
+        baseEndpoint: 'http://localhost:5100',
+        login: {
+          // ...
+          endpoint: '/autenticar',
+          method: 'post',
+          redirect: {
+            success: '/portal-cadastro-intranet/dashboard',
+            failure: null,
+          },
+          defaultErrors: ['Login/Senha informado errado'],
+          defaultMessages: ['Login efetuado com sucesso!!'],
+        },
+        register: {
+          endpoint: '/register',
+        },
+        refreshToken: true,
+
+        token: {
+          class: NbAuthJWTToken,
+          key: 'token',
+          // getter: (module, res) => {
+          //   return JSON.stringify(res.body[0]);
+          // },
+        },
       }),
     ],
     forms: {
