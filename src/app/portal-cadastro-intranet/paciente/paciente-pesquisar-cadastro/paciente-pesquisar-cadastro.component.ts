@@ -63,16 +63,24 @@ export class PacientePesquisarCadastroComponent implements OnInit {
   carregarDados(): void {
     this.pacienteService.buscarTodos()
       .subscribe(pacientes => {
-        const teste = [];
-        pacientes.forEach(element => {
-          teste.push(
-            {
-              nome: element.pessoa.nome,
-              apelido: element.pessoa.apelido,
-              dataNascimento: element.pessoa.dataNascimento,
-              chave: element.meta.chaveNaturalCadSus,
-            });
-        });
+        const teste = pacientes.map(p => {
+          return {
+            nome: p.pessoa.nome,
+            apelido: p.pessoa.apelido,
+            dataNascimento: p.pessoa.dataNascimento,
+            chave: p.meta.chaveNaturalCadSus,
+          }
+        })
+
+        // pacientes.forEach(element => {
+        //   teste.push(
+        //     {
+        //       nome: element.pessoa.nome,
+        //       apelido: element.pessoa.apelido,
+        //       dataNascimento: element.pessoa.dataNascimento,
+        //       chave: element.meta.chaveNaturalCadSus,
+        //     });
+        // });
         this.source.load(teste);
       });
   }
@@ -80,4 +88,21 @@ export class PacientePesquisarCadastroComponent implements OnInit {
   selecionarPaciente(event): void {
     this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.chave }]);
   }
+}
+
+class teste {
+  nome;
+  apelido;
+  dataNascimento;
+  chave;
+
+  constructor(nome,
+    apelido,
+    dataNascimento,
+    chave) {
+      this.nome = nome;
+      this.apelido = apelido;
+      this.dataNascimento = dataNascimento;
+      this.chave = chave;
+    }
 }

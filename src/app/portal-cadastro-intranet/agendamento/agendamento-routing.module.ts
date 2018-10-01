@@ -4,6 +4,7 @@ import {
     AgendamentoNovoComponent,
 } from './agendamento-novo/agendamento-novo.component';
 import { AgendamentoComponent } from './agendamento.component';
+import { AgendamentoNovoModalComponent } from './agendamento-novo-modal/agendamento-novo-modal.component';
 
 
 const routes: Routes = [{
@@ -12,6 +13,9 @@ const routes: Routes = [{
     children: [{
         path: 'novo',
         component: AgendamentoNovoComponent,
+    }, {
+        path: 'novoModal',
+        component: AgendamentoNovoModalComponent,
     }],
 }];
 
@@ -25,5 +29,6 @@ export class AgendamentoRoutingModule {
 
 export const routedComponents = [
     AgendamentoComponent,
+    AgendamentoNovoModalComponent,
     AgendamentoNovoComponent,
 ];
