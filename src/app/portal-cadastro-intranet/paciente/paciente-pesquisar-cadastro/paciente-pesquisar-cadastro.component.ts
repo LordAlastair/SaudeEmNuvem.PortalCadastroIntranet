@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
-
+import { DatePipe } from '@angular/common';
 import { PacienteDataService } from '../../_services/data-services/paciente-data.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class PacientePesquisarCadastroComponent implements OnInit {
       delete: false,
     },
     columns: {
-      chaveNatural: {
+      chave: {
         title: 'Codigo',
         type: 'string',
       },
@@ -31,13 +31,18 @@ export class PacientePesquisarCadastroComponent implements OnInit {
         title: 'Nome',
         type: 'string',
       },
-      nomeApelido: {
-        title: 'apelido',
+      apelido: {
+        title: 'Apelido',
         type: 'string',
       },
       dataNascimento: {
         title: 'Data Nascimento',
-        type: 'Date',
+        type: 'date',
+        valuePrepareFunction: (dataNascimento) => {
+          const raw = new Date(dataNascimento);
+          return raw.toLocaleDateString('en-Us');
+
+        },
       },
     },
   };
@@ -57,10 +62,22 @@ export class PacientePesquisarCadastroComponent implements OnInit {
 
   carregarDados(): void {
     this.pacienteService.buscarTodos()
-      .subscribe(pacientes => this.source.load(pacientes));
+      .subscribe(pacientes => {
+        const teste = [];
+        pacientes.forEach(element => {
+          teste.push(
+            {
+              nome: element.pessoa.nome,
+              apelido: element.pessoa.apelido,
+              dataNascimento: element.pessoa.dataNascimento,
+              chave: element.meta.chaveNaturalCadSus,
+            });
+        });
+        this.source.load(teste);
+      });
   }
 
   selecionarPaciente(event): void {
-    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.pacientecod }]);
+    this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.chave }]);
   }
 }

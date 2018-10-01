@@ -32,9 +32,9 @@
           </div>
           <div class="col-md-4 sm-12">
             <div class="form-group">
-              <show-errors [control]="form.controls.nomeApelido"></show-errors>
+              <show-errors [control]="form.controls.apelido"></show-errors>
               <label for="" class="input-label">Apelido </label>
-              <input type="text" placeholder="Apelido" class="form-control" name="nomeApelido" formControlName="nomeApelido" [ngClass]="{'form-control-warning': form.controls.nomeApelido.untouched, 'form-control-danger': form.controls.nomeApelido.invalid && !form.controls.nomeApelido.untouched, 'form-control-success': form.controls.nomeApelido.valid}"
+              <input type="text" placeholder="Apelido" class="form-control" name="apelido" formControlName="apelido" [ngClass]="{'form-control-warning': form.controls.apelido.untouched, 'form-control-danger': form.controls.apelido.invalid && !form.controls.apelido.untouched, 'form-control-success': form.controls.apelido.valid}"
               />
             </div>
           </div>
@@ -80,13 +80,13 @@
               <div formControlName="sexo" ngbRadioGroup 
                 class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group">
                 <label ngbButtonLabel class="btn btn-outline-primary">
-                  <input ngbButton type="radio" value="Masculino"> Masculino
+                  <input ngbButton type="radio" value="2"> Masculino
                 </label>
                 <label ngbButtonLabel class="btn btn-outline-primary">
-                  <input ngbButton type="radio" value="Feminino"> Feminino
+                  <input ngbButton type="radio" value="3"> Feminino
                 </label>
                 <label ngbButtonLabel class="btn btn-outline-primary">
-                  <input ngbButton type="radio" value="Outro"> Outro
+                  <input ngbButton type="radio" value="1"> Outro
                 </label>
               </div>
             </div>

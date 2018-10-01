@@ -21,6 +21,11 @@ const routes: Routes = [{
     loadChildren: './atendimento/atendimento.module#AtendimentoModule',
   },
   {
+    path: 'agendamento',
+    canActivate: [AuthGuard],
+    loadChildren: './agendamento/agendamento.module#AgendamentoModule',
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',

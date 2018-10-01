@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators/catchError';
 import { HttpWrapperService } from '../httpWrapper.service';
-import { Configuration } from '../../_shared/configuration';
+import { CadastroConf } from '../../_shared/CadastroConf';
 import { Paciente } from '../../_models/paciente';
 import { of } from 'rxjs/observable/of';
 import { tap } from 'rxjs/operators';
@@ -12,110 +12,117 @@ import * as uuidv4 from 'uuid/v4';
 @Injectable()
 export class PacienteDataService {
 
-	public actionUrl: string;
+    public actionUrl: string;
 
-	constructor(private http: HttpWrapperService, private configuration: Configuration, private toasterService: ToasterService) {
-		this.actionUrl = configuration.server + configuration.apiUrl + 'paciente/';
-	}
+    constructor(private http: HttpWrapperService, private configuration: CadastroConf,
+        private toasterService: ToasterService) {
+        this.actionUrl = configuration.server + configuration.apiUrl;
+    }
 
-	buscarTodos(): Observable<Paciente[]> {
-		return this.http.get<Paciente[]>(this.actionUrl)
-			.pipe(catchError(this.handleError<Paciente[]>('buscarTodos')));
-	}
+    buscarTodos(): Observable<Paciente[]> {
+        return this.http.get<Paciente[]>(this.actionUrl + '/GetPacientes')
+            .pipe(catchError(this.handleError<Paciente[]>('getPacientes')));
+    }
 
-	buscarPorCodigo(codigo: number): Observable<Paciente> {
-		return this.http.get<Paciente>(this.actionUrl + codigo)
-			.pipe(catchError(this.handleError<Paciente>('buscarPorCodigo')));
-	}
+    buscarPorCodigo(codigo: number): Observable<Paciente> {
+        return this.http.get<Paciente>(this.actionUrl + '/getPaciente' + codigo)
+            .pipe(catchError(this.handleError<Paciente>('getPaciente')));
+    }
 
-	criar(paciente: Paciente): Observable<Paciente> {
-		paciente.chaveNatural = uuidv4();
-		paciente.cns = this.geradorCNSValido();
+    buscarPorChaveCadSus(codigo: string): Observable<Paciente> {
+        return this.http.get<Paciente>(this.actionUrl + '/getPacientePorChaveCadSUs/' + codigo)
+            .pipe(catchError(this.handleError<Paciente>('getPacientePorChaveCadSUs')));
+    }
 
-		return this.http.post<Paciente>(this.actionUrl, paciente).pipe(
-			tap((paciente: Paciente) => this.log('Solicitação de cadastro iniciada')),
-			catchError(this.handleError<Paciente>('criar')),
-		);
-	}
+    criar(paciente: Paciente): Observable<Paciente> {
+        if (!paciente.meta.chaveNaturalCadSus) {
+            paciente.meta.chaveNaturalCadSus = uuidv4();
+        }
 
-	atualizar = (codigo: string, paciente: Paciente): Observable<Paciente> => {
-		return this.http.put<Paciente>(this.actionUrl + codigo, JSON.stringify(paciente))
-			.pipe(catchError(this.handleError<Paciente>('atualizar')));
-	}
+        return this.http.post<Paciente>(this.actionUrl + '/cadastrar', paciente).pipe(
+            tap(() => this.log('Solicitação de cadastro iniciada')),
+            catchError(this.handleError<Paciente>('cadastrar')),
+        );
+    }
 
-	/**
-	* Handle Http operation that failed.
-	* Let the app continue.
-	* @param operation - name of the operation that failed
-	* @param result - optional value to return as the observable result
-	*/
-	private handleError<T>(operation = 'operation', result?: T) {
-		return (error: any): Observable<T> => {
+    atualizar = (codigo: string, paciente: Paciente): Observable<Paciente> => {
+        return this.http.put<Paciente>(this.actionUrl + codigo, JSON.stringify(paciente))
+            .pipe(catchError(this.handleError<Paciente>('atualizar')));
+    }
 
-			// TODO: send the error to remote logging infrastructure
-			console.error(error); // log to console instead
+    /**
+    * Handle Http operation that failed.
+    * Let the app continue.
+    * @param operation - name of the operation that failed
+    * @param result - optional value to return as the observable result
+    */
+    private handleError<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
 
-			// Let the app keep running by returning an empty result.
-			return of(result as T);
-		};
-	}
+            // TODO: send the error to remote logging infrastructure
+            console.error(error); // log to console instead
 
-	/** Emite que a solicitação foi enviada  */
-	private log(message: string) {
-		const toast: Toast = {
-			type: 'warning',
-			body: message,
-		};
-		this.toasterService.pop(toast);
-	}
+            // Let the app keep running by returning an empty result.
+            return of(result as T);
+        };
+    }
 
-	public geradorCNSValido() {
-		let gera0 = Math.floor((Math.random() * 3) + 1);
+    /** Emite que a solicitação foi enviada  */
+    private log(message: string) {
+        const toast: Toast = {
+            type: 'warning',
+            body: message,
+        };
+        this.toasterService.pop(toast);
+    }
 
-		if (gera0 === 3) {
-			gera0 = Math.floor((Math.random() * 3) + 7);
-		}
+    public geradorCNSValido() {
+        let gera0 = Math.floor((Math.random() * 3) + 1);
 
-		const gera1 = Math.floor((Math.random() * 99999) + 1);
-		const gera2 = Math.floor((Math.random() * 99999) + 1);
+        if (gera0 === 3) {
+            gera0 = Math.floor((Math.random() * 3) + 7);
+        }
 
-		let cns = gera0 + ('0' + gera1).slice(-5) + ('0' + gera2).slice(-5);
-		let soma = (((Number(cns.substring(0, 1))) * 15) +
-			((Number(cns.substring(1, 2))) * 14) +
-			((Number(cns.substring(2, 3))) * 13) +
-			((Number(cns.substring(3, 4))) * 12) +
-			((Number(cns.substring(4, 5))) * 11) +
-			((Number(cns.substring(5, 6))) * 10) +
-			((Number(cns.substring(6, 7))) * 9) +
-			((Number(cns.substring(7, 8))) * 8) +
-			((Number(cns.substring(8, 9))) * 7) +
-			((Number(cns.substring(9, 10))) * 6) +
-			((Number(cns.substring(10, 11))) * 5));
+        const gera1 = Math.floor((Math.random() * 99999) + 1);
+        const gera2 = Math.floor((Math.random() * 99999) + 1);
 
-		let resto = soma % 11;
-		let dv = 11 - resto;
+        let cns = gera0 + ('0' + gera1).slice(-5) + ('0' + gera2).slice(-5);
+        let soma = (((Number(cns.substring(0, 1))) * 15) +
+            ((Number(cns.substring(1, 2))) * 14) +
+            ((Number(cns.substring(2, 3))) * 13) +
+            ((Number(cns.substring(3, 4))) * 12) +
+            ((Number(cns.substring(4, 5))) * 11) +
+            ((Number(cns.substring(5, 6))) * 10) +
+            ((Number(cns.substring(6, 7))) * 9) +
+            ((Number(cns.substring(7, 8))) * 8) +
+            ((Number(cns.substring(8, 9))) * 7) +
+            ((Number(cns.substring(9, 10))) * 6) +
+            ((Number(cns.substring(10, 11))) * 5));
 
-		dv = (dv === 11) ? 0 : dv;
-		const teste = dv;
-		if (dv === 10) {
-			soma = (((Number(cns.substring(0, 1))) * 15) +
-				((Number(cns.substring(1, 2))) * 14) +
-				((Number(cns.substring(2, 3))) * 13) +
-				((Number(cns.substring(3, 4))) * 12) +
-				((Number(cns.substring(4, 5))) * 11) +
-				((Number(cns.substring(5, 6))) * 10) +
-				((Number(cns.substring(6, 7))) * 9) +
-				((Number(cns.substring(7, 8))) * 8) +
-				((Number(cns.substring(8, 9))) * 7) +
-				((Number(cns.substring(9, 10))) * 6) +
-				((Number(cns.substring(10, 11))) * 5) + 2);
+        let resto = soma % 11;
+        let dv = 11 - resto;
 
-			resto = soma % 11;
-			dv = 11 - resto;
-			cns += '001' + String(dv);
-		} else {
-			cns += '000' + String(dv);
-		}
-		return cns;
-	}
+        dv = (dv === 11) ? 0 : dv;
+        const teste = dv;
+        if (dv === 10) {
+            soma = (((Number(cns.substring(0, 1))) * 15) +
+                ((Number(cns.substring(1, 2))) * 14) +
+                ((Number(cns.substring(2, 3))) * 13) +
+                ((Number(cns.substring(3, 4))) * 12) +
+                ((Number(cns.substring(4, 5))) * 11) +
+                ((Number(cns.substring(5, 6))) * 10) +
+                ((Number(cns.substring(6, 7))) * 9) +
+                ((Number(cns.substring(7, 8))) * 8) +
+                ((Number(cns.substring(8, 9))) * 7) +
+                ((Number(cns.substring(9, 10))) * 6) +
+                ((Number(cns.substring(10, 11))) * 5) + 2);
+
+            resto = soma % 11;
+            dv = 11 - resto;
+            cns += '001' + String(dv);
+        } else {
+            cns += '000' + String(dv);
+        }
+        return cns;
+    }
 }

@@ -5,9 +5,10 @@ import { PacienteDataService } from './_services/data-services/paciente-data.ser
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PortalRoutingModule } from './portal-cadastro-intranet-routing.module';
 import { PortalCadastroIntranetComponent } from './portal-cadastro-intranet.component';
-import { Configuration } from './_shared/configuration';
+import { CadastroConf } from './_shared/CadastroConf';
 import { HttpWrapperService } from './_services/httpWrapper.service';
 import { AtendimentoDataService } from './_services/data-services/atendimento-data.service';
+import { AgendamentoConf } from './_shared/AgendamentoConf';
 
 const COMPONENTS = [
   PortalCadastroIntranetComponent,
@@ -24,10 +25,11 @@ const COMPONENTS = [
   ],
   providers: [
     AtendimentoDataService,
-    Configuration,
+    CadastroConf,
+    AgendamentoConf,
     PacienteDataService,
     HttpWrapperService,
-],
+  ],
 })
 
 export class PortalCadastroIntranetModule { }

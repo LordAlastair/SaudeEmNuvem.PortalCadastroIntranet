@@ -24,7 +24,7 @@ export class PacienteVisualizarCadastroComponent implements OnInit {
 
   carregarDados(): void {
     this.pacienteService
-      .buscarPorCodigo(this.route.snapshot.params['codigo'])
+      .buscarPorChaveCadSus(this.route.snapshot.params['codigo'])
       .subscribe(
       res => {
         this.paciente = res;

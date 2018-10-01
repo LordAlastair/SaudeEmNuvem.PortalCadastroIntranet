@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Toast, ToasterService } from 'angular2-toaster';
-
+import * as uuidv4 from 'uuid/v4';
 import { PacienteDataService } from '../../_services/data-services/paciente-data.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   templateUrl: './paciente-realizar-cadastro.component.html',
@@ -26,25 +27,30 @@ export class PacienteRealizarCadastroComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       nome: [],
-      nomeApelido: [],
+      apelido: [],
       nomeMae: [],
       nomePai: [],
       dataNascimento: [],
-      sexo: [],
       cpf: [],
       rg: [],
       cns: [],
       pais: [],
-      nacionalidade: [],
-      cor: [],
+      cor: 1,
+      sexo: 1,
+      tipoSanguineo: 1,
+      nacionalidade: 1 ,
+      meta : {
+        chaveNaturalCadSus : uuidv4(),
+      },
     });
   }
 
   register() {
     if (this.form.valid) {
-      this.pacienteService.criar(this.form.value).subscribe(res => {
-        this.logSuccess(res.nome + ' cadastrado no sistema');
-        this.router.navigate(['/portal-cadastro-intranet/atendimento/cadastro', { codigo: res.chaveNatural }]);
+      this.pacienteService.criar(this.form.value).subscribe( res => {
+        this.logSuccess(this.form.value.nome + ' cadastrado no sistema');
+        this.router.navigate(
+          ['/portal-cadastro-intranet/atendimento/cadastro', { codigo: this.form.value.meta.chaveNaturalCadSus }]);
       }, (error) => {
         this.logSuccess(error.value);
       });

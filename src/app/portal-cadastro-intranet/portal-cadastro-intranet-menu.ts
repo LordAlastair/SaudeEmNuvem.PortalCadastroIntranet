@@ -53,4 +53,9 @@ export const MENU_ITEMS_PORTAL: NbMenuItem[] = [
     link: '/portal-cadastro-intranet/paciente/pesquisar',
     icon: 'ion-search',
   },
+  {
+    title: 'Nova Consulta',
+    link: '/portal-cadastro-intranet/agendamento/novo',
+    icon: 'ion-document-text',
+  },
 ];
