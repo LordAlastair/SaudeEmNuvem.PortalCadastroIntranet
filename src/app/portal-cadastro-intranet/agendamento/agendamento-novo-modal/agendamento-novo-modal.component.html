@@ -1,12 +1,33 @@
 <div class="modal-header">
-    <span>{{ modalHeader }}</span>
+    <span>Marcar consulta para o paciente: {{paciente?.pessoa?.nome}}</span>
     <button class="close" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
-    {{ modalContent }}
+    <nb-card-body>
+        <div class="row col-md-12">
+            <div class="col-md-4 sm-12">
+                <div class="form-group">
+                    <span>Selecione o horário</span>
+                    <ngb-datepicker #d (select)="onDateSelect($event)"></ngb-datepicker>
+                </div>
+            </div>
+            <div class="col-md-4 sm-12">
+                <div class="dropdown" placement="top" ngbDropdown>
+                    <div class="dropdown" ngbDropdown>
+                        <button class="btn btn-primary" type="button" ngbDropdownToggle>
+                            Selecione o Médico:
+                        </button>
+                        <ul class="dropdown-menu" ngbDropdownMenu>
+                            <li value="9713c397-fedc-45e8-9e19-d1b9d52ba253"  class="dropdown-item">Medico Master</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-md btn-primary" (click)="closeModal()">Save changes</button>
+    <button class="btn btn-md btn-primary" (click)="closeModal()">Confirmar consulta</button>
 </div>

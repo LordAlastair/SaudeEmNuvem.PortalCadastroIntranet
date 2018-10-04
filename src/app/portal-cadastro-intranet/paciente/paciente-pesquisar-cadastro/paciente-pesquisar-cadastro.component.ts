@@ -71,7 +71,7 @@ export class PacientePesquisarCadastroComponent implements OnInit {
             chave: p.meta.chaveNaturalCadSus,
           }
         })
-
+        this.source.load(teste);
         // pacientes.forEach(element => {
         //   teste.push(
         //     {
@@ -81,28 +81,10 @@ export class PacientePesquisarCadastroComponent implements OnInit {
         //       chave: element.meta.chaveNaturalCadSus,
         //     });
         // });
-        this.source.load(teste);
       });
   }
 
   selecionarPaciente(event): void {
     this.router.navigate(['/portal-cadastro-intranet/paciente/visualizar', { codigo: event.data.chave }]);
   }
-}
-
-class teste {
-  nome;
-  apelido;
-  dataNascimento;
-  chave;
-
-  constructor(nome,
-    apelido,
-    dataNascimento,
-    chave) {
-      this.nome = nome;
-      this.apelido = apelido;
-      this.dataNascimento = dataNascimento;
-      this.chave = chave;
-    }
 }

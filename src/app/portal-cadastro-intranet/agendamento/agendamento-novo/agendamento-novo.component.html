@@ -1,3 +1,21 @@
-<p>
-  Agendamento works!
-</p>
+<!-- <div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Modals</nb-card-header>
+      <nb-card-body>
+        <button class="btn btn-success" (click)="showLargeModal('f5c52155-e763-481d-aa7f-e6638868106d')">Large modal</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div> -->
+
+<nb-card>
+  <nb-card-header>
+    Pacientes
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="selecionarPaciente($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

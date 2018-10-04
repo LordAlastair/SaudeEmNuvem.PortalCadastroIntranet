@@ -16,7 +16,8 @@
             <div class="form-group">
               <show-errors [control]="form.controls.dataNascimento"></show-errors>
               <label for="" class="input-label">Nascimento* </label>
-              <input type="text" placeholder="Nascimento" class="form-control" name="dataNascimento" formControlName="dataNascimento" [ngClass]="{'form-control-warning': form.controls.dataNascimento.untouched, 'form-control-danger': form.controls.dataNascimento.invalid && !form.controls.dataNascimento.untouched, 'form-control-success': form.controls.dataNascimento.valid}"
+              <input type="text" placeholder="Nascimento" class="form-control" name="dataNascimento" formControlName="dataNascimento"
+                [ngClass]="{'form-control-warning': form.controls.dataNascimento.untouched, 'form-control-danger': form.controls.dataNascimento.invalid && !form.controls.dataNascimento.untouched, 'form-control-success': form.controls.dataNascimento.valid}"
                 [textMask]="{mask: maskNascimento}" required />
             </div>
           </div>
@@ -34,8 +35,8 @@
             <div class="form-group">
               <show-errors [control]="form.controls.apelido"></show-errors>
               <label for="" class="input-label">Apelido </label>
-              <input type="text" placeholder="Apelido" class="form-control" name="apelido" formControlName="apelido" [ngClass]="{'form-control-warning': form.controls.apelido.untouched, 'form-control-danger': form.controls.apelido.invalid && !form.controls.apelido.untouched, 'form-control-success': form.controls.apelido.valid}"
-              />
+              <input type="text" placeholder="Apelido" class="form-control" name="apelido" formControlName="apelido"
+                [ngClass]="{'form-control-warning': form.controls.apelido.untouched, 'form-control-danger': form.controls.apelido.invalid && !form.controls.apelido.untouched, 'form-control-success': form.controls.apelido.valid}" />
             </div>
           </div>
         </div>
@@ -44,16 +45,16 @@
             <div class="form-group">
               <show-errors [control]="form.controls.nomePai"></show-errors>
               <label for="" class="input-label">Nome Pai </label>
-              <input type="text" placeholder="Nome Pai" class="form-control" name="nomePai" formControlName="nomePai" [ngClass]="{'form-control-warning': form.controls.nomePai.untouched, 'form-control-danger': form.controls.nomePai.invalid && !form.controls.nomePai.untouched, 'form-control-success': form.controls.nomePai.valid}"
-              />
+              <input type="text" placeholder="Nome Pai" class="form-control" name="nomePai" formControlName="nomePai"
+                [ngClass]="{'form-control-warning': form.controls.nomePai.untouched, 'form-control-danger': form.controls.nomePai.invalid && !form.controls.nomePai.untouched, 'form-control-success': form.controls.nomePai.valid}" />
             </div>
           </div>
           <div class="col-md-6 sm-12">
             <div class="form-group">
               <show-errors [control]="form.controls.nomeMae"></show-errors>
               <label for="" class="input-label">Nome Mãe</label>
-              <input type="text" placeholder="Nome mãe" class="form-control" name="nomeMae" formControlName="nomeMae" [ngClass]="{'form-control-warning': form.controls.nomeMae.untouched, 'form-control-danger': form.controls.nomeMae.invalid && !form.controls.nomeMae.untouched, 'form-control-success': form.controls.nomeMae.valid}"
-              />
+              <input type="text" placeholder="Nome mãe" class="form-control" name="nomeMae" formControlName="nomeMae"
+                [ngClass]="{'form-control-warning': form.controls.nomeMae.untouched, 'form-control-danger': form.controls.nomeMae.invalid && !form.controls.nomeMae.untouched, 'form-control-success': form.controls.nomeMae.valid}" />
             </div>
           </div>
         </div>
@@ -62,7 +63,8 @@
             <div class="form-group">
               <show-errors [control]="form.controls.nacionalidade"></show-errors>
               <label for="" class="input-label">Nacionalidade* </label>
-              <input type="text" placeholder="Pais" class="form-control" name="nacionalidade" formControlName="nacionalidade" [ngClass]="{'form-control-warning': form.controls.nacionalidade.untouched, 'form-control-danger': form.controls.nacionalidade.invalid && !form.controls.nacionalidade.untouched, 'form-control-success': form.controls.nacionalidade.valid}"
+              <input type="text" placeholder="Pais" class="form-control" name="nacionalidade" formControlName="nacionalidade"
+                [ngClass]="{'form-control-warning': form.controls.nacionalidade.untouched, 'form-control-danger': form.controls.nacionalidade.invalid && !form.controls.nacionalidade.untouched, 'form-control-success': form.controls.nacionalidade.valid}"
                 required />
             </div>
           </div>
@@ -77,8 +79,7 @@
           <div class="col-md-4 sm-12">
             <div class="example-container toggle-types">
               <div class="container-title ">Sexo</div>
-              <div formControlName="sexo" ngbRadioGroup 
-                class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group">
+              <div formControlName="sexo" ngbRadioGroup class="btn-group btn-group-toggle btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group">
                 <label ngbButtonLabel class="btn btn-outline-primary">
                   <input ngbButton type="radio" value="2"> Masculino
                 </label>
@@ -104,15 +105,15 @@
             (focus)="d.open()" (click)="d.open()" required>
         </div> -->
         <div class="row col-md-12">
-            <div class=" col-md-4">
-                <button type="submit" class="btn btn-primary col-12">Cadastrar Paciente</button>
-              </div>
-              <div class=" col-md-4">
-                <button type="button" class="btn btn-primary col-12">Salvar Pré-cadastro</button>
-              </div>
-              <div class=" col-md-2">
-                <button type="button" class="btn btn-danger col-12" (click)="cancelar()">Cancelar</button>
-              </div>
+          <div class=" col-md-4">
+            <button type="submit" class="btn btn-primary col-12">Cadastrar Paciente</button>
+          </div>
+          <div class=" col-md-4">
+            <button type="button" class="btn btn-primary col-12">Salvar Pré-cadastro</button>
+          </div>
+          <div class=" col-md-2">
+            <button type="button" class="btn btn-danger col-12" (click)="cancelar()">Cancelar</button>
+          </div>
         </div>
       </nb-card-body>
     </nb-card>
