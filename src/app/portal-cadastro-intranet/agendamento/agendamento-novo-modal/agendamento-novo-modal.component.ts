@@ -16,7 +16,6 @@ export class AgendamentoNovoModalComponent implements OnInit {
   modalHeader: string;
   modalContent = ``;
   chave: string;
-  medicos: [];
   medico: '9713c397-fedc-45e8-9e19-d1b9d52ba253';
   paciente: Paciente;
   date: any;
@@ -46,7 +45,6 @@ export class AgendamentoNovoModalComponent implements OnInit {
     this.consultaCommand.pacienteChaveCadSus = this.paciente.meta.chaveNaturalCadSus;
     this.consultaCommand.pacienteNome = this.paciente.pessoa.nome;
     this.consultaCommand.tipoConsulta = 'exame';
-    console.log(this.consultaCommand);
     this.AgendamentoService.criar(this.consultaCommand).subscribe(res => {
       this.logSuccess(' Agendamento registrado no sistema');
     }, (error) => {

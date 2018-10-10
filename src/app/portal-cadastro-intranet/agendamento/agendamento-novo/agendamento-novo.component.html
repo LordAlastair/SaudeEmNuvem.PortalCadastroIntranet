@@ -1,21 +1,186 @@
-<!-- <div class="row">
-  <div class="col-md-12">
-    <nb-card>
-      <nb-card-header>Modals</nb-card-header>
-      <nb-card-body>
-        <button class="btn btn-success" (click)="showLargeModal('f5c52155-e763-481d-aa7f-e6638868106d')">Large modal</button>
-      </nb-card-body>
-    </nb-card>
+<!-- <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <button class="btn btn-primary" (click)="decrement()" [disabled]="prevBtnDisabled">
+          Previous
+        </button>
+        <button class="btn btn-outline-secondary" (click)="today()">
+          Today
+        </button>
+        <button class="btn btn-primary" (click)="increment()" [disabled]="nextBtnDisabled">
+          Next
+        </button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="btn btn-primary" (click)="changeView('month')" [class.active]="view === 'month'">Month</div>
+        <div class="btn btn-primary" (click)="changeView('week')" [class.active]="view === 'week'">Week</div>
+        <div class="btn btn-primary" (click)="changeView('day')" [class.active]="view === 'day'">Day</div>
+      </div>
+    </div>
   </div>
-</div> -->
 
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]=locale
+        (dayClicked)="viewDate = $event.day.date; view = 'day'" (beforeViewRender)="beforeMonthViewRender($event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view [dayStartHour]="minDate" [dayEndHour]="maxDate" *ngSwitchCase="'week'" [viewDate]="viewDate"
+        [events]="events" [locale]=locale (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view [dayStartHour]="minDate" [dayEndHour]="maxDate" *ngSwitchCase="'day'" [viewDate]="viewDate"
+        [events]="events" [locale]=locale>
+      </mwl-calendar-day-view>
+    </div> -->
+<!--
+      <mwl-calendar-month-view [viewDate]="viewDate" [locale]="locale" [events]="events" (beforeViewRender)="beforeMonthViewRender($event)"
+        (dayClicked)="diaDoMesSelecionado($event.day)">
+      </mwl-calendar-month-view> -->
+      <ng-template #modalContent let-close="close">
+          <div class="modal-header">
+            <h5 class="modal-title">Event action occurred</h5>
+            <button type="button" class="close" (click)="close()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              Action:
+              <pre>{{ modalData?.action }}</pre>
+            </div>
+            <div>
+              Event:
+              <pre>{{ modalData?.event | json }}</pre>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+          </div>
+        </ng-template>
 <nb-card>
-  <nb-card-header>
-    Pacientes
-  </nb-card-header>
-
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="selecionarPaciente($event)">
-    </ng2-smart-table>
+    <div class="row text-center">
+      <!-- <div class="col-md-4">
+        <div class="btn-group">
+          <button class="btn btn-primary" (click)="decrement()" [disabled]="prevBtnDisabled" >
+            Anterior
+          </button>
+          <button class="btn btn-outline-secondary" (click)="today()">
+            Hoje
+          </button>
+          <button class="btn btn-primary" (click)="increment()" [disabled]="nextBtnDisabled">
+            Próximo
+          </button>
+        </div>
+      </div> -->
+      <div class="col-md-4">
+          <div class="btn-group">
+            <div
+              class="btn btn-primary"
+              mwlCalendarPreviousView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (click)="decrement()">
+              Anterior
+            </div>
+            <div
+              class="btn btn-outline-secondary"
+              mwlCalendarToday
+              (click)="today()"
+              [(viewDate)]="viewDate">
+              Hoje
+            </div>
+            <div
+              class="btn btn-primary"
+              mwlCalendarNextView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (click)="increment()">
+              Próximo
+            </div>
+          </div>
+        </div>
+
+      <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt' }}</h3>
+      </div>
+      <!-- <div class="col-md-4">
+        <div class="btn-group">
+          <div class="btn btn-primary" (click)="changeView('month')" [class.active]="view === 'month'">Mês</div>
+          <div class="btn btn-primary" (click)="changeView('week')" [class.active]="view === 'week'">Semana</div>
+          <div class="btn btn-primary" (click)="changeView('day')" [class.active]="view === 'day'">Dia</div>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary"
+            (click)="view = CalendarView.Month"
+            [class.active]="view === CalendarView.Month">
+            Mês
+          </div>
+          <div
+            class="btn btn-primary"
+            (click)="view = CalendarView.Week"
+            [class.active]="view === CalendarView.Week">
+            Semana
+          </div>
+          <div
+            class="btn btn-primary"
+            (click)="view = CalendarView.Day"
+            [class.active]="view === CalendarView.Day">
+            Dia
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- <div [ngSwitch]="view">
+      <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]=locale
+        (dayClicked)="viewDate = $event.day.date; view = 'day'" (beforeViewRender)="beforeMonthViewRender($event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [locale]=locale
+        (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]=locale>
+      </mwl-calendar-day-view>
+    </div> -->
+    <div [ngSwitch]="view">
+        <mwl-calendar-month-view
+          *ngSwitchCase="CalendarView.Month"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          (dayClicked)="viewDate = $event.day.date; view = 'day'"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="beforeMonthViewRender($event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view
+          *ngSwitchCase="CalendarView.Week"
+          [hourSegments]="4"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+          (beforeViewRender)="beforeDayViewRender($event.body.hourGrid)"
+          (hourSegmentClicked)="hourSegmentClicked($event.date)">
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view
+          *ngSwitchCase="CalendarView.Day"
+          [hourSegments]="4"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          (beforeViewRender)="beforeDayViewRender($event.body.hourGrid)"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+          (hourSegmentClicked)="hourSegmentClicked($event.date)">
+        </mwl-calendar-day-view>
+      </div>
   </nb-card-body>
 </nb-card>
+
+

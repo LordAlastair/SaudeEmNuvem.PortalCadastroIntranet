@@ -1,0 +1,63 @@
+// .cal-day-selected,
+// .cal-day-selected:hover {
+//   background-color: rgb(162, 226, 255) !important;
+// }
+
+// .cal-past {
+//   background-color: rgb(243, 89, 89);
+//   pointer-events: none;
+// }
+
+// .tem-vagas {
+//   background-color: rgb(72, 148, 9);
+// }
+
+// .sem-vagas{
+//   background-color: rgb(238, 180, 142);
+// }
+
+// .cal-month-view .cal-cell-top {
+//   height: 35px;
+//   min-height: 20px;
+// }
+
+// .cal-month-view .cal-day-cell{
+//   min-height: 20px;
+//   height: 35px;
+// }
+
+// .cal-month-view .cal-day-number{
+//   float: inherit;
+// }
+// .cal-month-view .cal-header .cal-cell {
+//   padding: 5px 0;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   display: block;
+//   white-space: inherit;
+// }
+// .nb-theme-default nb-card-header{
+//   max-height: 65px;
+// }
+.cal-disabled {
+  background-color: #eee;
+  pointer-events: none;
+}
+
+.cal-disabled .cal-day-number {
+  opacity: 0.1;
+}
+
+.cal-day-selected,
+.cal-day-selected:hover {
+  background-color:darkorange !important;
+}
+
+h3 {
+  margin: 0 0 10px;
+}
+
+pre {
+  background-color: #f5f5f5;
+  padding: 15px;
+}

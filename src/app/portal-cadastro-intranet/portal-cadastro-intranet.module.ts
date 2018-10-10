@@ -10,6 +10,7 @@ import { CadastroConf } from './_shared/CadastroConf';
 import { HttpWrapperService } from './_services/httpWrapper.service';
 import { AtendimentoDataService } from './_services/data-services/atendimento-data.service';
 import { AgendamentoConf } from './_shared/AgendamentoConf';
+import { DateTimePickerComponent } from './_util/calendar/date-time-picker.component';
 
 const COMPONENTS = [
   PortalCadastroIntranetComponent,
@@ -23,6 +24,7 @@ const COMPONENTS = [
   ],
   declarations: [
     ...COMPONENTS,
+    [ DateTimePickerComponent],
   ],
   providers: [
     AtendimentoDataService,
@@ -32,6 +34,7 @@ const COMPONENTS = [
     AgendamentoDataService,
     HttpWrapperService,
   ],
+  exports: [   DateTimePickerComponent ],
 })
 
 export class PortalCadastroIntranetModule { }

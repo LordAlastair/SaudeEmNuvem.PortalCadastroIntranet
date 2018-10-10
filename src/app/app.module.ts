@@ -20,11 +20,19 @@ import { AuthGuard } from './auth-guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToasterModule, ToasterService, ToasterConfig } from 'angular2-toaster';
 import { HttpClientModule } from '@angular/common/http';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { MyCalendarModule } from './portal-cadastro-intranet/_util/calendar/my-calendar.module';
 
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -34,6 +42,11 @@ import { HttpClientModule } from '@angular/common/http';
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
     ToasterModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    MyCalendarModule,
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -42,5 +55,4 @@ import { HttpClientModule } from '@angular/common/http';
     AuthGuard,
   ],
 })
-export class AppModule {
-}
+export class AppModule {}
