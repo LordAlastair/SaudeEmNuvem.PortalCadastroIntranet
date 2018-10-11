@@ -95,7 +95,7 @@
         <div class="btn-group">
           <div
             class="btn btn-primary"
-            (click)="view = CalendarView.Month"
+            (click)="changeView('month')"
             [class.active]="view === CalendarView.Month">
             Mês
           </div>
@@ -107,7 +107,7 @@
           </div> -->
           <div
             class="btn btn-primary"
-            (click)="view = CalendarView.Day"
+            (click)="changeView('day')"
             [class.active]="view === CalendarView.Day">
             Dia
           </div>
@@ -139,6 +139,8 @@
         </mwl-calendar-week-view> -->
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarView.Day"
+          [dayStartHour]="7"
+          [dayEndHour]="19"
           [hourSegments]="4"
           [viewDate]="viewDate"
           [events]="events"

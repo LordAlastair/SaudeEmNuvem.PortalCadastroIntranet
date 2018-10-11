@@ -43,6 +43,7 @@ import { colors } from '../../_util/calendar/colors';
 import { Subject } from 'rxjs';
 import { DayViewHour } from 'calendar-utils';
 import { Medico } from '../../_models/medico';
+import { ToasterService, Toast } from 'angular2-toaster';
 
 type CalendarPeriod = 'day' | 'week' | 'month';
 
@@ -93,10 +94,10 @@ export class AgendamentoNovoComponent implements OnInit {
   @ViewChild('modalContent')
   modalContent: TemplateRef<any>;
 
+  view: CalendarPeriod = 'month';
+
   @Input()
   selectedMonthViewDay: CalendarMonthViewDay;
-
-  view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
@@ -184,6 +185,7 @@ export class AgendamentoNovoComponent implements OnInit {
     private modal: NgbModal,
     private pacienteService: PacienteDataService,
     private agendamentoService: AgendamentoDataService,
+    private toasterService: ToasterService,
   ) {
     this.dateOrViewChanged();
   }
@@ -201,7 +203,6 @@ export class AgendamentoNovoComponent implements OnInit {
   carregarConsultas(): void {
     this.agendamentoService.buscarTodosConsultas().subscribe(response => {
       response.forEach(element => {
-        console.log(response);
        const aux = new Date(element.horarioMarcado);
         this.events.push(
           {
@@ -258,6 +259,11 @@ export class AgendamentoNovoComponent implements OnInit {
     this.dateOrViewChanged();
   }
 
+  changeView(view: CalendarPeriod): void {
+    this.view = view;
+    this.dateOrViewChanged();
+  }
+
   dateOrViewChanged(): void {
     this.prevBtnDisabled = !this.dateIsValid(
       endOfPeriod(this.view, subPeriod(this.view, this.viewDate, 1)),
@@ -272,14 +278,22 @@ export class AgendamentoNovoComponent implements OnInit {
     }
   }
 
+  // beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+  //   body.forEach(day => {
+  //     if (
+  //       this.selectedDays.some(
+  //         selectedDay => selectedDay.date.getTime() === day.date.getTime()
+  //       )
+  //     ) {
+  //       day.cssClass = 'cal-day-selected';
+  //     }
+  //   });
+  // }
+
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach(day => {
-      if (
-        this.selectedDays.some(
-          selectedDay => selectedDay.date.getTime() === day.date.getTime()
-        )
-      ) {
-        day.cssClass = 'cal-day-selected';
+      if (!this.dateIsValid(day.date)) {
+        day.cssClass = 'cal-disabled';
       }
     });
   }
@@ -319,8 +333,11 @@ export class AgendamentoNovoComponent implements OnInit {
 
   // Horario clicado no calendar
   hourSegmentClicked(date: Date) {
+    if (date < new Date()) {
+      this.logError('Horário não é mais valido para consultas ');
+      return false;
+    }
     this.selectedDayViewDate = date;
-    console.log(this.events);
     this.openModal();
     this.addSelectedDayViewClass();
   }
@@ -374,4 +391,22 @@ export class AgendamentoNovoComponent implements OnInit {
     });
     this.refresh.next();
   }
+
+  //#region Toast
+  private logError(msg: string) {
+    const toast: Toast = {
+      type: 'error',
+      body: msg,
+    };
+    this.toasterService.pop(toast);
+  }
+
+  private logSuccess(msg: string) {
+    const toast: Toast = {
+      type: 'success',
+      body: msg,
+    };
+    this.toasterService.pop(toast);
+  }
+  //#endregion
 }
