@@ -5,6 +5,7 @@ export interface Consulta {
   tipoConsulta: string;
   origem: string;
   destino: string;
+  idtStatus: string;
   paciente: {
     nome: string;
     dataNascimento: Date;

@@ -12,7 +12,8 @@ import { AgendamentoNovoModalComponent } from '../agendamento-novo-modal/agendam
 import { LocalDataSource } from 'ng2-smart-table';
 import { PacienteDataService } from '../../_services/data-services/paciente-data.service';
 import { AgendamentoDataService } from '../../_services/data-services/agendamento-data.service';
-// Calendar
+
+//#region Calendar
 import {
   CalendarView,
   CalendarEvent,
@@ -41,6 +42,7 @@ import {
 import { colors } from '../../_util/calendar/colors';
 import { Subject } from 'rxjs';
 import { DayViewHour } from 'calendar-utils';
+import { Medico } from '../../_models/medico';
 
 type CalendarPeriod = 'day' | 'week' | 'month';
 
@@ -75,7 +77,7 @@ function endOfPeriod(period: CalendarPeriod, date: Date): Date {
     month: endOfMonth,
   }[period](date);
 }
-// end calendar
+//#endregion calendar
 
 @Component({
   selector: 'ngx-agendamento-novo',
@@ -85,57 +87,8 @@ function endOfPeriod(period: CalendarPeriod, date: Date): Date {
   encapsulation: ViewEncapsulation.None,
 })
 export class AgendamentoNovoComponent implements OnInit {
-  // Table
-  settings = {
-    actions: {
-      add: false,
-      edit: false,
-      delete: false,
-    },
-    columns: {
-      chave: {
-        title: 'Codigo',
-        type: 'string',
-      },
-      nome: {
-        title: 'Nome',
-        type: 'string',
-      },
-      apelido: {
-        title: 'Apelido',
-        type: 'string',
-      },
-      dataNascimento: {
-        title: 'Data Nascimento',
-        type: 'date',
-        valuePrepareFunction: dataNascimento => {
-          const raw = new Date(dataNascimento);
-          return raw.toLocaleDateString('en-Us');
-        },
-      },
-    },
-  };
 
-  public source: LocalDataSource;
-
-  constructor(
-    private modal: NgbModal,
-    private pacienteService: PacienteDataService,
-    private agendamentoService: AgendamentoDataService,
-  ) {
-    this.dateOrViewChanged();
-  }
-
-  public ngOnInit() {
-    this.preencherCalendar();
-    // this.source = new LocalDataSource();
-    // this.carregarPacientes();
-    // const date = new Date();
-    // const dias = this.diasNoMes(date.getMonth(), date.getFullYear());
-    // this.carregarvagasDias(dias);
-  }
-
-  // Calendar
+  //#region Var
   locale: string = 'pt';
   @ViewChild('modalContent')
   modalContent: TemplateRef<any>;
@@ -167,76 +120,123 @@ export class AgendamentoNovoComponent implements OnInit {
 
   selectedDays: any = [];
 
-  // carregarPacientes(): void {
-  //   this.pacienteService.buscarTodos().subscribe(pacientes => {
-  //     const teste = pacientes.map(p => {
-  //       return {
-  //         nome: p.pessoa.nome,
-  //         apelido: p.pessoa.apelido,
-  //         dataNascimento: p.pessoa.dataNascimento,
-  //         chave: p.meta.chaveNaturalCadSus,
-  //       };
-  //     });
-  //     this.source.load(teste);
-  //   });
-  // }
+  selectedMed: Medico;
 
-  // selecionarPaciente(event): void {
-  //   const activeModal = this.modalService.open(AgendamentoNovoModalComponent, {
-  //     size: 'lg',
-  //     container: 'nb-layout',
-  //   });
-  //   activeModal.componentInstance.modalHeader = 'Marcar Consulta';
-  //   activeModal.componentInstance.chave = event.data.chave;
-  // }
+  public source: LocalDataSource;
 
-  // showLargeModal(chave) {
-  //   const activeModal = this.modalService.open(AgendamentoNovoModalComponent, {
-  //     size: 'lg',
-  //     container: 'nb-layout',
-  //   });
+  modalData: {
+    action: string;
+    event: CalendarEvent;
+  };
 
-  //   activeModal.componentInstance.modalHeader = 'Marcar Consulta';
-  //   activeModal.componentInstance.chave = chave;
-  // }
+  refresh: Subject<any> = new Subject();
 
-  // diaDoMesSelecionado(day: CalendarMonthViewDay): void {
-  //   if (this.selectedMonthViewDay) {
-  //     delete this.selectedMonthViewDay.cssClass;
-  //     // this.aplicarCorDia(day);
-  //   }
-  //   day.cssClass = 'cal-day-selected';
-  //   this.selectedMonthViewDay = day;
-  //   // this.agendamentoService.diaSelecionado(day.date);
-  // }
+  actions: CalendarEventAction[] = [
+    {
+      label: '<i class="fa fa-fw fa-pencil"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
+      },
+    },
+    {
+      label: '<i class="fa fa-fw fa-times"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.events = this.events.filter(iEvent => iEvent !== event);
+        this.handleEvent('Deleted', event);
+      },
+    },
+  ];
+//#endregion
 
-  // carregarvagasDias(dias: Date[]) {
-  //   for (let i = 0; i < dias.length; i++) {
-  //     this.agendamentoService.temConsultasAbertasDia(dias[i]).subscribe(res => {
-  //       this.vagasDias.push(res);
-  //     });
-  //   }
-  // }
+  //#region Table
+  settings = {
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+    columns: {
+      chave: {
+        title: 'Codigo',
+        type: 'string',
+      },
+      nome: {
+        title: 'Nome',
+        type: 'string',
+      },
+      apelido: {
+        title: 'Apelido',
+        type: 'string',
+      },
+      dataNascimento: {
+        title: 'Data Nascimento',
+        type: 'date',
+        valuePrepareFunction: dataNascimento => {
+          const raw = new Date(dataNascimento);
+          return raw.toLocaleDateString('en-Us');
+        },
+      },
+    },
+  };
+  //#endregion
 
-  // diasNoMes(mes, ano) {
-  //   const date = new Date(ano, mes, 1);
-  //   const dias = [];
-  //   while (date.getMonth() === mes) {
-  //     dias.push(new Date(date));
-  //     date.setDate(date.getDate() + 1);
-  //   }
-  //   return dias;
-  // }
+  constructor(
+    private modal: NgbModal,
+    private pacienteService: PacienteDataService,
+    private agendamentoService: AgendamentoDataService,
+  ) {
+    this.dateOrViewChanged();
+  }
 
-  // aplicarCorDia(day: CalendarMonthViewDay) {
-  //   delete day.cssClass;
-  //   if (this.vagasDias[day.date.getDay()] > 0) {
-  //     day.cssClass = 'tem-vagas';
-  //   } else {
-  //     day.cssClass = 'sem-vagas';
-  //   }
-  // }
+  public ngOnInit() {
+    this.preencherCalendar();
+    this.carregarConsultas();
+    // this.source = new LocalDataSource();
+    // this.carregarPacientes();
+    // const date = new Date();
+    // const dias = this.diasNoMes(date.getMonth(), date.getFullYear());
+    // this.carregarvagasDias(dias);
+  }
 
+  carregarConsultas(): void {
+    this.agendamentoService.buscarTodosConsultas().subscribe(response => {
+      response.forEach(element => {
+        console.log(response);
+       const aux = new Date(element.horarioMarcado);
+        this.events.push(
+          {
+            start: element.horarioMarcado,
+            end: new Date(aux.getTime() + 15 * 60000),
+            title: element.medico.nome,
+            color: colors.blue,
+            actions: this.actions,
+            resizable: {
+              beforeStart: false,
+              afterEnd: false,
+            },
+            draggable: false,
+            meta: {
+              idmed: element.medico.id,
+              idPac: element.paciente.chaveNaturalCadSus,
+              idtStatus: element.idtStatus,
+            },
+          },
+        );
+      });
+    });
+  }
+
+  openModal(): void {
+    const activeModal = this.modal.open(AgendamentoNovoModalComponent, {
+      size: 'lg',
+      container: 'nb-layout',
+    });
+    activeModal.componentInstance.modalHeader = 'Marcar Consulta';
+    activeModal.componentInstance.medico = this.selectedMed;
+    activeModal.componentInstance.dia = this.selectedDayViewDate;
+  }
+
+//#region Calendar constructor methods
   increment(): void {
     this.changeDate(addPeriod(this.view, this.viewDate, 1));
   }
@@ -272,14 +272,6 @@ export class AgendamentoNovoComponent implements OnInit {
     }
   }
 
-  // beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-  //   body.forEach(day => {
-  //     if (!this.dateIsValid(day.date)) {
-  //       day.cssClass = 'cal-disabled';
-  //     }
-  //   });
-  // }
-
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach(day => {
       if (
@@ -291,8 +283,9 @@ export class AgendamentoNovoComponent implements OnInit {
       }
     });
   }
+//#endregion
 
-  // preencherCalendar(): void {
+  preencherCalendar(): void {
   //   const year = this.minDate.getFullYear();
   //   const month = this.minDate.getMonth();
   //   let day = this.minDate.getDate();
@@ -317,71 +310,18 @@ export class AgendamentoNovoComponent implements OnInit {
   //     );
   //     aux = new Date(aux.getTime() + 15 * 60000);
   //   }
-  // }
-
-  preencherCalendar(): void {
-    this.events = [
-      {
-        start: subDays(startOfDay(new Date()), 1),
-        end: addDays(new Date(), 1),
-        title: 'A 3 day event',
-        color: colors.red,
-        actions: this.actions,
-        allDay: true,
-        resizable: {
-          beforeStart: false,
-          afterEnd: false,
-        },
-        draggable: false,
-      },
-    ];
   }
-
-  refresh: Subject<any> = new Subject();
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-  //   if (isSameMonth(date, this.viewDate)) {
-  //     this.viewDate = date;
-  //     if (
-  //       (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-  //       events.length === 0
-  //     ) {
-  //       this.activeDayIsOpen = false;
-  //     } else {
-  //       this.activeDayIsOpen = true;
-  //     }
-  //   }
-  // }
 
   dayClicked(view: CalendarPeriod): void {
     // this.view = view;
     this.dateOrViewChanged();
   }
 
+  // Horario clicado no calendar
   hourSegmentClicked(date: Date) {
-    console.log(date);
     this.selectedDayViewDate = date;
+    console.log(this.events);
+    this.openModal();
     this.addSelectedDayViewClass();
   }
 

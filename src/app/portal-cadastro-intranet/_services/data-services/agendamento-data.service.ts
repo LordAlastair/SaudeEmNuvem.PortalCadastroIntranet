@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { ToasterService, Toast } from 'angular2-toaster';
 import { Consulta } from '../../_models/consulta';
 import { CriarConsulta } from '../../_models/commands/criarConsulta';
+import { Medico } from '../../_models/medico';
 
 @Injectable()
 export class AgendamentoDataService {
@@ -20,14 +21,34 @@ export class AgendamentoDataService {
         this.actionUrl = configuration.server + configuration.apiUrl;
     }
 
-    buscarTodos(): Observable<Consulta[]> {
+    buscarTodosConsultas(): Observable<Consulta[]> {
         return this.http.get<Consulta[]>(this.actionUrl + 'GetConsultas')
             .pipe(catchError(this.handleError<Consulta[]>('GetConsultas')));
     }
 
+    buscarTodosMedicos(): Observable<Medico[]> {
+      return this.http.get<Medico[]>(this.actionUrl + 'GetMedicos')
+          .pipe(catchError(this.handleError<Medico[]>('GetMedicos')));
+  }
+
     buscarPorCodigo(codigo: number): Observable<Consulta> {
         return this.http.get<Consulta>(this.actionUrl + 'GetConsulta' + codigo)
             .pipe(catchError(this.handleError<Consulta>('GetConsulta')));
+    }
+
+    getConsultasPorMedico(codigo: number): Observable<Consulta> {
+      return this.http.get<Consulta>(this.actionUrl + 'GetConsultasPorMedico' + codigo)
+          .pipe(catchError(this.handleError<Consulta>('GetConsulta')));
+    }
+
+    getConsultasPorPaciente(codigo: number): Observable<Consulta> {
+      return this.http.get<Consulta>(this.actionUrl + 'GetConsultasPorPaciente' + codigo)
+          .pipe(catchError(this.handleError<Consulta>('GetConsulta')));
+    }
+
+    getConsultasMarcadasHoje(codigo: number): Observable<Consulta> {
+      return this.http.get<Consulta>(this.actionUrl + 'ConsultasMarcadasHoje' + codigo)
+          .pipe(catchError(this.handleError<Consulta>('ConsultasMarcadasHoje')));
     }
 
     criar(consulta: CriarConsulta): Observable<CriarConsulta> {

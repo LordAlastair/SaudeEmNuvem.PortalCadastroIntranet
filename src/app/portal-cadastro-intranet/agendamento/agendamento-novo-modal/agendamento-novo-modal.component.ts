@@ -18,6 +18,7 @@ export class AgendamentoNovoModalComponent implements OnInit {
   chave: string;
   medico: '9713c397-fedc-45e8-9e19-d1b9d52ba253';
   paciente: Paciente;
+  pacientes: any = [];
   date: any;
   consultaCommand = {} as CriarConsulta;
 
@@ -28,14 +29,10 @@ export class AgendamentoNovoModalComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.pacienteService.buscarPorChaveCadSus(this.chave)
-      .subscribe(r => {
-        this.paciente = r;
+    this.pacienteService.buscarTodos()
+      .subscribe(response => {
+        this.pacientes = response;
       });
-  }
-
-  onDateSelect($event) {
-    this.date = new Date($event.year, $event.month, $event.day, 0, 0, 0, 0).toDateString();
   }
 
   closeModal() {
