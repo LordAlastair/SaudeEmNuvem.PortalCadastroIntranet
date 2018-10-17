@@ -3,5 +3,6 @@ export interface Medico {
   dataNascimento: Date;
   chaveNaturalCadSus: string;
   chaveNaturalCadApi: string;
+  especialidade: string;
   id: 0;
 }

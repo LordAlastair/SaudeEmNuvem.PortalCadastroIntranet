@@ -1,32 +1,68 @@
 <div class="modal-header">
-    <span>Marcar consulta para o paciente: {{paciente?.pessoa?.nome}}</span>
-    <button class="close" aria-label="Close" (click)="closeModal()">
-        <span aria-hidden="true">&times;</span>
-    </button>
+  <span>Marcar consulta no horário</span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
+
 <div class="modal-body">
-    <nb-card-body>
-        <div class="row col-md-12">
-            <div class="col-md-4 sm-12">
-                <div class="form-group">
-                    <span>Selecione o paciente</span>
-                </div>
-            </div>
-            <div class="col-md-4 sm-12">
-                <div class="dropdown" placement="top" ngbDropdown>
-                    <div class="dropdown" ngbDropdown>
-                        <button class="btn btn-primary" type="button" ngbDropdownToggle>
-                            Selecione o Médico:
-                        </button>
-                        <ul class="dropdown-menu" ngbDropdownMenu>
-                            <li value="9713c397-fedc-45e8-9e19-d1b9d52ba253"  class="dropdown-item">Medico Master</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+  <nb-card-body>
+    <ng-template #rtm let-r="result" let-t="term">
+      <div class=row>
+          <span [innerHTML]="'Nome: ' + r.nome"></span>
+      </div>
+      <div class=row>
+          <span [innerHTML]="'Especialidade: ' + r.especialidade"></span>
+      </div>
+    </ng-template>
+
+    <ng-template #rt let-r="result" let-t="term">
+      <div class="row">
+        <span [innerHTML]="'Nome: ' + r.pessoa.nome"></span>
+      </div>
+      <div class="row">
+        <span [innerHTML]="'CNS: ' + r.meta?.chaveNaturalCadSus"></span>
+      </div>
+      <div class="row">
+        <span> Nascimento: {{r.pessoa?.dataNascimento | date:'d/M/yyyy'}}</span>
+      </div>
+    </ng-template>
+    <div class="row col-md-12">
+      <div class="row col-md-12">
+        <div class="col-md-6 sm-12">
+          <div class="form-group">
+            <label class="input-label" for="typeahead-templateMedico">Buscar Medico:</label>
+
+            <input id="typeahead-templateMedico" type="text" class="form-control" [(ngModel)]="modelMedico"
+              [ngbTypeahead]="searchMedico" [resultTemplate]="rtm" [inputFormatter]="formatterMedico" />
+          </div>
         </div>
-    </nb-card-body>
+        <div class="col-md-6 sm-12">
+          <div class="form-group">
+            <label for="typeahead-template" class="input-label">Buscar paciente:</label>
+
+            <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="modelPaciente"
+             [ngbTypeahead]="searchPaciente" [resultTemplate]="rt" [inputFormatter]="formatterPaciente" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="modelPaciente?.pessoa?.nome !== null && modelPaciente?.pessoa?.nome !== undefined">
+      <pre>Paciente Selecionado:
+{{ modelPaciente ? 'Nome: ' + modelPaciente?.pessoa?.nome : 'A Selecionar' | json }}
+{{ modelPaciente ? 'Código ' + modelPaciente?.meta?.chaveNaturalCadSus : '...' | json }}</pre>
+    </div>
+
+    <div *ngIf="modelMedico?.nome !== null && modelMedico?.nome !== undefined">
+      <pre>Medico Selecionado:
+{{ modelMedico ? 'Nome: ' + modelMedico?.nome : '...' | json }}
+{{ modelMedico ? 'Especialidade ' + modelMedico?.especialidade : '...' | json }}</pre>
+    </div>
+
+  </nb-card-body>
 </div>
+
+
 <div class="modal-footer">
-    <button class="btn btn-md btn-primary" (click)="closeModal()">Confirmar consulta</button>
+  <button class="btn btn-md btn-primary" (click)="marcar()">Confirmar consulta</button>
 </div>

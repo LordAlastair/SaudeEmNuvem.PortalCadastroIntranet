@@ -40,7 +40,7 @@
 //   max-height: 65px;
 // }
 .cal-disabled {
-  background-color: #eee;
+  background-color: #f7aaaa;
   pointer-events: none;
 }
 
@@ -51,6 +51,10 @@
 .cal-day-selected,
 .cal-day-selected:hover {
   background-color:darkorange !important;
+}
+
+.cal-hour-block{
+  background-color: #f7aaaa;
 }
 
 h3 {

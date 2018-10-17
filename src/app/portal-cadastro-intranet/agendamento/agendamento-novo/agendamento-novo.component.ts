@@ -123,6 +123,10 @@ export class AgendamentoNovoComponent implements OnInit {
 
   selectedMed: Medico;
 
+  pacientes: any = [];
+
+  medicos: any = [];
+
   public source: LocalDataSource;
 
   modalData: {
@@ -193,6 +197,15 @@ export class AgendamentoNovoComponent implements OnInit {
   public ngOnInit() {
     this.preencherCalendar();
     this.carregarConsultas();
+
+    this.pacienteService.buscarTodos()
+    .subscribe(response => {
+      this.pacientes = response;
+    });
+    this.agendamentoService.buscarTodosMedicos()
+    .subscribe(response => {
+      this.medicos = response;
+    });
     // this.source = new LocalDataSource();
     // this.carregarPacientes();
     // const date = new Date();
@@ -234,7 +247,7 @@ export class AgendamentoNovoComponent implements OnInit {
     });
     activeModal.componentInstance.modalHeader = 'Marcar Consulta';
     activeModal.componentInstance.medico = this.selectedMed;
-    activeModal.componentInstance.dia = this.selectedDayViewDate;
+    activeModal.componentInstance.horario = this.selectedDayViewDate;
   }
 
 //#region Calendar constructor methods
@@ -297,6 +310,12 @@ export class AgendamentoNovoComponent implements OnInit {
       }
     });
   }
+
+  beforeDayViewRender(dayView: DayViewHour[]) {
+    this.dayView = dayView;
+    this.blockDayPastHour();
+  }
+
 //#endregion
 
   preencherCalendar(): void {
@@ -342,9 +361,17 @@ export class AgendamentoNovoComponent implements OnInit {
     this.addSelectedDayViewClass();
   }
 
-  beforeDayViewRender(dayView: DayViewHour[]) {
-    this.dayView = dayView;
-    this.addSelectedDayViewClass();
+  private blockDayPastHour() {
+    this.dayView.forEach(hourSegment => {
+      hourSegment.segments.forEach(segment => {
+        delete segment.cssClass;
+        if (
+          segment.date.getTime() < new Date().getTime()
+        ) {
+          segment.cssClass = 'cal-hour-block';
+        }
+      });
+    });
   }
 
   private addSelectedDayViewClass() {
