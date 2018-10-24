@@ -153,38 +153,6 @@ export class AgendamentoNovoComponent implements OnInit {
   ];
 //#endregion
 
-  //#region Table
-  settings = {
-    actions: {
-      add: false,
-      edit: false,
-      delete: false,
-    },
-    columns: {
-      chave: {
-        title: 'Codigo',
-        type: 'string',
-      },
-      nome: {
-        title: 'Nome',
-        type: 'string',
-      },
-      apelido: {
-        title: 'Apelido',
-        type: 'string',
-      },
-      dataNascimento: {
-        title: 'Data Nascimento',
-        type: 'date',
-        valuePrepareFunction: dataNascimento => {
-          const raw = new Date(dataNascimento);
-          return raw.toLocaleDateString('en-Us');
-        },
-      },
-    },
-  };
-  //#endregion
-
   constructor(
     private modal: NgbModal,
     private pacienteService: PacienteDataService,
@@ -206,38 +174,61 @@ export class AgendamentoNovoComponent implements OnInit {
     .subscribe(response => {
       this.medicos = response;
     });
-    // this.source = new LocalDataSource();
-    // this.carregarPacientes();
-    // const date = new Date();
-    // const dias = this.diasNoMes(date.getMonth(), date.getFullYear());
-    // this.carregarvagasDias(dias);
+    this.refresh.next();
   }
 
   carregarConsultas(): void {
+    const d = new Date();
     this.agendamentoService.buscarTodosConsultas().subscribe(response => {
       response.forEach(element => {
-       const aux = new Date(element.horarioMarcado);
-        this.events.push(
-          {
-            start: element.horarioMarcado,
-            end: new Date(aux.getTime() + 15 * 60000),
-            title: element.medico.nome,
-            color: colors.blue,
-            actions: this.actions,
-            resizable: {
-              beforeStart: false,
-              afterEnd: false,
+        const aux = new Date(element.horarioMarcado);
+        if (element.horarioMarcado < d) {
+          this.events.push(
+            {
+              // start: element.horarioMarcado,
+              start: new Date(aux.getTime() - (180 * 60000)),
+              end: new Date(aux.getTime() + (15 * 60000) - (180 * 60000)),
+              title: element.medico.nome,
+              color: colors.yellow,
+              actions: this.actions,
+              resizable: {
+                beforeStart: false,
+                afterEnd: false,
+              },
+              draggable: false,
+              meta: {
+                idmed: element.medico.id,
+                idPac: element.paciente.chaveNaturalCadSus,
+                idtStatus: element.idtStatus,
+              },
             },
-            draggable: false,
-            meta: {
-              idmed: element.medico.id,
-              idPac: element.paciente.chaveNaturalCadSus,
-              idtStatus: element.idtStatus,
+          );
+        } else {
+          this.events.push(
+            {
+              // start: element.horarioMarcado,
+              start: new Date(aux.getTime() - (180 * 60000)),
+              end: new Date(aux.getTime() + (15 * 60000) - (180 * 60000)),
+              title: element.medico.nome,
+              color: colors.blue,
+              actions: this.actions,
+              resizable: {
+                beforeStart: false,
+                afterEnd: false,
+              },
+              draggable: false,
+              meta: {
+                idmed: element.medico.id,
+                idPac: element.paciente.chaveNaturalCadSus,
+                idtStatus: element.idtStatus,
+              },
             },
-          },
-        );
+          );
+        }
+
       });
     });
+    // falta um refresh aqui...
   }
 
   openModal(): void {
@@ -314,6 +305,10 @@ export class AgendamentoNovoComponent implements OnInit {
   beforeDayViewRender(dayView: DayViewHour[]) {
     this.dayView = dayView;
     this.blockDayPastHour();
+  }
+
+  refreshView(): void {
+    this.refresh.next();
   }
 
 //#endregion

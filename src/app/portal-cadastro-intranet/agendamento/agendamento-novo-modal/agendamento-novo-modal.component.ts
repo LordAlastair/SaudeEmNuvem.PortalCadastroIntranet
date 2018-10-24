@@ -49,18 +49,23 @@ export class AgendamentoNovoModalComponent implements OnInit {
 
   marcar() {
     if (this.modelMedico && this.modelPaciente) {
-        this.consultaCommand.horarioMarcado = this.horario;
-        this.consultaCommand.medicoId = this.modelMedico.chaveNaturalCadApi;
-        this.consultaCommand.medicoNome = this.modelMedico.nome;
-        this.consultaCommand.pacienteChaveCadSus = this.modelPaciente.meta.chaveNaturalCadSus;
-        this.consultaCommand.pacienteNome = this.modelPaciente.pessoa.nome;
-        this.consultaCommand.tipoConsulta = 'exame';
-        this.agendamentoService.criar(this.consultaCommand).subscribe(res => {
-        this.logSuccess(' Agendamento registrado no sistema');
+      this.consultaCommand.horarioMarcado = this.horario;
+      this.consultaCommand.medicoId = this.modelMedico.chaveNaturalCadApi;
+      this.consultaCommand.medicoNome = this.modelMedico.nome;
+      this.consultaCommand.pacienteChaveCadSus = this.modelPaciente.meta.chaveNaturalCadSus;
+      this.consultaCommand.pacienteNome = this.modelPaciente.pessoa.nome;
+      this.consultaCommand.tipoConsulta = 'exame';
+
+      this.agendamentoService.criar(this.consultaCommand).subscribe(res => {
+        if (res.idt) {
+          this.logSuccess(' Agendamento registrado no sistema');
+        }else {
+          this.logError('Horário ocupado ou paciente já tem uma consulta marcada');
+        }
       }, (error) => {
         this.logError(error.value);
       });
-    }else {
+    } else {
       this.logError('Selecione o paciente e medico para a consulta');
     }
   }
@@ -73,14 +78,14 @@ export class AgendamentoNovoModalComponent implements OnInit {
       debounceTime(200),
       map(term => term === '' ? []
       : this.pacientes.filter(v => v.pessoa.nome.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)),
-  )
+  );
 
   searchMedico = (text$: Observable<string>) =>
   text$.pipe(
       debounceTime(200),
       map(term => term === '' ? []
       : this.medicos.filter(v => v.nome.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)),
-  )
+  );
 
   private logError(msg: string) {
     const toast: Toast = {

@@ -5,4 +5,5 @@ export interface CriarConsulta {
   pacienteChaveCadSus?: string,
   pacienteNome?: string,
   horarioMarcado?: Date,
+  idt?: string
 }

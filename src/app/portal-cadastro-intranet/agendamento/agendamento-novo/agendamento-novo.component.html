@@ -120,10 +120,10 @@
           *ngSwitchCase="CalendarView.Month"
           [viewDate]="viewDate"
           [events]="events"
-          [refresh]="refresh"
           (dayClicked)="viewDate = $event.day.date; view = 'day'"
           (eventClicked)="handleEvent('Clicked', $event.event)"
           (eventTimesChanged)="eventTimesChanged($event)"
+          [refresh]="refresh"
           (beforeViewRender)="beforeMonthViewRender($event)">
         </mwl-calendar-month-view>
         <!-- <mwl-calendar-week-view

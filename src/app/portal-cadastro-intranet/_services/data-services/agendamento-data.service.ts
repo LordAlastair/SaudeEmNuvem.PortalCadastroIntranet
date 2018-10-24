@@ -82,10 +82,10 @@ export class AgendamentoDataService {
 
     /** Emite que a solicitação foi enviada  */
     private log(message: string) {
-        const toast: Toast = {
-            type: 'warning',
-            body: message,
-        };
-        this.toasterService.pop(toast);
-    }
+      const toast: Toast = {
+          type: 'warning',
+          body: message,
+      };
+      this.toasterService.pop(toast);
+  }
 }
