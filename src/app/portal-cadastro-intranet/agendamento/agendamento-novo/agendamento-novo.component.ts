@@ -107,7 +107,7 @@ export class AgendamentoNovoComponent implements OnInit {
 
   minDate: Date = subDays(new Date(), 1);
 
-  maxDate: Date = addMonths(new Date(), 1);
+  maxDate: Date = addMonths(new Date(), 6);
 
   prevBtnDisabled: boolean = false;
 
@@ -163,7 +163,6 @@ export class AgendamentoNovoComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.preencherCalendar();
     this.carregarConsultas();
 
     this.pacienteService.buscarTodos()
@@ -185,7 +184,6 @@ export class AgendamentoNovoComponent implements OnInit {
         if (element.horarioMarcado < d) {
           this.events.push(
             {
-              // start: element.horarioMarcado,
               start: new Date(aux.getTime() - (180 * 60000)),
               end: new Date(aux.getTime() + (15 * 60000) - (180 * 60000)),
               title: element.medico.nome,
@@ -206,7 +204,6 @@ export class AgendamentoNovoComponent implements OnInit {
         } else {
           this.events.push(
             {
-              // start: element.horarioMarcado,
               start: new Date(aux.getTime() - (180 * 60000)),
               end: new Date(aux.getTime() + (15 * 60000) - (180 * 60000)),
               title: element.medico.nome,
@@ -225,10 +222,9 @@ export class AgendamentoNovoComponent implements OnInit {
             },
           );
         }
-
+        this.refreshView();
       });
     });
-    // falta um refresh aqui...
   }
 
   openModal(): void {
@@ -282,18 +278,6 @@ export class AgendamentoNovoComponent implements OnInit {
     }
   }
 
-  // beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-  //   body.forEach(day => {
-  //     if (
-  //       this.selectedDays.some(
-  //         selectedDay => selectedDay.date.getTime() === day.date.getTime()
-  //       )
-  //     ) {
-  //       day.cssClass = 'cal-day-selected';
-  //     }
-  //   });
-  // }
-
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach(day => {
       if (!this.dateIsValid(day.date)) {
@@ -313,35 +297,7 @@ export class AgendamentoNovoComponent implements OnInit {
 
 //#endregion
 
-  preencherCalendar(): void {
-  //   const year = this.minDate.getFullYear();
-  //   const month = this.minDate.getMonth();
-  //   let day = this.minDate.getDate();
-  //   let min = this.minDate.getTime();
-  //   let aux = new Date();
-  //   const dates = [this.minDate];
-
-  //   while (aux <= this.maxDate) {
-  //     this.events.push(
-  //       {
-  //         start: aux,
-  //         end: new Date(aux.getTime() + 15 * 60000),
-  //         title: 'Med',
-  //         color: colors.blue,
-  //         actions: this.actions,
-  //         resizable: {
-  //           beforeStart: false,
-  //           afterEnd: false,
-  //         },
-  //         draggable: false,
-  //       },
-  //     );
-  //     aux = new Date(aux.getTime() + 15 * 60000);
-  //   }
-  }
-
   dayClicked(view: CalendarPeriod): void {
-    // this.view = view;
     this.dateOrViewChanged();
   }
 

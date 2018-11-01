@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <span>Marcar consulta no horário</span>
+  <span>Marcar consulta no horário {{horario | date:'d/M/yyyy hh:mm'}}</span>
   <button class="close" aria-label="Close" (click)="closeModal()">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -39,7 +39,7 @@
         </div>
         <div class="col-md-6 sm-12">
           <div class="form-group">
-            <label for="typeahead-template" class="input-label">Buscar paciente:</label>
+            <label class="input-label" for="typeahead-template" >Buscar paciente:</label>
 
             <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="modelPaciente"
              [ngbTypeahead]="searchPaciente" [resultTemplate]="rt" [inputFormatter]="formatterPaciente" />
